@@ -1,0 +1,37 @@
+#+TITLE: CSCI-21 - Programs and Algorithms 2 - Butte Spring 2011
+#+AUTHOR: Jeremiah Mahler
+
+
+* projects
+** DONE project 01, simple integer and string operations
+   DEADLINE: <2011-02-07 Mon>
+   CLOCK: [2011-01-28 Fri 10:26]--[2011-01-28 Fri 11:41] =>  1:15
+   CLOCK: [2011-01-27 Thu 21:57]--[2011-01-28 Fri 10:19] => 12:22
+   - State "DONE"       from "TODO"       [2011-01-27 Thu 19:46]
+   CLOCK: [2011-01-27 Thu 17:53]--[2011-01-27 Thu 19:46] =>  1:53
+   All the functionality is working.
+   Still need to clean up the documentation, etc.
+   CLOCK: [2011-01-27 Thu 12:30]--[2011-01-27 Thu 13:08] =>  0:38
+   CLOCK: [2011-01-26 Wed 10:24]--[2011-01-26 Wed 10:50] =>  0:26
+   CLOCK: [2011-01-25 Tue 18:45]--[2011-01-25 Tue 19:18] =>  0:33
+   CLOCK: [2011-01-25 Tue 17:50]--[2011-01-25 Tue 18:29] =>  0:39
+   CLOCK: [2011-01-25 Tue 16:47]--[2011-01-25 Tue 17:17] =>  0:30
+   CLOCK: [2011-01-25 Tue 14:43]--[2011-01-25 Tue 15:10] =>  0:27
+
+[[http://foobt.net/csci21/S3513_11/labs/lab1.html]]
+
+In this project a simple user interface for performing operations on
+integers and strings is built.
+
+* misc
+
+no class: [2011-02-01 Tue]
+
+** Makefile setup?
+   CLOCK: [2011-01-25 Tue 16:15]--[2011-01-25 Tue 16:40] =>  0:25
+[2011-01-25 Tue 16:14]
+
+The projects in this class are fairly simple and the
+first project just includes everything in one directory.
+But there must be a way to take advantage of Makefiles for
+building shared libraries.
