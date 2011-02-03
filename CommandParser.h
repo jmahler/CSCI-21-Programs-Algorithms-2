@@ -2,7 +2,6 @@
 #include <string>
 
 using namespace std;
-
 /**
  *
  * Parse a string in to its command and argument

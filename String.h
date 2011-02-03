@@ -68,6 +68,17 @@ public:
      * @return number of characters
      */
     int count();
+
+    /**
+     * Does this string represent an integer?
+     *
+     * A string representing an integer can contain spaces at
+     * the begining or end, an optional negative sign, or any number
+     * digits.
+     *
+     * @return true if an integer, false otherwise
+     */
+    bool isInteger();
 };
 
 /**

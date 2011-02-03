@@ -1,35 +1,67 @@
 #include "CommandParser.h"
 
-using namespace std;
-
 // {{{ parse()
 CommandParser::CommandParser(string s) {
-    size_t p1, p2;
+    size_t l;
+    size_t p;
+    size_t i = 0;
 
     // defaults
     cmd = "";
     arg = "";
 
+    // no command, no arguments
     if (s.empty()) {
         return;
     }
 
-    p1 = s.find_first_of(" ", 0);
-    if (p1 == string::npos) {
-        // no spaces were found
-        cmd = s;
+    l = s.length();
 
+    // skip any preceeding spaces
+    for (; i < l; i++) {
+        if (s[i] != ' ')
+            break;
+    }
+
+    p = i; // possible start position of argument
+
+    // find the next space or end
+    for (; i < l; i++) {
+        if (s[i] == ' ') {
+            break;
+        }
+    }
+
+    // we hit the end
+    if (i == l) {
+        // if there is at least one character
+        if (i > p)
+            cmd = s.substr(p, i - p);
+
+        return;
+    } else {
+        // we hit a space
+        cmd = s.substr(p, i - p);
+    }
+
+    // skip any spaces between the command and argument
+    for (; i < l; i++) {
+        if (s[i] != ' ')
+            break;
+    }
+
+    // we hit the end
+    if (i == l) {
         return;
     }
 
-    p2 = s.find_first_not_of(" ", p1);
+    // we haven't hit the end yet there might still
+    // be an argument
 
-    if (p2 == string::npos) {
-        return;
-    }
+    p = i; // possible start position of command
 
-    cmd = s.substr(0, p1);
-    arg = s.substr(p2, s.length() - p2);
+    // the argument is everything else
+    arg = s.substr(p, l - i);
 }
 // }}}
 
@@ -45,3 +77,4 @@ string CommandParser::getArgument() {
 }
 // }}}
 
+// vim:foldmethod=marker

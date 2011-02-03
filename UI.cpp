@@ -34,6 +34,8 @@ void UI::mainMenu()
         cmd = cp.getCommand();
         arg = cp.getArgument();
 
+        cout << "cmd: " << cmd << "\n";
+
         if (cmd.empty()) {
             // empty line
         } else if (cmd == "i") {
@@ -41,11 +43,18 @@ void UI::mainMenu()
 
             arg = cp.getArgument();
 
-            // convert the ascii string to an integer
-            i = atoi(arg.c_str());
+            String s(arg);
 
-            // dispatch to the second level user interface for an integer
-            this->submenuInt(i);
+            if (! s.isInteger()) {
+                cout << "  I can't understand that integer, please try again.\n";
+            } else {
+                // convert the ascii string to an integer
+                stringstream ss(arg);
+                ss >> i;
+
+                // dispatch to the second level user interface for an integer
+                this->submenuInt(i);
+            }
         } else if (cmd == "s") {
             arg = cp.getArgument();
 
@@ -188,3 +197,4 @@ void UI::submenuString(string _s) {
 }
 // }}}
 
+// vim:foldmethod=marker
