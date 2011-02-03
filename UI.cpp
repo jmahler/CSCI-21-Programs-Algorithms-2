@@ -52,16 +52,16 @@ void UI::mainMenu()
             // dispatch to submenu for string
             this->submenuString(arg);
         } else if (cmd == "h") {
-            cout << " Help:\n";
-            cout << "  s <string>\n";
-            cout << "  i <integer>\n";
-            cout << "  h                 help\n";
-            cout << "  q                 quit\n";
+            cout << " Help:\n"
+                 << "  s <string>\n" 
+                 << "  i <integer>\n" 
+                 << "  h                 help\n"
+                 << "  q                 quit\n";
         } else if (cmd == "q") {
             break;
         } else {
-            cout << " Invalid Input.\n";
-            cout << " Enter 'h' for the help screen.\n";
+            cout << " Invalid Input.\n" 
+                 << " Enter 'h' for the help screen.\n";
         }
     }
 
@@ -119,16 +119,16 @@ void UI::submenuInt(int _i)
         } else if (cmd == "q") {
             break;
         } else if (cmd == "h") {
-            cout << " Help, integer:\n";
-            cout << "  d           display the number\n";
-            cout << "  o           is it odd?\n";
-            cout << "  e           is it even?\n";
-            cout << "  p           is it a prime number?\n";
-            cout << "  h           help\n";
-            cout << "  q           quit (to previous level)\n";
+            cout << " Help, integer:\n"
+                 << "  d           display the number\n"
+                 << "  o           is it odd?\n"
+                 << "  e           is it even?\n"
+                 << "  p           is it a prime number?\n"
+                 << "  h           help\n"
+                 << "  q           quit (to previous level)\n";
         } else {
-            cout << " Invalid Input.\n";
-            cout << " Enter 'h' for the help screen.\n";
+            cout << " Invalid Input.\n"
+                 << " Enter 'h' for the help screen.\n";
         }
     }
 
@@ -171,16 +171,16 @@ void UI::submenuString(string _s) {
         } else if (cmd == "q") {
             break; // quit
         } else if (cmd == "h") {
-            cout << " Help, String:\n";
-            cout << "  c           count number of characters\n";
-            cout << "  d           display the string\n";
-            cout << "  l           to lowercase\n";
-            cout << "  u           to uppercase\n";
-            cout << "  h           help\n";
-            cout << "  q           quit (to previous level)\n";
+            cout << " Help, String:\n"
+                 << "  c           count number of characters\n"
+                 << "  d           display the string\n"
+                 << "  l           to lowercase\n"
+                 << "  u           to uppercase\n"
+                 << "  h           help\n"
+                 << "  q           quit (to previous level)\n";
         } else {
-            cout << " Invalid Input.\n";
-            cout << " Enter 'h' for the help screen.\n";
+            cout << " Invalid Input.\n"
+                 << " Enter 'h' for the help screen.\n";
         }
     }
 
