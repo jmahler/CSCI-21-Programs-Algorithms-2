@@ -1,9 +1,6 @@
 /**
  *
  * @mainpage
- * @version 0.01
- * @author  Jeremiah Mahler <jmmahler@gmail.com>
- * @date    Thu, 27 Jan 2011 19:16:18 -0800
  *
  * This project provides a simple user interface for displaying
  * detailed information about integers and strings.
@@ -16,6 +13,7 @@
  * class CSCI 21 taught by <a href="http://www.foobt.net">Boyd Trolinger</a>
  * at <a href="http://www.butte.edu">Butte College</a> during Spring 2011.
  *
+ * @author  Jeremiah Mahler <jmmahler@gmail.com>
  */
 
 #include <iostream>
@@ -42,6 +40,10 @@
  * ui.mainMenu();  // go
  *
  * @endcode
+ *
+ * @author  Jeremiah Mahler <jmmahler@gmail.com>
+ * @version 0.01
+ *
  */
 class UI
 {
@@ -65,7 +67,7 @@ public:
      * Currently it can process integers (i) and strings (s)
      * and display useful information about them.
      *
-     * @return Returns when done (user chose to quit).
+     * @return when user chooses to quit
      *
      */
     void mainMenu();

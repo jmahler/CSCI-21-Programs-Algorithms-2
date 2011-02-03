@@ -5,10 +5,8 @@ using namespace std;
 
 /**
  *
- * A class for providing detailed information about an integer
- * above and beyond what is provided for the standard int type.
- * Information such as whether it is odd, (isOdd()), even (isEven()),
- * is a prime number (isPrime()), etc.
+ * A class for performing operations on integers.
+ * Operations such as whether an integer is odd, even or is a prime number.
  *
  * <h2>Synopsis</h2>
  *
@@ -22,7 +20,7 @@ using namespace std;
  *
  *   if (i.isOdd()) {
  *      cout << i << " is odd\n";
- *   } else {
+ *   } else if (i.isEven()) {
  *      cout << i << " is even\n";
  *   }
  * 
@@ -33,6 +31,10 @@ using namespace std;
  *   }
  *
  * @endcode
+ *
+ * @author  Jeremiah Mahler <jmmahler@gmail.com>
+ * @version 0.01
+ *
  */
 class Integer
 {
@@ -62,9 +64,11 @@ public:
      * For a more in depth background on prime numbers see
      * [<a href="http://en.wikipedia.org/wiki/Prime_number">Wikipedia: Prime number</a>].
      *
-     * The algorithm used is a simple brute force approach.
+     * The algorithm used here is a simple brute force approach.
      * Excluding the number 1 or the number itself it tries
      * to find any number in between that divides in evenly.
+     * If any number divides in then there are more than two divisors
+     * and this number is not a prime.
      * It can be quite slow for very large numbers.
      */
     bool isPrime();
@@ -90,7 +94,7 @@ public:
 
     // {{{ getVal()
     /**
-     * Get the integer (int) value.
+     * Get the integer value.
      *
      * @return int 
      *

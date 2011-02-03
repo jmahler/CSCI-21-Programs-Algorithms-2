@@ -29,6 +29,9 @@ using namespace std;
  *
  * @endcode
  *
+ * @author  Jeremiah Mahler <jmmahler@gmail.com>
+ * @version 0.01
+ *
  */
 class CommandParser {
     string cmd;
@@ -44,7 +47,7 @@ public:
      *
 @verbatim
     "<cmd> <argument>"
-    OR
+      OR
     "<cmd>"
 @endverbatim
      *
@@ -61,6 +64,8 @@ public:
 
     /**
      * Get the argument.
+     *
+     * There must have been a command otherwise the argument is blank as well.
      *
      * @return the argument or "" if it was blank
      */

@@ -6,8 +6,8 @@ using namespace std;
 
 /**
  *
- * A class for operations on string beyond what is provided
- * by the standard library (string).
+ * Performs simple operations on strings such as counting the number of
+ * characters or converting to upper case.
  *
  * <h2>Synopsis</h2>
  *
@@ -26,12 +26,15 @@ using namespace std;
  *
  * cout << s.getString() << "\n";
  * @endcode
+ *
+ * @author  Jeremiah Mahler <jmmahler@gmail.com>
+ * @version 0.01
  */
 class String {
     string s;
 public:
     /**
-     * Construct a String object by intializing it with
+     * Construct a String object by initializing it with
      * a standard string.
      *
      */
@@ -62,9 +65,14 @@ public:
     /**
      * The number of characters in the string.
      *
-     * @return number of charcaters
+     * @return number of characters
      */
     int count();
 };
 
+/**
+ *
+ * Output stream operator for a 'String' type.
+ *
+ */
 ostream& operator<<(ostream &stream, String s);

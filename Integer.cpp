@@ -45,7 +45,7 @@ bool Integer::isPrime()
     // will never divide evenly until it
     // is is the number.
     // 
-    // h is used to abort at the half way point
+    // h is used to abort at this half way point
     h = n / 2;
 
     for (j = 2; j <= h; j++) {
@@ -72,6 +72,11 @@ void Integer::setVal(int _i)
 // }}}
 
 // {{{ operator<<
+/**
+ *
+ * Output stream operator for the type 'Integer'.
+ *
+ */
 ostream& operator<<(ostream &stream, Integer i)
 {
     stream << i.getVal() ;
