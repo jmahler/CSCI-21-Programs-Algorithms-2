@@ -2,27 +2,23 @@
 NAME
 ----
 
-CSCI 21 - Programs and Algorithms 2
+CSCI 21 - Programs and Algorithms 2 - Project 1
 
-BACKGROUND
-----------
+INTRODUCTON
+-----------
 
-This repository contains all the projects that the author
+This project is a simple command line shell for interrogating
+numbers and strings.
+Things such as whether a number is odd, even or prime.
+Or how long a string is.
+
+This repository contains project 1 that the author
 completed while taking the class "Programs and Algorithms 2".
 This class was taught by [Boyd Trolinger][boyd] during the Spring of
 2011 at [Butte College][butte].
 
  [butte]: http://www.butte.edu
  [boyd]: http://www.foobt.net
-
-INDEX
------
-
- + CSCI-21.org -- class notes, project times, for Emacs [org-mode][org]
- + project01 -- shell for examining strings and integers
-
-
-  [org]: http://www.orgmode.org
 
 AUTHOR
 ------
