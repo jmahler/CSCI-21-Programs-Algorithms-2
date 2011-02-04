@@ -64,11 +64,10 @@ public:
     /**
      * Get the argument.
      *
-     * There must have been a command otherwise the argument is blank as well.
+     * There must have been a command otherwise the argument will be blank as well.
      *
      * @return the argument or "" if it was blank
      */
-
     string getArgument();
 };
 

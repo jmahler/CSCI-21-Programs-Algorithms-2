@@ -174,7 +174,7 @@ void UI::submenuString(string _s) {
         } else if (cmd == "l") {
             cout << " lowercase: '" << s.toLowercase() << "'\n";
         } else if (cmd == "c") {
-            cout << " count: '" << s.count() << "'\n";
+            cout << " count: " << s.count() << "\n";
         } else if (cmd == "d") {
             cout << " '" << s << "'\n";
         } else if (cmd == "q") {

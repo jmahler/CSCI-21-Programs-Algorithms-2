@@ -25,6 +25,10 @@ using namespace std;
  * cout << s.count() << "\n";
  *
  * cout << s.getString() << "\n";
+ *
+ * // does the string look like an integer?
+ * s.isInteger();
+ *
  * @endcode
  *
  * @author  Jeremiah Mahler <jmmahler@gmail.com>
