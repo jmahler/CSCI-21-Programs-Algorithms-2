@@ -34,8 +34,6 @@ void UI::mainMenu()
         cmd = cp.getCommand();
         arg = cp.getArgument();
 
-        cout << "cmd: " << cmd << "\n";
-
         if (cmd.empty()) {
             // empty line
         } else if (cmd == "i") {
