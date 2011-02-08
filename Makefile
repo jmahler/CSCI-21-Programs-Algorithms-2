@@ -1,13 +1,13 @@
 
 INCLUDE=
 
-OBJECTS = BTTimer.o
+OBJECTS = BTTimer.o CinReader.o CommandParser.o
 CC=g++
 CFLAGS=-Wall -ansi -pedantic $(INCLUDE)
 
 all: parent child
 
-doc: main.cpp *.h 
+doc: *.cpp *.h 
 	doxygen  # using Doxyfile 
 
 parent: parent.cpp $(OBJECTS)
