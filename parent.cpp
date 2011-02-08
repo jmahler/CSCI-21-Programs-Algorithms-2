@@ -1,17 +1,37 @@
 
-#include "CinReader.h"
 #include "CommandParser.h"
 
+#include <stdlib.h>
+#include <signal.h>
 #include <unistd.h>
 #include <iostream>
 #include <string>
 #include <errno.h>
 #include <stdio.h>
+#include <sys/wait.h>
+#include <sys/types.h>
+#include <iomanip>
+#include <cstring>
+
+static void reaper(int sig, siginfo_t *siginfo, void *context) {
+
+    cout << "A child has died!\n";
+
+    while (waitpid(-1, NULL, WNOHANG) > 0) {}
+
+    return;
+}
 
 int main() {
 
-    CinReader cin;
     string ps1 = "$> ";
+    struct sigaction sa_reaper;
+
+    sa_reaper.sa_sigaction = &reaper;
+    sigemptyset(&sa_reaper.sa_mask);
+    sa_reaper.sa_flags = 0;
+
+    sigaction(SIGCHLD, &sa_reaper, NULL);
 
     cout << "So you think you're ready to be a parent?\n"
          << "\n"
@@ -24,8 +44,22 @@ int main() {
         string cmd;
         string arg;
 
+        // TODO display alive child summary
+
         cout << ps1;
-        line = cin.readString();
+
+        while (1) {
+            getline(cin, line);
+            if (cin.fail() or cin.bad()) { // *
+                cin.clear();
+            } else {
+                break;
+            }
+        }
+        /*
+         * * When the SIGCHLD interrupt is executed the bad bit
+         *   will be set on cin.  This is fixed by using clear().
+         */
 
         CommandParser cp(line);
 
@@ -35,6 +69,13 @@ int main() {
         if (cmd == "f") {
             // feed a pet
             
+            if (arg.empty()) {
+                cout << "Which pet do you want to feed?.\n";
+            }  else {
+                //pid = arg;
+                //kill(pid, SIGHUP);
+                // TODO 
+            }
         } else if (cmd == "s") {
             // spawn a new child
 
@@ -44,21 +85,19 @@ int main() {
                 pid_t pid = fork();
 
                 if (0 == pid) {
-                    int err;
                     // child
-                    err = execl("./child", "./child", arg.c_str());
+
+                    //execl("./child", "./child", arg.c_str(), 0);
+                    execlp("./child", "./child", arg.c_str(), 0);
 
                     // will only get here if there was an error
                     perror(0);
-                    return 1;
+                    exit(1);
                 } else {
                     // parent
                     // TODO store the pid
                 }
             }
-            //pid = arg;
-            //kill(pid, SIGHUP);
-
         } else if (cmd == "q") {
             // quit
 

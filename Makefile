@@ -1,7 +1,7 @@
 
 INCLUDE=
 
-OBJECTS = BTTimer.o CinReader.o CommandParser.o
+OBJECTS = CinReader.o CommandParser.o
 CC=g++
 CFLAGS=-Wall -ansi -pedantic $(INCLUDE)
 

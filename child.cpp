@@ -8,7 +8,7 @@
 
 using namespace std;
 
-volatile int hunger = 5; // initial hunger level
+volatile int hunger = 3; // initial hunger level
 volatile int t = time(NULL);
 
 /**
@@ -66,15 +66,11 @@ int main(int argc, char** argv)
     sigaction(SIGHUP, &sa_food, NULL);
     sigaction(SIGALRM, &sa_update, NULL);
 
-    /*
     if (argc == 2) {
         name = argv[1];
-        //cout << "USAGE: a.out <name>\n";
-        //return(1);
     } else {
         name = "John Doe";
     }
-    */
 
     // check the status periodically
     while (1) {
@@ -87,7 +83,7 @@ int main(int argc, char** argv)
                 return 1;
             }
 
-            cout << "munch, munch (" << hunger << ")\n";
+            cout << "munch, munch (" << hunger << ") " << name << "\n";
             t = time(NULL);  // reset
         }
 
