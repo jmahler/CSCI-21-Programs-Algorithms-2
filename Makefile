@@ -1,7 +1,7 @@
 
 INCLUDE=
 
-OBJECTS = CommandParser.o Child.o
+OBJECTS = CommandParser.o Child.o BirthRecords.o BirthRecord.o Parent.o
 CC=g++
 CFLAGS=-Wall -ansi -pedantic $(INCLUDE)
 
@@ -9,6 +9,8 @@ all: parent child
 
 doc: *.cpp *.h 
 	doxygen  # using Doxyfile 
+
+BirthRecords.o: BirthRecord.o
 
 parent: parent.cpp $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
