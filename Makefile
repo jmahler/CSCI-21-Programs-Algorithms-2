@@ -1,7 +1,7 @@
 
 INCLUDE=
 
-OBJECTS = CinReader.o CommandParser.o
+OBJECTS = CommandParser.o Child.o
 CC=g++
 CFLAGS=-Wall -ansi -pedantic $(INCLUDE)
 
