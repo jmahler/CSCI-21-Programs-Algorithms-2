@@ -4,14 +4,14 @@
 Child::Child()
 {
     name = "John Doe";
-    energy = 5; 
+    rand_energy();
     last_ate = time(0);
 }
 
 Child::Child(string _name)
 {
     name = _name;
-    energy = 5; 
+    rand_energy();
     last_ate = time(0);
 }
 
@@ -30,7 +30,7 @@ Child::~Child()
 void Child::feed()
 {
     if (energy >= max_energy) {
-        cout << "Yuck, I'm not hungry!\n";
+        cout << "No thanks, I'm not hungry.\n";
     } else {
         energy += 1;
         cout << "Thank You.\n";
@@ -39,7 +39,7 @@ void Child::feed()
 
 bool Child::updateEnergy()
 {
-    if (energy <= 0)
+    if (energy < 0)
         return true; // is dead
 
     time_t now = time(0);
@@ -51,7 +51,16 @@ bool Child::updateEnergy()
     if (n > 0) {
         energy -= n;
 
-        if (n <= 0) {
+        if (2 == energy)
+            cout << "I'm kinda hungry.\n";
+
+        if (1 == energy)
+            cout << "I'm starving!\n";
+
+        if (0 == energy)
+            cout << "I'm sleepy.\n";
+
+        if (n < 0) {
             return true; // died
         } else {
             //cout << "munch, munch (" << energy << ") " << name << "\n";

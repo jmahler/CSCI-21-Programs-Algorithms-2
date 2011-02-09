@@ -2,9 +2,10 @@
 #include <ctime>
 #include <iostream>
 #include <signal.h>
+#include <stdlib.h>
 #include <string>
 #include <unistd.h>
-
+#include <stdlib.h>
 using namespace std;
 
 class Child {
@@ -14,6 +15,24 @@ class Child {
     string name;
     time_t last_ate;
     static const int max_energy = 10;
+
+    /*
+     * random initial hunger level between 5 and 10
+     */
+    void rand_energy() {
+
+        /*
+         * If many children are created and they all have the same
+         * random seed they will all have the same random amount of
+         * energy.  To remedy this process id (pid) is used.
+         * Another option is to use /dev/random.
+         *
+         */
+        srand(getpid());
+
+        //energy = rand() % 6 + 5; // 5 to 10
+        energy = random() % 6 + 5; // 5 to 10
+    }
 
 public:
     /**
