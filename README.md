@@ -39,11 +39,11 @@ since these file handles are shared after a fork.
 And the parent can feed the children using inter-process
 communication (IPC).  In this case the HUP signal (man 7 signal).
 
-   $ ./parent
-   $ >
-   $ > s Joe Bob
-    (spawned new child named "Joe Bob")
-    ...
+    $ ./parent
+    $ >
+    $ > s Joe Bob
+     (spawned new child named "Joe Bob")
+     ...
 
 An interesting consequence of encapsulating the child in to its own process
 is that it can be run and tested without the parent.
