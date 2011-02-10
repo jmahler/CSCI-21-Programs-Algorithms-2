@@ -16,17 +16,37 @@ class BirthRecords {
     list<BirthRecord*> records;
 
 public:
+    /**
+     * Create a new BirthRecords object.
+     */
     BirthRecords() {};
     ~BirthRecords();
 
+    /**
+     * Record of a new birth.
+     */
     void addBirth(int pid, string name);
 
     BirthRecord* getBirthRecord(const int pid);
     BirthRecord* getBirthRecord(string name);
 
-    list<BirthRecord*> getAllLiving();
-    list<BirthRecord*> getAllDeceased();
+    /**
+     * Get ALL birth records.
+     *
+     */
+    list<BirthRecord*> getAll() { return records; };
 
-    void displaySummary();
+    /**
+     * Get all birth records for LIVING children.
+     *
+     * @returns NULL pointer if record not found
+     */
+    list<BirthRecord*> getAllLiving();
+    /**
+     * Get all birth records of DECEASED children.
+     *
+     * @returns NULL pointer if record not found
+     */
+    list<BirthRecord*> getAllDeceased();
 };
 

@@ -13,15 +13,22 @@ The goal is to keep the pets fed before they die.
 DESIGN
 ------
 
-The purpose of this project was to continue to learn more about
+The purpose of this project is to continue to learn more about
 the basics of object oriented design in C++ [[lab2][lab2]].
-But this is not very challenging.
-And if I someone is not being challenged then they are not learning anything new.
-To remedy this I spiced up my solution to the problem with some forks,
-signals and interrupts.
-And the result is pretty damn cool.
 
  [lab2]: http://foobt.net/csci21/S3513_11/labs/lab2.html
+
+If the game is built using only the very basics of C++ it is
+very limited.  The parent must manually check (poll) to
+see if the children are hungry.
+
+But the concept of virtual children (pets) suggests a more dynamic
+design would result in a more realistic game.
+Children bug their parents when they are hungry and they
+do not wait for the parent to ask.
+This design can be accomplished by using several standard Linux
+system calls (fork, exec, signals, interrupts, etc).
+And this design is what is implemented in this project.
 
 The parent process is in charge of the children (or pets).
 It can create new children or feed hungry ones.
@@ -31,6 +38,12 @@ The child can bug the parent for food by using standard output
 since these file handles are shared after a fork.
 And the parent can feed the children using inter-process
 communication (IPC).  In this case the HUP signal (man 7 signal).
+
+   $ ./parent
+   $ >
+   $ > s Joe Bob
+    (spawned new child named "Joe Bob")
+    ...
 
 An interesting consequence of encapsulating the child in to its own process
 is that it can be run and tested without the parent.
@@ -46,17 +59,6 @@ the child will clutter the screen when it is begging for food.
      24196 pts/0    00:00:00 ps
     $ kill -HUP 24195     # feed one child
     $ killall -HUP child  # feed all the children
-
-
-The parent process is essentially a user interface for managing children.
-
-    $ ./parent
-
-An interesting side effect of this dynamic design is that it makes
-the game more realistic.
-When there is only a few children it is not that difficult to keep them fed
-but when there are lots the parent can easily become overwhelmed
-when they are all begging for food.
 
 
 AUTHOR

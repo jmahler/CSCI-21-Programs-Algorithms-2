@@ -46,7 +46,7 @@ bool Child::updateEnergy()
     time_t d = now - last_ate;
     int n = d / consumption_rate;
 
-    cout << "energy: " << energy << "\n";
+    //cout << "energy: " << energy << "\n";
 
     if (n > 0) {
         energy -= n;
@@ -64,7 +64,7 @@ bool Child::updateEnergy()
             return true; // died
         } else {
             //cout << "munch, munch (" << energy << ") " << name << "\n";
-            cout << "munch, munch, munch...\n";
+            //cout << "munch, munch, munch...\n";
 
             last_ate = now;  // reset
         }

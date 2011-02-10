@@ -16,6 +16,7 @@ class BirthRecord
     string name;
     time_t time_birth;
     time_t time_death;
+    time_t time_last_ate;
     
 public:
     BirthRecord(int pid, string name);
@@ -24,10 +25,12 @@ public:
     string getName() { return name; };
     time_t timeBirth() { return time_birth; };
     time_t timeDeath() { return time_death; };
+    time_t timeLastAte() { return time_last_ate; };
+    void resetAteTime() { time_last_ate = time(0); };
 
     void setTimeDeath() { time_death = time(0); };
     void markDeceased() { time_death = time(0); };
 
     bool isAlive() { return (! this->isDeceased()); };
-    bool isDeceased() { return (0 == time_death) ? false : true; };
+    bool isDeceased() { return ((0 == time_death) ? false : true); };
 };

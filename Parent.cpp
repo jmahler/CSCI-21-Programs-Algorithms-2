@@ -21,7 +21,7 @@ void Parent::mainMenu()
         string cmd;
         string arg;
 
-        // TODO display alive child summary
+        displayAliveChildren();
 
         cout << ps1;
 
@@ -45,13 +45,26 @@ void Parent::mainMenu()
 
         if (cmd == "f") {
             // feed a pet
+            BirthRecords *brs = getBirthRecords();
+            BirthRecord *br;
             
             if (arg.empty()) {
                 cout << "Which child do you want to feed?.\n";
             }  else {
-                //pid = arg;
-                //kill(pid, SIGHUP);
-                // TODO 
+                int cid, pid;
+                stringstream ss(arg);
+                ss >> cid;
+
+                pid = last_n_pids[cid];
+
+                br = brs->getBirthRecord(pid);
+                if (0 == br) {
+                    cout << "No record found.\n";
+                } else {
+                    kill(pid, SIGHUP);
+                    br->resetAteTime();
+                }
+
             }
         } else if (cmd == "s") {
             // spawn a new child
@@ -119,6 +132,7 @@ void Parent::mainMenu()
 }
 // }}}
 
+// {{{ Parent::spawn(string name)
 void Parent::spawn(string name) {
 
     pid_t pid = fork();
@@ -141,5 +155,65 @@ void Parent::spawn(string name) {
         brs->addBirth(pid, name);
     }
 }
+// }}}
+
+// {{{ Parent::displayAliveChildren()
+void Parent::displayAliveChildren()
+{
+
+    BirthRecords *brs = getBirthRecords();
+    list<BirthRecord*> cs;
+    list<BirthRecord*>::iterator i;
+    int n = 1;
+
+    cs = brs->getAllLiving();
+
+    cout << "id: name, last ate (sec)\n";
+
+    last_n_pids.clear();
+
+    for (i = cs.begin(); i != cs.end(); i++) {
+        time_t now = time(0);
+        time_t last_ate = (*i)->timeLastAte();
+        int d = now - last_ate;
+        bool is_alive = (*i)->isAlive();
+        time_t t_death = (*i)->timeDeath();
+        cout << n << " : " << (*i)->getName() << ", " << d << "; " << is_alive << " " << t_death << "\n";
+
+        last_n_pids[n] = (*i)->getPid();
+
+        n++;
+    }
+    cout << "\n";
+
+}
+// }}}
+
+// {{{ Parent::displayEndSummary()
+void Parent::displayEndSummary()
+{
+
+    BirthRecords *brs = getBirthRecords();
+    list<BirthRecord*> cs;
+    list<BirthRecord*>::iterator i;
+    int n = 1;
+
+    cs = brs->getAll();
+
+    cout << "id: name, time death\n";
+
+    for (i = cs.begin(); i != cs.end(); i++) {
+        time_t now = time(0);
+        time_t last_ate = (*i)->timeLastAte();
+        int d = now - last_ate;
+        time_t t_death = (*i)->timeDeath();
+        cout << n << " : " << (*i)->getName() << ", " << d << "; " << t_death << "\n";
+        n++;
+    }
+    cout << "\n";
+
+}
+// }}}
+
 
 // vim:foldmethod=marker

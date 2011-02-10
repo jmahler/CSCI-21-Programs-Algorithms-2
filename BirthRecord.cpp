@@ -7,5 +7,6 @@ BirthRecord::BirthRecord(int _pid, string _name)
     name       = _name;
     time_birth = time(0);
     time_death = 0;        // not dead yet
+    time_last_ate = time_birth;
 }
 

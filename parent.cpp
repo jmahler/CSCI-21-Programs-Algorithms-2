@@ -31,20 +31,16 @@ static void reaper(int sig, siginfo_t *siginfo, void *context)
     BirthRecords *brs = p.getBirthRecords();
     
     while ((pid = waitpid(-1, NULL, WNOHANG)) > 0) {
-        //p.markDeceased(pid);
         BirthRecord *br = brs->getBirthRecord(pid);
         if (0 == br) {
-            // no record found
+            cerr << "WARNING: no record found for pid: " << pid << "\n";
         } else {
             br->markDeceased();
         }
     }
-
 }
 
 int main() {
-
-    p.mainMenu();
 
     struct sigaction sa_reaper;
     sa_reaper.sa_sigaction = &reaper;
@@ -53,7 +49,10 @@ int main() {
 
     sigaction(SIGCHLD, &sa_reaper, NULL);
 
-    // TODO - display obituaries, scores
+    p.mainMenu();
+
+    p.displayEndSummary();
+
     return 0;
 }
 
