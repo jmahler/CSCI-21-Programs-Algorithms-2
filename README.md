@@ -15,6 +15,7 @@ DESIGN
 
 The purpose of this project is to continue to learn more about
 the basics of object oriented design in C++ [[lab2][lab2]].
+Things such as constructors, destructors, dynamic memory, etc.
 
  [lab2]: http://foobt.net/csci21/S3513_11/labs/lab2.html
 
