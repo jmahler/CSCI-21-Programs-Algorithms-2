@@ -10,7 +10,7 @@ using namespace std;
 class Pet {
 
     static const int max_energy = 10;
-    static const int consumption_rate = 1; // 1 units engergy / x second
+    static const int consumption_rate = 5;    // 1 units engergy / x second
     //static const int consumption_rate = 120;  // 1 unit / 2 minutes
 
     int energy;
@@ -83,13 +83,20 @@ public:
      */
     time_t timeUntilNextEat();
 
-
     /**
      *
      * Is the pet alive?
      * Current as of the last refresh().
      *
+     * @returns true if pet is alive, false otherwise
      */
     bool isAlive() { return (energy > 0 ? true : false); };
+
+    /**
+     * Is the pet dead?
+     * Current as of the last refresh().
+     *
+     * @returns true if pet is dead, false otherwise
+     */
     bool isDead() { return (! this->isAlive()); };
 };

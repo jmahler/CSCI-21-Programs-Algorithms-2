@@ -9,15 +9,15 @@ UI::UI()
 
     cinr = new CinReader();
 
-    pets.push_front(new Pet("Paul"));
-    pets.push_front(new Pet("Stuart"));
-    pets.push_front(new Pet("Mavis"));  // somebody kick my dog mavis
+    pets.push_back(new Pet("Paul"));
+    pets.push_back(new Pet("Stuart"));
+    pets.push_back(new Pet("Mavis"));  // somebody kick my dog mavis
 }
 
 UI::~UI() {
     delete cinr;
 
-    list<Pet*>::iterator i;
+    vector<Pet*>::iterator i;
     for (i = pets.begin(); i != pets.end(); i++) {
         delete (*i);
     }
@@ -27,9 +27,11 @@ UI::~UI() {
 // {{{ UI::go()
 void UI::go()
 {
-    cout << "Don't let your pets die of starvation!\n"
+    cout << "\n"
+         << "Don't let your pets die of starvation!\n"
          << "\n"
-         << "Enter 'h' for the help menu.\n";
+         << "Enter 'h' for the help menu.\n"
+         << "Press return to refresh the pets status.\n";
 
     while (1) {
         string line;
@@ -54,23 +56,26 @@ void UI::go()
             if (arg.empty()) {
                 cout << "Which child do you want to feed?.\n";
             }  else {
-                int cid;
+                unsigned int cid;
                 stringstream ss(arg);
                 ss >> cid;
 
-                // TODO
+                if (cid > 0 && cid <= pets.size()) {
+                    (pets[cid - 1])->feed();
+                } else {
+                    cout << "Invalid pet id.\n";
+                }
             }
         } else if (cmd == "q") {
             // quit
-
             break;
         } else if (cmd == "h") {
             // help menu
             cout << "Help Menu:\n"
                  << "\n"
                  << " h          help menu\n"
-                 << " f <id>     feed a child\n"
-                 << " <RET>      display current children\n"
+                 << " f <id>     feed a pet\n"
+                 << " <RET>      display status of pets\n"
                  << " q          quit\n";
         }
     }
@@ -80,11 +85,12 @@ void UI::go()
 // {{{ UI::refreshPets()
 void UI::refreshPets()
 {
-    list<Pet*>::iterator i;
+    vector<Pet*>::iterator i;
     time_t now = time(0);
 
     for (i = pets.begin(); i != pets.end(); i++) {
         Pet *pet = *i;
+
         if (pet->isAlive()) {
             pet->refresh(now);
 
@@ -108,7 +114,7 @@ void UI::refreshPets()
 void UI::displayAlivePets()
 {
 
-    list<Pet*>::iterator i;
+    vector<Pet*>::iterator i;
     int n = 1;
 
     cout << "id: name, last ate (sec)\n";

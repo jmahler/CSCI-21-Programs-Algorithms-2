@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <list>
+#include <vector>
 
 using namespace std;
 
@@ -16,7 +16,7 @@ class UI {
 
     CinReader *cinr;
 
-    list<Pet*> pets;
+    vector<Pet*> pets;
 
 public:
     /**
@@ -32,15 +32,14 @@ public:
     void go();
 
     /**
-     *  Display a list of the children that are still alive.
-     *  Each child is denoted by an integer and this integer
-     *  can be used as a key to feedChild.
-     *
+     *  Display the status of the current living pets.
      */
     void displayAlivePets();
 
     /**
      * Refresh the status of all the Pets.
+     * If any of the pets have died the user is prompted to
+     * name a new pet.
      */
     void refreshPets();
 };
