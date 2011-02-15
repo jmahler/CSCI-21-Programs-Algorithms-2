@@ -29,7 +29,7 @@ using namespace std;
  * @endcode
  *
  * @author  Jeremiah Mahler <jmmahler@gmail.com>
- * @version 0.01
+ * @version 0.02
  *
  */
 class CommandParser {

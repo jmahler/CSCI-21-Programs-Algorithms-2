@@ -7,6 +7,14 @@
 
 using namespace std;
 
+/**
+ * The Pet class is used for creating and updating pets.
+ * Each pet has a name and a energy level that
+ * decreases over time until they starve and die.
+ *
+ * @author Jeremiah Mahler <jmmahler@gmail.com>
+ * @version 0.01
+ */
 class Pet {
 
     static const int max_energy = 10;
@@ -32,12 +40,14 @@ public:
 
     /**
      * Construct a pet with name specified and the rest defaults.
+     *
+     * @arg name of pet
      */
     Pet(string name);
 
     /**
-     * When the Pet object is destroy a message will be displayed
-     * such as "Spot has passed out".
+     * When the Pet object is destroyed a message will be displayed
+     * such as "Spot has passed out" where "Spot" is the name of the pet.
      */
     ~Pet();
 
@@ -58,9 +68,9 @@ public:
 
     /**
      *
-     * Try to feed the pet 1 unit of food.
-     * If it is not hungry the food will be rejected.
-     * It may output a message as a response.
+     * Try to feed the pet one unit of food.
+     * If it is not hungry the food will be rejected
+     * and it may output a message describing why.
      *
      */
     void feed();
@@ -68,7 +78,7 @@ public:
     /**
      *
      * Refresh the pets current energy level based on how long
-     * it has been since they last ate.
+     * it has been since it last ate.
      *
      * @returns true if pet dies or is dead, false otherwise
      */
