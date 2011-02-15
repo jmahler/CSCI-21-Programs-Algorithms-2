@@ -2,66 +2,34 @@
 
 // {{{ parse()
 CommandParser::CommandParser(string s) {
-    size_t l;
     size_t p;
-    size_t i = 0;
 
     // defaults
     cmd = "";
     arg = "";
 
-    // no command, no arguments
-    if (s.empty()) {
+    if (s.empty())
+        return;
+
+    s = prechomp(s);
+
+    if (s.empty())
+        return;
+
+    p = s.find_first_of(' ');
+    if (p == string::npos) {
+        cmd = s;
         return;
     }
 
-    l = s.length();
+    cmd = s.substr(0, p);
 
-    // skip any preceeding spaces
-    for (; i < l; i++) {
-        if (s[i] != ' ')
-            break;
-    }
-
-    p = i; // possible start position of argument
-
-    // find the next space or end
-    for (; i < l; i++) {
-        if (s[i] == ' ') {
-            break;
-        }
-    }
-
-    // we hit the end
-    if (i == l) {
-        // if there is at least one character
-        if (i > p)
-            cmd = s.substr(p, i - p);
-
+    if (p == s.length())
         return;
-    } else {
-        // we hit a space
-        cmd = s.substr(p, i - p);
-    }
 
-    // skip any spaces between the command and argument
-    for (; i < l; i++) {
-        if (s[i] != ' ')
-            break;
-    }
+    arg = prechomp(s.substr(p + 1, s.length() - (p + 1)));
 
-    // we hit the end
-    if (i == l) {
-        return;
-    }
-
-    // we haven't hit the end yet there might still
-    // be an argument
-
-    p = i; // possible start position of command
-
-    // the argument is everything else
-    arg = s.substr(p, l - i);
+    return;
 }
 // }}}
 

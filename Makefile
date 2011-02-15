@@ -10,7 +10,7 @@ all: main
 doc: *.cpp *.h 
 	doxygen  # using Doxyfile 
 
-main: main.cpp $(OBJECTS)
+main: main.cpp $(OBJECTS) string_utils.h
 	$(CC) $(CFLAGS) $^ -o $@
 
 %.o: %.cc %.h
