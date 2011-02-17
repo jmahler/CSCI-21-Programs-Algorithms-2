@@ -28,7 +28,7 @@
 using namespace std;
 
 /**
- * The UI class is used to creat the interface for interacting with the user.
+ * The UI class is used to create the interface for interacting with the user.
  *
  * @author  Jeremiah Mahler <jmmahler@gmail.com>
  * @version 0.01

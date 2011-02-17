@@ -18,8 +18,8 @@ using namespace std;
 class Pet {
 
     static const int max_energy = 10;
-    static const int consumption_rate = 5;    // 1 units engergy / x second
-    //static const int consumption_rate = 120;  // 1 unit / 2 minutes
+    //static const int consumption_rate = 5;    // 1 units engergy / x second
+    static const int consumption_rate = 120;  // 1 unit / 2 minutes
 
     int energy;
     string name;

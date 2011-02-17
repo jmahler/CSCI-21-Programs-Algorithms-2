@@ -126,7 +126,7 @@ void UI::displayAlivePets()
             time_t last_ate = (*i)->getTimeLastAte();
             int d = now - last_ate;
 
-            cout << "[" << n << "] " << (*i)->getName() << " ; energy=" << (*i)->getEnergy() << ", last ate (sec)=" << d << "\n";
+            cout << "[" << n << "] " << (*i)->getName() << " ; energy = " << (*i)->getEnergy() << ", last ate (sec) = " << d << "\n";
 
             n++;
         }
