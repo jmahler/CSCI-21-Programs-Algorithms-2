@@ -1,7 +1,7 @@
 
 INCLUDE=
 
-OBJECTS = CinReader.o CommandParser.o Pet.o UI.o
+OBJECTS = CinReader.o CommandParser.o Pet.o UI.o JString.o
 CC=g++
 CFLAGS=-Wall -ansi -pedantic $(INCLUDE)
 
@@ -10,7 +10,7 @@ all: main
 doc: *.cpp *.h 
 	doxygen  # using Doxyfile 
 
-main: main.cpp $(OBJECTS) string_utils.h
+main: main.cpp $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
 
 %.o: %.cc %.h

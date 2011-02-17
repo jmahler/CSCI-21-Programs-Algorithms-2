@@ -3,31 +3,33 @@
 // {{{ parse()
 CommandParser::CommandParser(string s) {
     size_t p;
+    JString js(s);
 
     // defaults
     cmd = "";
     arg = "";
 
-    if (s.empty())
+    if (js.empty())
         return;
 
-    s = prechomp(s);
+    js = js.prechomp();
 
-    if (s.empty())
+    if (js.empty())
         return;
 
-    p = s.find_first_of(' ');
-    if (p == string::npos) {
+    p = js.find_first_of(' ');
+    if (p == std::string::npos) {
         cmd = s;
         return;
     }
 
-    cmd = s.substr(0, p);
+    cmd = js.substr(0, p);
 
-    if (p == s.length())
+    if (p == js.length())
         return;
 
-    arg = prechomp(s.substr(p + 1, s.length() - (p + 1)));
+    js = js.substr(p + 1, s.length() - (p + 1));
+    arg = js.prechomp();
 
     return;
 }

@@ -8,20 +8,20 @@ INTRODUCTON
 -----------
 
 This project is a game of virtual pets.
-The goal is to keep the pets fed before they die.
+The goal is to keep them fed so they don't starve.
 
 DESIGN
 ------
 
 The purpose of this project is to continue to learn more about
 the basics of object oriented design in C++ [[lab2][lab2]].
-Things such as constructors, destructors, dynamic memory, etc.
+Specifically dynamic memory with new, delete.
 
  [lab2]: http://foobt.net/csci21/S3513_11/labs/lab2.html
 
 This implementation is a very basic vanilla version implementing
 exactly what is required and no more.
-For a more interesting version see the branch 'master'
+For a more elaborate version see the branch 'master'
 on [[Github:Project02][prj2]].
 
   [prj2]: https://github.com/jmahler/CSCI-21-Programs-Algorithms-2-project02

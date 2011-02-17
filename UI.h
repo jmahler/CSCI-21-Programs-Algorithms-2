@@ -3,7 +3,7 @@
  * @mainpage
  *
  * This project is a simple game where you must feed the pets
- * before they starve and die.
+ * before they starve.
  *
  * This program was completed for "project 2" of the
  * class CSCI 21 taught by <a href="http://www.foobt.net">Boyd Trolinger</a>
