@@ -1,5 +1,6 @@
 
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -30,8 +31,9 @@ class JArray {
 
     int* numbers;
     int _capacity;
-    int elements; // number of elements, next available position
+    int elements;       // number of elements, next available position
     bool autosize;
+    int chunk_size;     // size of chunks to use during realloc
 
 public:
     /**
@@ -49,7 +51,7 @@ public:
     ~JArray() { delete[] numbers; };
 
     /**
-     * Get the element at the given index.
+     * Retrieves the element at the given index.
      *
      * @returns value at index,
      *      -1 on error (index out of bounds, or value undefined)
@@ -58,8 +60,24 @@ public:
      *
      * Currently the value -1 is used to indicate an out of bounds error
      * as per the project specifications.
-     * But if the value stored is a -1 this makes it impossible to detect
-     * if an error occured with functions such as get() which return a value.
+     * But if the value stored is -1 this makes it impossible to detect
+     * if an error occured.
+     * One workaround is to use the function is_defined() to check
+     * whether that position is defined.
+     *
+     * @code
+     *
+     * int err;
+     * index i = 3;
+     * Jarray ja();
+     *
+     * err = ja.get(i);
+     * if (-1 == err and ja.is_defined(i)) {
+     *     // we got an error
+     * }
+     * // else we got a valid value, that is possibly -1
+     *
+     * @endcode
      */
     int get(const int index);
 
@@ -68,14 +86,28 @@ public:
      *
      * @returns -1 on error (index out of bounds)
      */
-    int insert(int val, int index);
+    int insert(const int val, const int index);
+
+    /**
+     * Inserts a value in the next available slot.
+     *
+     * @returns -1 on error
+     */
+    int push(const int val);
 
     /**
      * Remove the element at the given index (0 offset).
      *
      * @returns -1 on error (index out of bounds)
      */
-    int remove(int index);
+    int remove(const int index);
+
+    /**
+     * Removes the value at the last slot.
+     *
+     * @returns -1 on error
+     */
+    int pop();
 
     /**
      * The capacity is the maximum number of elements that can
@@ -94,7 +126,7 @@ public:
      *
      * Values included are: capacity, number of elements, and all the values.
      */
-    string get_stats();
+    string describe();
 
     /**
      * Is a value defined at the given index?

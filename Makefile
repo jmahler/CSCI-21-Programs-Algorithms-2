@@ -1,14 +1,17 @@
 
 INCLUDE=
 
-OBJECTS = JArray.o
+OBJECTS = JArray.o CommandParser.o JString.o
 CC=g++
 CFLAGS=-Wall -ansi -pedantic $(INCLUDE)
 
-all: main
+all: main test
 
 doc: *.cpp *.h 
 	doxygen  # using Doxyfile 
+
+test: test.cpp $(OBJECTS)
+	$(CC) $(CFLAGS) $^ -o $@
 
 main: main.cpp $(OBJECTS)
 	$(CC) $(CFLAGS) $^ -o $@
