@@ -20,8 +20,6 @@ int main(int argc, char** argv)
         exit(1);
     }
 
-    stringstream ss(stringstream::in | stringstream::out);
-
     int linen = 0; // line numbers
 
     // line #1: array capacity (an int value)
