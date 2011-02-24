@@ -1,7 +1,7 @@
 
 INCLUDE=
 
-OBJECTS = JArray.o CommandParser.o JString.o
+OBJECTS = JArray.o
 CC=g++
 CFLAGS=-Wall -ansi -pedantic $(INCLUDE)
 

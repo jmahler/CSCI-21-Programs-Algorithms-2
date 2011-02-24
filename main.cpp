@@ -4,14 +4,13 @@
 #include <cstdlib>
 
 #include "JArray.h"
-#include "CommandParser.h"
 
 using namespace std;
 
 int main(int argc, char** argv)
 {
-
     string input_file = "lab3input.txt";
+
     if (argc == 2)
         input_file = argv[1];
 
@@ -26,28 +25,24 @@ int main(int argc, char** argv)
     int linen = 0; // line numbers
 
     // line #1: array capacity (an int value)
-    string str_capacity;
-    getline(from, str_capacity);
-    linen++;
-    
     int capacity;
-    ss << str_capacity;
-    ss >> capacity;
-
-    // line #2: fixed size (0) or auto-resize (1)
-    string str_autosize;
-    getline(from, str_autosize);
+    {
+    string s;
+    getline(from, s);
     linen++;
-
-
-    int iautosize;
+    stringstream ss(s);
+    ss >> capacity;
+    }
+    
+    // line #2: fixed size (0) or auto-resize (1)
     bool autosize;
-    ss << str_autosize;
-    ss >> iautosize;
-    if (1 == iautosize)
-        autosize = true;
-    else
-        autosize = false;
+    {
+    string s;
+    getline(from, s);
+    linen++;
+    stringstream ss(s);
+    ss >> autosize;
+    }
 
     JArray ja(capacity, autosize);
 
@@ -55,18 +50,28 @@ int main(int argc, char** argv)
     while (getline(from, line)) {
         linen++;
 
-        CommandParser cp(line);
+        string cmd;
+        stringstream ss (line);
+        ss >> cmd;
 
-        string cmd = cp.getCommand();
-        string arg = cp.getArgument();
+        // read in subsequent arguments by using
+        // ss >> var;
 
         if (cmd == "i") {
-            // TODO
+            int val, idx, err;
+
+            ss >> val;
+            ss >> idx;
         
+            err = ja.insert(val, idx);
+            if (-1 == err)
+                cout << val << " inserted at index " << idx << endl;
+            else
+                cout << idx << " is an invalid index" << endl;
+
         } else if (cmd == "g") {
             int val, idx;
 
-            stringstream ss(arg);
             ss >> idx;
 
             val = ja.get(idx);
@@ -77,7 +82,6 @@ int main(int argc, char** argv)
         } else if (cmd == "a") {
             int val;
 
-            stringstream ss(arg);
             ss >> val;
 
             int err = ja.push(val);
@@ -87,17 +91,16 @@ int main(int argc, char** argv)
                 cout << val << " added" << endl;
 
         } else if (cmd == "r") {
-            int indx;
+            int idx;
 
-            stringstream ss(arg);
-            ss >> indx;
+            ss >> idx;
 
-            int err = ja.remove(indx);
+            int err = ja.remove(idx);
 
             if (-1 == err)
-                cout << indx << " is an invalid index" << endl;
+                cout << idx << " is an invalid index" << endl;
             else
-                cout << "value at " << indx << " removed" << endl;
+                cout << "value at " << idx << " removed" << endl;
         } else if (cmd == "c") {
             cout << "array capacity is " << ja.capacity() << endl;
         } else if (cmd == "n") {
