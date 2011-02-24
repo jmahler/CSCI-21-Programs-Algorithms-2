@@ -33,6 +33,7 @@ class JArray {
     int _capacity;
     int elements;       // number of elements, next available position
     bool autosize;
+    bool autocollapse;
     int chunk_size;     // size of chunks to use during realloc
 
 public:
@@ -41,12 +42,15 @@ public:
      *
      * @arg initial capacity, default 5
      * @arg autosize?, default true
+     * @arg autocollapse?, default false
      *
      * When autosize is on the capacity of the array
      * expanded as needed to accomadate the number of elements.
      *
+     * When autocollapse is on the array will be collapsed as needed.
+     *
      */
-    JArray(int capacity=5, bool autosize=true);
+    JArray(int capacity=5, bool autosize=true, bool autocollapse=false);
 
     ~JArray() { delete[] numbers; };
 

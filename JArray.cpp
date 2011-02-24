@@ -2,7 +2,7 @@
 #include "JArray.h"
 
 // {{{ JArray::JArray
-JArray::JArray(int __capacity, bool _autosize)
+JArray::JArray(int __capacity, bool _autosize, bool _autocollapse)
 {
     if (__capacity < 0)
         _capacity = 0;
@@ -10,6 +10,7 @@ JArray::JArray(int __capacity, bool _autosize)
         _capacity = __capacity;
 
     autosize = _autosize;
+    autocollapse = _autocollapse;
 
     elements = 0;
 
@@ -39,10 +40,10 @@ int JArray::insert(const int val, const int i)
     if (i > elements)
         return -1;
 
-    // Make sure there is room, or make some room.
-    if (elements == _capacity) {
-        // no room left
+    if (elements == _capacity) { // were out of room
         if (autosize) {
+            // make some room
+
             int* new_numbers = new int[_capacity + chunk_size];
             _capacity += chunk_size;
 
@@ -53,24 +54,26 @@ int JArray::insert(const int val, const int i)
             delete[] numbers;
 
             numbers = new_numbers;
-        } else {
-            return -1;  // sorry, no room left
         }
     }
 
-    // a simple append
-    if (i == elements) {
-        numbers[i] = val;
-        elements++;
+    if (i >= _capacity)
+        return -1;
 
-        return 0; // OK
+    // The end is different depending on whether we have
+    // room or if elements are being discarded.
+    int end;
+    if (_capacity > elements) {
+        end = elements;
+        elements++;
+    } else {
+        end = _capacity - 1;
     }
 
     // shift all previous elements
-    for (int j = elements; j > i; j--)
+    for (int j = end; j > i; j--)
         numbers[j] = numbers[j-1];
 
-    elements++;
     numbers[i] = val;
 
     return 0; // OK
@@ -103,7 +106,7 @@ int JArray::remove(const int i)
     elements--;
 
     // collapse the size of the array if needed
-    if (autosize && (elements > 0) && 0 == (elements % chunk_size)) {
+    if (autocollapse && (elements > 0) && 0 == (elements % chunk_size)) {
         int* new_numbers = new int[elements];
         _capacity = elements;
 

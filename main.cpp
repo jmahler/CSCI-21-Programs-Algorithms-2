@@ -42,7 +42,7 @@ int main(int argc, char** argv)
     }
 
     ifstream _from(input_file.c_str());
-    if (!_from) {
+    if (_from.fail()) {
         // The file they specified was invalid,
         // perhaps they meant stdin?
         if ("-" == input_file) {
@@ -150,4 +150,6 @@ int main(int argc, char** argv)
         }
         // anything else is quietly ignored
     }
+
+    _from.close();
 }
