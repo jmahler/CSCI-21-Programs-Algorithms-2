@@ -102,6 +102,20 @@ int JArray::remove(const int i)
 
     elements--;
 
+    // collapse the size of the array if needed
+    if (autosize && (elements > 0) && 0 == (elements % chunk_size)) {
+        int* new_numbers = new int[elements];
+        _capacity = elements;
+
+        for (int i = 0; i < elements; i++) {
+            new_numbers[i] = numbers[i];
+        }
+
+        delete[] numbers;
+
+        numbers = new_numbers;
+    }
+
     return 0; // OK
 }
 // }}}

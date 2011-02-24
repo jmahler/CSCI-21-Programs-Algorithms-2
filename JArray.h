@@ -131,6 +131,6 @@ public:
     /**
      * Is a value defined at the given index?
      */
-    bool is_defined(int index) { return (index >= 0 and index < elements); };
+    bool is_defined(int index) { return (index >= 0 && index < elements); };
 };
 

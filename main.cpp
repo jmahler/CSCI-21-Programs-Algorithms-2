@@ -103,9 +103,9 @@ int main(int argc, char** argv)
         
             err = ja.insert(val, idx);
             if (-1 == err)
-                cout << val << " inserted at index " << idx << endl;
-            else
                 cout << idx << " is an invalid index" << endl;
+            else
+                cout << val << " inserted at index " << idx << endl;
 
         } else if (cmd == "g") {
             int val, idx;
