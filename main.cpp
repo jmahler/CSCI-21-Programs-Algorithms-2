@@ -9,16 +9,56 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    string input_file = "lab3input.txt";
+
+    // {{{ help (-h) menu
+    if (argc >= 2 && "-h" == string(argv[1])) {
+        // help/usage
+        cout << "usage:\n"
+             << "  ./main                   # opens \"lab3input.txt\"\n"
+             << "  ./main -                 # reads input from stdin\n"
+             << "  ./main <file>            # reads input from <file>\n"
+             << "\n"
+             << "  # pipe commands from a file\n"
+             << "    cat lab3input.txt | ./main -\n"
+             << "  # execute commands interactively\n"
+             << "  ./main -\n"
+             << "\n"
+             << "  # see lab3.html for command descriptions\n";
+
+        exit(0);
+    }
+    // }}}
+
+    // {{{ input stream setup
+    string input_file = "lab3input.txt"; // default
+    istream *pfrom;  // *pfrom is used to build &from at end
 
     if (argc == 2)
         input_file = argv[1];
 
-    ifstream from(input_file.c_str());
-    if (!from) {
-        cerr << "unable to open file\n";
+    if (argc > 2) {
+        cerr << "This program only takes 1 argument, see -h for usage.\n";
         exit(1);
     }
+
+    ifstream _from(input_file.c_str());
+    if (!_from) {
+        // The file they specified was invalid,
+        // perhaps they meant stdin?
+        if ("-" == input_file) {
+            pfrom = &cin;
+        } else {
+            // Whatever they specified, it is not working.
+            cerr << "Unable to open file named '" << input_file << "'.\n";
+            cerr << "Does the file exist and do you have sufficient permissions?\n";
+            exit(1);
+        }
+    } else {
+        // assign the valid input file stream
+        pfrom = &_from;
+    }
+    istream &from = (*pfrom);
+    // }}}
 
     int linen = 0; // line numbers
 
@@ -105,7 +145,9 @@ int main(int argc, char** argv)
             cout << "array has " << ja.size() << " elements" << endl;
         } else if (cmd == "p") {
             cout << ja.describe() << endl;
+        } else if (cmd == "-1") {
+            exit(0);
         }
-
+        // anything else is quietly ignored
     }
 }
