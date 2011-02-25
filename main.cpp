@@ -1,3 +1,18 @@
+/**
+ * @mainpage
+ *
+ * This project provides a simple dynamic array.
+ *
+ * This program was completed for "project 3" of the
+ * class CSCI 21 taught by <a href="http://www.foobt.net">Boyd Trolinger</a>
+ * at <a href="http://www.butte.edu">Butte College</a> during Spring 2011.
+ *
+ * Detailed application requirements are available
+ * at [<a href="http://foobt.net/csci21/S3513_11/labs/lab3.html">csci21/S3513_11/labs/lab3</a>]
+ * and duplicated with this source [lab3.html].
+ *
+ * @author  Jeremiah Mahler <jmmahler@gmail.com>
+ */
 
 #include <iostream>
 #include <fstream>
