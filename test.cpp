@@ -4,45 +4,108 @@
 
 using namespace std;
 
+static int testn = 0;
+static int failn = 0;
+
+/**
+ * Test an item and keep track of the pass/fail counts.
+ */
+void ok(bool pass, string desc="") {
+    testn++;
+
+    if (pass) {
+
+    } else {
+        failn++;
+        cout << testn << ": " << (pass ? "ok" : "FAIL") << " " << desc << endl;
+    }
+}
+
+/**
+ * Display a summary of the tests (pass/fail) counts.
+ */
+void summary() {
+    cout << testn << " tests run, " << failn << " failed\n";
+}
+
 int main(int argc, char** argv)
 {
 
+    // fixed size tests
+    {
     JArray ja0(5, false);
-    JArray ja1(5, true);
-    JArray ja2(0, true);
+    ok(5 == ja0.capacity());
+    ok(0 == ja0.size());
 
-    for (int i = 0; i < 100; i++) {
-        ja0.insert(i, 0);
+    for (int i = 0; i < 6; i++) {
+        ja0.insert(i, i);
+    }
+    ok(5 == ja0.capacity());
+    ok(5 == ja0.size());
+
+    for (int i = 0; i < 5; i++) {
+        ok(i == ja0.get(i));
     }
 
-    cout << "ja0: " << ja0.describe() << endl;
+    ok(-1 == ja0.get(5));
 
-    for (int i = 0; i < 15; i++) {
-        ja1.insert(i, 0);
+    ok(-1 == ja0.remove(6));
+    ok(-1 == ja0.remove(5));
+    ok(-1 != ja0.remove(2));
+
+    ok(4 == ja0.size());
+    ok(5 == ja0.capacity());
+    ok(1 == ja0.get(1));
+    ok(3 == ja0.get(2));
+    ok(4 == ja0.get(3));
+    ok(-1 == ja0.get(4));
     }
-    
-    cout << "ja1: " << ja1.describe() << endl;
 
-    for (int j = 0; j < 100; j++) {
-        for (int i = 0; i < 21; i++) {
-            //ja2.insert(i, 0);
-            ja2.push(i);
-        }
+    // autosize test
+    {
+    JArray ja0(5, true);
+    ok(5 == ja0.capacity());
+    ok(0 == ja0.size());
 
-        for (int i = 0; i < 11; i++) {
-            ja2.remove(0);
-        }
+    for (int i = 0; i < 121; i++) {
+        ja0.insert(i, i);
+    }
 
-        for (int i = 0; i < 10; i++) {
-            ja2.insert(i, 0);
-        }
+    ok(121 <= ja0.capacity());
+    ok(121 == ja0.size());
 
-        for (int i = 0; i < 21; i++) {
-            ja2.remove(0);
-            ja2.pop();
+    for (int i = 0; i < 121; i++) {
+        ok(i == ja0.get(i));
+    }
+
+    for (int i = 0; i < 121; i++) {
+        if (i % 2) {
+            ok(-1 != ja0.remove(0));
+        } else {
+            ok(-1 != ja0.pop());
         }
     }
-    cout << "ja2: " << ja2.describe() << endl;
+
+    ok(0 == ja0.size());
+    }
+
+    // autocollapse test
+    {
+    JArray ja0(5, true, true);
+
+    for (int i = 0; i < 250; i++) {
+        ja0.insert(i, i);
+    }
+
+    ok(250 <= ja0.capacity());
+    ok(250 == ja0.size());
+
+    for (int i = 0; i < 250; i++) {
+        ja0.pop();
+    }
+    ok(5 <= ja0.capacity());
+    ok(0 == ja0.size());
+    }
 
     // memory leak test
     /* tested OK 2/23/11
@@ -54,10 +117,7 @@ int main(int argc, char** argv)
         }
     }
     */
+
+    summary();
 }
 
-/*
-void ok(bool test) {
-
-}
-*/
