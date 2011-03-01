@@ -44,8 +44,8 @@ int JArray::insert(const int val, const int i)
         if (autosize) {
             // make some room
 
-            int* new_numbers = new int[_capacity + chunk_size];
-            _capacity += chunk_size;
+            int* new_numbers = new int[_capacity*2];
+            _capacity *= 2;
 
             for (int i = 0; i < elements; i++) {
                 new_numbers[i] = numbers[i];
