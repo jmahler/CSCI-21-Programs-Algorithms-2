@@ -139,21 +139,22 @@ string JArray::describe()
 
     ss << elements << "/" << _capacity << endl;
 
-    ss << " ["; // start of first line
+    ss << " ["; // start of array
     for (int i = 0; i < elements; i++) {
 
-        ss << " " << numbers[i] ;
+        ss << " " << numbers[i];
 
+        // for all but the last element
         if (i != (elements - 1))
             ss << ",";
 
-        if ((i + 1) != 0 && 0 == ((i + 1) % chunk)) {
+        // every chunk'th except at the beggining or end
+        if ((i + 1) != 0 && 0 == ((i + 1) % chunk) && i != (elements - 1)) {
             ss << endl;
-            ss << "  ";
+            ss << "  "; // indent the next line
         }
     }
-    ss << " ] ";
-    //ss << endl << " ] ";  // if you want ] on its own line
+    ss << " ]"; // end of array
 
     return ss.str();
 }
