@@ -2,91 +2,69 @@
 #include "JArray.h"
 #include <iostream>
 
+//#define NDEBUG
+#include <assert.h>
+
 using namespace std;
-
-static int testn = 0;
-static int failn = 0;
-
-/**
- * Test an item and keep track of the pass/fail counts.
- */
-void ok(bool pass, string desc="") {
-    testn++;
-
-    if (pass) {
-
-    } else {
-        failn++;
-        cout << testn << ": " << (pass ? "ok" : "FAIL") << " " << desc << endl;
-    }
-}
-
-/**
- * Display a summary of the tests (pass/fail) counts.
- */
-void summary() {
-    cout << testn << " tests run, " << failn << " failed\n";
-}
 
 int main(int argc, char** argv)
 {
-
     // fixed size tests
     {
     JArray ja0(5, false);
-    ok(5 == ja0.capacity());
-    ok(0 == ja0.size());
+    assert(5 == ja0.capacity());
+    assert(0 == ja0.size());
 
     for (int i = 0; i < 6; i++) {
         ja0.insert(i, i);
     }
-    ok(5 == ja0.capacity());
-    ok(5 == ja0.size());
+    assert(5 == ja0.capacity());
+    assert(5 == ja0.size());
 
     for (int i = 0; i < 5; i++) {
-        ok(i == ja0.get(i));
+        assert(i == ja0.get(i));
     }
 
-    ok(-1 == ja0.get(5));
+    assert(-1 == ja0.get(5));
 
-    ok(-1 == ja0.remove(6));
-    ok(-1 == ja0.remove(5));
-    ok(-1 != ja0.remove(2));
+    assert(-1 == ja0.remove(6));
+    assert(-1 == ja0.remove(5));
+    assert(-1 != ja0.remove(2));
 
-    ok(4 == ja0.size());
-    ok(5 == ja0.capacity());
-    ok(1 == ja0.get(1));
-    ok(3 == ja0.get(2));
-    ok(4 == ja0.get(3));
-    ok(-1 == ja0.get(4));
+    assert(4 == ja0.size());
+    assert(5 == ja0.capacity());
+    assert(1 == ja0.get(1));
+    assert(3 == ja0.get(2));
+    assert(4 == ja0.get(3));
+    assert(-1 == ja0.get(4));
     }
 
     // autosize test
     {
     JArray ja0(5, true);
-    ok(5 == ja0.capacity());
-    ok(0 == ja0.size());
+    assert(5 == ja0.capacity());
+    assert(0 == ja0.size());
 
     for (int i = 0; i < 121; i++) {
         ja0.insert(i, i);
     }
 
-    ok(121 <= ja0.capacity());
-    ok(121 == ja0.size());
+    assert(121 <= ja0.capacity());
+    assert(121 == ja0.size());
 
     for (int i = 0; i < 121; i++) {
-        ok(i == ja0.get(i));
+        assert(i == ja0.get(i));
     }
 
     for (int i = 0; i < 121; i++) {
         if (i % 2) {
-            ok(-1 != ja0.remove(0));
+            assert(-1 != ja0.remove(0));
         } else {
-            ok(-1 != ja0.pop());
+            assert(-1 != ja0.pop());
         }
     }
 
-    ok(0 == ja0.size());
+    assert(0 == ja0.size());
     }
 
     // autocollapse test
@@ -97,14 +75,14 @@ int main(int argc, char** argv)
         ja0.insert(i, i);
     }
 
-    ok(250 <= ja0.capacity());
-    ok(250 == ja0.size());
+    assert(250 <= ja0.capacity());
+    assert(250 == ja0.size());
 
     for (int i = 0; i < 250; i++) {
         ja0.pop();
     }
-    ok(5 <= ja0.capacity());
-    ok(0 == ja0.size());
+    assert(5 <= ja0.capacity());
+    assert(0 == ja0.size());
     }
 
     // memory leak test
@@ -118,6 +96,5 @@ int main(int argc, char** argv)
     }
     */
 
-    summary();
+    cout << "All tests passed.\n";
 }
-
