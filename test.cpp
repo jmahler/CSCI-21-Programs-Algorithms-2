@@ -3,7 +3,7 @@
 #include <iostream>
 
 //#define NDEBUG
-#include <assert.h>
+#include <cassert>
 
 using namespace std;
 
