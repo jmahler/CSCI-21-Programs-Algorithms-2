@@ -75,14 +75,13 @@ int main(int argc, char** argv)
     istream &from = (*pfrom);
     // }}}
 
-    int linen = 0; // line numbers
+    // process input ...
 
     // line #1: array capacity (an int value)
     int capacity;
     {
     string s;
     getline(from, s);
-    linen++;
     stringstream ss(s);
     ss >> capacity;
     }
@@ -92,16 +91,15 @@ int main(int argc, char** argv)
     {
     string s;
     getline(from, s);
-    linen++;
     stringstream ss(s);
     ss >> autosize;
     }
 
     JArray ja(capacity, autosize);
 
+    // all the rest of thie lines
     string line;
     while (getline(from, line)) {
-        linen++;
 
         string cmd;
         stringstream ss (line);
