@@ -24,7 +24,7 @@ using namespace std;
  *
  *  a.insert(3, 0);
  *
- *  a.get_stats();
+ *  a.describe();
  * @endcode
  */
 class JArray {
@@ -77,8 +77,9 @@ public:
      * err = ja.get(i);
      * if (-1 == err && ja.is_defined(i)) {
      *     // we got an error
+     * } else {
+     *     // else we got a valid value, that is possibly -1
      * }
-     * // else we got a valid value, that is possibly -1
      *
      * @endcode
      */
@@ -116,6 +117,12 @@ public:
      * Removes the value at the last slot.
      *
      * @returns -1 on error
+     *
+     * <h2 style="color: red; text-decoration: blink;">Warning</h2>
+     *
+     * The value returned could be -1 or it could be an error (see insert()
+     * for a more in depth discussion of this problem).
+     *
      */
     int pop();
 

@@ -10,6 +10,21 @@ INTRODUCTON
 This project provides a simple dynamic array and allows
 commands to be defined in a file to manipulate them.
 
+DESIGN
+------
+
+As per the [specification][lab3] the value -1 is to be returned to
+indicate an error.
+But it is also possible to store the value -1.
+This creates a conflict and makes it impossible to determine if
+it was an error without calling a secondary operation.
+One possible solution to this problem would be to use exceptions.
+
+The -1 return value also implies that the object stored must be
+a signed integer.
+This eliminates the possiblility of defining the array in a more
+generic way using templates.
+
 AUTHOR
 ------
 
