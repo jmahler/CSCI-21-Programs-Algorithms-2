@@ -1,7 +1,7 @@
 /**
  * @mainpage
  *
- * This project provides a simple dynamic array.
+ * A simple dynamic array and a utility to test it using commands from a file.
  *
  * This program was completed for "project 3" of the
  * class CSCI 21 taught by <a href="http://www.foobt.net">Boyd Trolinger</a>
@@ -14,9 +14,10 @@
  * @author  Jeremiah Mahler <jmmahler@gmail.com>
  */
 
-#include <iostream>
-#include <fstream>
 #include <cstdlib>
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 #include "JArray.h"
 
@@ -114,19 +115,31 @@ int main(int argc, char** argv)
             ss >> val;
             ss >> idx;
         
-            err = ja.insert(val, idx);
+            //err = ja.insert(val, idx);
+            err = ja.replace(val, idx);
             if (-1 == err)
                 cout << idx << " is an invalid index" << endl;
             else
                 cout << val << " inserted at index " << idx << endl;
 
+        } else if (cmd == "ii") {
+            int val, idx, err;
+
+            ss >> val;
+            ss >> idx;
+        
+            err = ja.insert(val, idx);
+            if (-1 == err)
+                cout << idx << " is an invalid index" << endl;
+            else
+                cout << val << " inserted at index " << idx << endl;
         } else if (cmd == "g") {
             int val, idx;
 
             ss >> idx;
 
             val = ja.get(idx);
-            if (-1 == val && !ja.is_defined(idx))
+            if (-1 == val)
                 cout << idx << " is an invalid index" << endl;
             else
                 cout << "value at " << idx << ": " << val << endl;
@@ -140,7 +153,6 @@ int main(int argc, char** argv)
                 cout << "array is filled to capacity" << endl;
             else
                 cout << val << " added" << endl;
-
         } else if (cmd == "r") {
             int idx;
 

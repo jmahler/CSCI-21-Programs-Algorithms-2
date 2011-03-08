@@ -15,26 +15,52 @@ using namespace std;
  * @code
  *  #include "JArray.h";
  *
- *  JArray a(5, true);
- *  int x;
+ *  JArray a(5, true);  // (capacity, autosize)
+ *  int val, err, index;
  *
- *  a.capacity();
+ *  val = a.get(index);
  *
- *  x = a.get(2);
+ *  err = a.insert(val, index);
+ *  err = a.remove(index);
+ *  err = a.replace(val, index);
  *
- *  a.insert(3, 0);
+ *  err = a.push(val);
+ *  err = a.pop();
+ *
+ *  val = a.capacity();
+ *  val = a.size();
  *
  *  a.describe();
+ *
  * @endcode
  */
 class JArray {
-
+private:
     int* numbers;
     int  _capacity;
     int  elements;       // number of elements, next available position
     bool autosize;
     bool autocollapse;
     int  chunk_size;     // size of chunks to use during realloc
+
+    /*
+     * Is the given value valid?
+     */
+    bool is_valid_val(int value);
+
+    /*
+     * Is the requested index valid?
+     * Returns true if a value could be retrieved or assigned
+     *  to the given index.
+     */
+    bool is_assignable_index(int index);
+
+    /*
+     * Could a value be retrieved from the given index?
+     *
+     * @returns true if yes, false otherwise
+     */
+    bool is_gettable_index(int index);
 
 public:
     /**
@@ -58,30 +84,6 @@ public:
      *
      * @returns value at index,
      *      -1 on error (index out of bounds, or value undefined)
-     *
-     * <h2 style="color: red; text-decoration: blink;">Warning</h2>
-     *
-     * Currently the value -1 is used to indicate an out of bounds error
-     * as per the project specifications.
-     * But if the value stored is -1 this makes it impossible to detect
-     * if an error occurred.
-     * One workaround is to use the function is_defined() to check
-     * whether that position is defined.
-     *
-     * @code
-     *
-     * int err;
-     * int i = 3; // index
-     * JArray ja();
-     *
-     * err = ja.get(i);
-     * if (-1 == err && ja.is_defined(i)) {
-     *     // we got an error
-     * } else {
-     *     // else we got a valid value, that is possibly -1
-     * }
-     *
-     * @endcode
      */
     int get(const int index);
 
@@ -99,6 +101,21 @@ public:
     int insert(const int val, const int index);
 
     /**
+     * Remove the element at the given index (0 offset).
+     *
+     * @returns -1 on error (index out of bounds)
+     */
+    int remove(const int index);
+
+    /**
+     *
+     * Replace the value at the given index with the specified value.
+     *
+     * @returns -1 on error
+     */
+    int replace(const int val, const int index);
+
+    /**
      * Inserts a value in the next available slot.
      * See also (insert()).
      *
@@ -107,28 +124,18 @@ public:
     int push(const int val);
 
     /**
-     * Remove the element at the given index (0 offset).
-     *
-     * @returns -1 on error (index out of bounds)
-     */
-    int remove(const int index);
-
-    /**
      * Removes the value at the last slot.
      *
      * @returns -1 on error
-     *
-     * <h2 style="color: red; text-decoration: blink;">Warning</h2>
-     *
-     * The value returned could be -1 or it could be an error (see insert()
-     * for a more in depth discussion of this problem).
-     *
      */
     int pop();
 
     /**
      * The capacity is the maximum number of elements that can
      * be stored in this array.
+     *
+     * If the array has autosize enabled the capacity will be automatically
+     * expanded as needed.
      *
      */
     int capacity() { return _capacity; };
@@ -145,11 +152,5 @@ public:
      */
     string describe();
 
-    /**
-     * Is a value defined at the given index?
-     *
-     * @returns true if defined, false otherwise
-     */
-    bool is_defined(int index) { return (index >= 0 && index < elements); };
 };
 

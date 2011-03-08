@@ -20,32 +20,81 @@ JArray::JArray(int __capacity, bool _autosize, bool _autocollapse)
 }
 // }}}
 
+// {{{ JArray::is_valid_val
+bool JArray::is_valid_val(const int val)
+{
+    if (val >= 0)
+        return true;
+
+    return false;
+}
+// }}}
+
+// {{{ JArray::is_gettable_index
+bool JArray::is_gettable_index(int index)
+{
+    return (index >= 0 && index < elements);
+}
+// }}}
+
+// {{{ JArray::is_assignable_index
+bool JArray::is_assignable_index(const int i)
+{
+    // negative indexs are invalid
+    if (i < 0)
+        return false;
+
+    // Cant add an element beyond the last one
+    // and there are no valid elements beyond the last one
+    if (i > elements)
+        return false;
+
+    if (i < elements)
+        return true;
+
+    // index == elements
+
+    if (elements == _capacity) {  // were out of room
+        if (autosize) {
+            // we could make room
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // index == elments && elements < _capacity
+
+    return true;
+}
+// }}}
+
 // {{{ JArray::get
 int JArray::get(const int i)
 {
-    if (is_defined(i))
-        return numbers[i];
-    else
+    if (! is_gettable_index(i))
         return -1;
+
+    return numbers[i];
 }
 // }}}
 
 // {{{ JArray::insert
 int JArray::insert(const int val, const int i)
 {
-    if (i < 0)
+    if (! is_valid_val(val))
         return -1;
 
-    // cant add an element beyond the last one
-    if (i > elements)
+    if (! is_assignable_index(i))
         return -1;
 
     if (elements == _capacity) { // were out of room
         if (autosize) {
             // make some room
+            int new_capacity = (_capacity > 0) ? _capacity*2 : 2;
 
-            int* new_numbers = new int[_capacity*2];
-            _capacity *= 2;
+            int* new_numbers = new int[new_capacity];
+            _capacity = new_capacity;
 
             for (int i = 0; i < elements; i++) {
                 new_numbers[i] = numbers[i];
@@ -57,6 +106,7 @@ int JArray::insert(const int val, const int i)
         }
     }
 
+    // we could'nt make any room
     if (i >= _capacity)
         return -1;
 
@@ -80,24 +130,10 @@ int JArray::insert(const int val, const int i)
 }
 // }}}
 
-// {{{ JArray::push
-int JArray::push(const int val)
-{
-    return insert(val, elements);
-}
-// }}}
-
 // {{{ JArray::remove
 int JArray::remove(const int i)
 {
-    if (i < 0)
-        return -1;
-
-    if (! is_defined(i))
-        return -1;
-
-    // cant add an element beyond the last one
-    if (i > elements)
+    if (! is_assignable_index(i) || ! is_gettable_index(i))
         return -1;
 
     for (int j = i; j < elements; j++)
@@ -106,6 +142,7 @@ int JArray::remove(const int i)
     elements--;
 
     // collapse the size of the array if needed
+    /*
     if (autocollapse && (elements > 0) && 0 == (elements % chunk_size)) {
         int* new_numbers = new int[elements];
         _capacity = elements;
@@ -118,8 +155,31 @@ int JArray::remove(const int i)
 
         numbers = new_numbers;
     }
+    */
 
     return 0; // OK
+}
+// }}}
+
+// {{{ JArray::replace
+int JArray::replace(const int val, const int i)
+{
+    if (! is_valid_val(val))
+        return -1;
+
+    if (! is_assignable_index(i) || ! is_gettable_index(i))
+        return -1;
+
+    numbers[i] = val;
+
+    return 0; // OK
+}
+// }}}
+
+// {{{ JArray::push
+int JArray::push(const int val)
+{
+    return insert(val, elements);
 }
 // }}}
 
