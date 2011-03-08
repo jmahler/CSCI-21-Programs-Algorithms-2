@@ -7,28 +7,12 @@ CSCI 21 - Programs and Algorithms 2 - Project 3
 INTRODUCTON
 -----------
 
-This project provides a simple dynamic array and allows
-commands to be defined in a file to manipulate them.
-
-DESIGN
-------
-
-As per the [specification][lab3] the value -1 is to be returned to
-indicate an error.
-But it is also possible to store the value -1.
-This creates a conflict and makes it impossible to determine if
-it was an error without calling a secondary operation.
-One possible solution to this problem would be to use exceptions.
-
-The -1 return value also implies that the object stored must be
-a signed integer.
-This eliminates the possiblility of defining the array in a more
-generic way using templates.
+A simple dynamic array and a utility to test it using commands from a file.
 
 AUTHOR
 ------
 
-This project was completed to satisfy for [project 3][lab3]
+This project was completed to satisfy [project 3][lab3]
 in the class "Programs and Algorithms 2".
 This class was taught by [Boyd Trolinger][boyd] during the Spring of
 2011 at [Butte College][butte].

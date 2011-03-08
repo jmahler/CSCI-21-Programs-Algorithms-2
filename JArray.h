@@ -38,6 +38,7 @@ class JArray {
 private:
     int* numbers;
     int  _capacity;
+    // _capacity cannot be named capacity because it conflicts with capacity()
     int  elements;       // number of elements, next available position
     bool autosize;
     bool autocollapse;
@@ -83,14 +84,14 @@ public:
      * Retrieves the element at the given index.
      *
      * @returns value at index,
-     *      -1 on error (index out of bounds, or value undefined)
+     *      -1 on error
      */
     int get(const int index);
 
     /**
      * Inserts a value at the given index (0 offset).
      *
-     * @returns -1 on error (index out of bounds)
+     * @returns -1 on error
      *
      * All the values above will be shifted to accommodate the new value.
      * If the array is full and is of fixed size (autosize = false)
@@ -103,7 +104,7 @@ public:
     /**
      * Remove the element at the given index (0 offset).
      *
-     * @returns -1 on error (index out of bounds)
+     * @returns -1 on error
      */
     int remove(const int index);
 
