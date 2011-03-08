@@ -141,9 +141,11 @@ int JArray::remove(const int i)
 
     elements--;
 
-    // collapse the size of the array if needed
-    /*
-    if (autocollapse && (elements > 0) && 0 == (elements % chunk_size)) {
+    /* When there is atleast one elment and the capacity is twice as
+     * large as the number of elements it will be collapsed to the
+     * number of elements.
+     */
+    if (autocollapse && (elements > 0) && 0 == (_capacity % elements*2)) {
         int* new_numbers = new int[elements];
         _capacity = elements;
 
@@ -155,7 +157,6 @@ int JArray::remove(const int i)
 
         numbers = new_numbers;
     }
-    */
 
     return 0; // OK
 }

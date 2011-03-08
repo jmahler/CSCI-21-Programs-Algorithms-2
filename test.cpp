@@ -110,10 +110,10 @@ int main(int argc, char** argv)
     // }}}
 
     // {{{ autocollapse test
-    /*
     {
     JArray ja0(5, true, true);
 
+    // add a bunch of values
     for (int i = 0; i < 250; i++) {
         ja0.insert(i, i);
     }
@@ -121,17 +121,31 @@ int main(int argc, char** argv)
     assert(250 <= ja0.capacity());
     assert(250 == ja0.size());
 
-    for (int i = 0; i < 250; i++) {
+    // remove atleast half the elements
+    for (int i = 0; i < 200; i++) {
         ja0.pop();
     }
-    assert(5 <= ja0.capacity());
-    assert(0 == ja0.size());
+
+    // all the previously stored values should be the same
+    for (int i = 0; i < (250 - 200); i++) {
+        assert(i == ja0.get(i));
     }
-    */
+
+    // has the ccapacity been decreased?
+    assert(ja0.capacity() < 200);
+    assert((250 - 200) == ja0.size());
+    }
     // }}}
 
-    // memory leak test
-    /* tested OK 2/23/11
+    // {{{ memory leak test
+    /*
+     * This section will create and destroy a large number of objects.
+     * A good way to monitor the memory consumption will this is running
+     * is by using "top".
+     */
+    // tested OK 2/23/11
+    // tested OK 3/8/11
+    /*
     while(1) {
         JArray jaX(5, true);
 
@@ -140,6 +154,7 @@ int main(int argc, char** argv)
         }
     }
     */
+    // }}}
 
     cout << "All tests passed.\n";
 }
