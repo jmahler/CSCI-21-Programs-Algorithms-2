@@ -64,9 +64,23 @@ int main(int argc, char** argv)
     JArray ja0(0, false);
     assert(0 == ja0.capacity());
     assert(0 == ja0.size());
+    assert(-1 == ja0.replace(0, 0));
     assert(-1 == ja0.insert(0, 0));
     assert(-1 == ja0.push(0));
     }
+
+    {
+    // fixed size with capacity of 1
+    JArray ja0(1, false);
+    assert(1 == ja0.capacity());
+    assert(0 == ja0.size());
+    assert(-1 != ja0.replace(0, 0));
+    assert(-1 != ja0.insert(0, 0));  // discards a value
+    assert(-1 != ja0.pop());
+    assert(-1 != ja0.push(0));
+    }
+
+
     // }}}
 
     // {{{ autosize test

@@ -168,7 +168,7 @@ int JArray::replace(const int val, const int i)
     if (! is_valid_val(val))
         return -1;
 
-    if (! is_assignable_index(i) || ! is_gettable_index(i))
+    if (! is_assignable_index(i))
         return -1;
 
     numbers[i] = val;

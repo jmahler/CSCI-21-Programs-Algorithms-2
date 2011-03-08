@@ -29,7 +29,7 @@ int main(int argc, char** argv)
     // {{{ help (-h) menu
     if (argc >= 2 && "-h" == string(argv[1])) {
         // help/usage
-        cout << "usage:\n"
+        cout << "USAGE:\n"
              << "  ./main                   # opens \"lab3input.txt\"\n"
              << "  ./main -                 # reads input from stdin\n"
              << "  ./main <file>            # reads input from <file>\n"
@@ -39,7 +39,17 @@ int main(int argc, char** argv)
              << "  # execute commands interactively\n"
              << "  ./main -\n"
              << "\n"
-             << "  # see lab3.html for command descriptions\n";
+             << "COMMANDS:\n"
+             << "  i  <val> <idx>      # replace value at index\n"
+             << "  ii <val> <idx>      # insert value at index\n"
+             << "  g  <idx>            # get value at index\n"
+             << "  a  <val>            # append a value\n"
+             << "  r  <idx>            # remove value at index\n"
+             << "  c                   # get capacity\n"
+             << "  n                   # get size\n"
+             << "  p                   # describe the array\n"
+             << "  -1                  # quit\n"
+             << "  # see also lab3.html for command descriptions\n";
 
         exit(0);
     }
@@ -110,12 +120,12 @@ int main(int argc, char** argv)
         // ss >> var;
 
         if (cmd == "i") {
+            // replace
             int val, idx, err;
 
             ss >> val;
             ss >> idx;
         
-            //err = ja.insert(val, idx);
             err = ja.replace(val, idx);
             if (-1 == err)
                 cout << idx << " is an invalid index" << endl;
@@ -123,6 +133,7 @@ int main(int argc, char** argv)
                 cout << val << " inserted at index " << idx << endl;
 
         } else if (cmd == "ii") {
+            // insert
             int val, idx, err;
 
             ss >> val;
@@ -134,6 +145,7 @@ int main(int argc, char** argv)
             else
                 cout << val << " inserted at index " << idx << endl;
         } else if (cmd == "g") {
+            // get a value
             int val, idx;
 
             ss >> idx;
@@ -144,6 +156,7 @@ int main(int argc, char** argv)
             else
                 cout << "value at " << idx << ": " << val << endl;
         } else if (cmd == "a") {
+            // append a value
             int val;
 
             ss >> val;
@@ -154,6 +167,7 @@ int main(int argc, char** argv)
             else
                 cout << val << " added" << endl;
         } else if (cmd == "r") {
+            // remove a value
             int idx;
 
             ss >> idx;
@@ -171,9 +185,9 @@ int main(int argc, char** argv)
         } else if (cmd == "p") {
             cout << ja.describe() << endl;
         } else if (cmd == "-1") {
-            exit(0);
+            exit(0); // quit
         }
-        // anything else is quietly ignored
+        // anything else is silently ignored
     }
 
     _from.close();
