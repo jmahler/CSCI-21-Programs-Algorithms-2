@@ -79,8 +79,6 @@ int main(int argc, char** argv)
     assert(-1 != ja0.pop());
     assert(-1 != ja0.push(0));
     }
-
-
     // }}}
 
     // {{{ autosize test
@@ -148,6 +146,26 @@ int main(int argc, char** argv)
     // has the ccapacity been decreased?
     assert(ja0.capacity() < 200);
     assert((250 - 200) == ja0.size());
+    }
+    // }}}
+
+    // {{{ get
+    {
+    JArray ja0(1, false);
+    int x;
+
+    assert(! ja0.get(0, x));
+    assert(! ja0.get(2, x));
+    assert(-1 == ja0.get(0));
+
+    ja0.push(12);
+    assert(ja0.get(0, x));
+    assert(12 == x);
+    assert(12 == ja0.get(0));
+
+    for (int i = 1; i < 10; i++) {
+        assert(! ja0.get(i, x));
+    }
     }
     // }}}
 

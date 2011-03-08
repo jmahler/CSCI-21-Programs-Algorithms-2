@@ -79,6 +79,17 @@ int JArray::get(const int i)
 }
 // }}}
 
+// {{{ JArray::get
+bool JArray::get(const int i, int& val)
+{
+    if (! is_gettable_index(i))
+        return false;
+
+    val = numbers[i];
+    return true; // OK
+}
+// }}}
+
 // {{{ JArray::insert
 int JArray::insert(const int val, const int i)
 {

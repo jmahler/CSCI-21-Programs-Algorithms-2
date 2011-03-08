@@ -17,8 +17,10 @@ using namespace std;
  *
  *  JArray a(5, true);  // (capacity, autosize)
  *  int val, err, index;
+ *  bool torf;
  *
  *  val = a.get(index);
+ *  torf = a.get(index, val);
  *
  *  err = a.insert(val, index);
  *  err = a.remove(index);
@@ -89,6 +91,14 @@ public:
     int get(const int index);
 
     /**
+     * Retrieves the element at the given index
+     * and assigns to the reference val.
+     *
+     * @returns true on success, false on error
+     */
+    bool get(const int index, int& val);
+
+    /**
      * Inserts a value at the given index (0 offset).
      *
      * @returns -1 on error
@@ -154,4 +164,3 @@ public:
     string describe();
 
 };
-
