@@ -72,7 +72,7 @@ public:
      * Create a new array object.
      *
      * @arg initial capacity, default 5
-     * @arg autosize?, default true
+     * @arg autosize?, default false
      * @arg autocollapse?, default false
      *
      * When autosize is on the capacity of the array
@@ -138,12 +138,13 @@ public:
     int pop();
 
     /**
+     * @returns the capacity of the array
+     *
      * The capacity is the maximum number of elements that can
      * be stored in this array.
      *
      * If the array has autosize enabled the capacity will be automatically
      * expanded as needed.
-     *
      */
     int capacity() { return _capacity; };
 
