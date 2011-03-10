@@ -24,7 +24,7 @@ main: main.cpp $(OBJECTS)
 
 
 clean:
-	-rm -f main
+	-rm -f main test
 	-rm -f $(OBJECTS)
 	-rm -fr doc
 
