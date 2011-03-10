@@ -198,22 +198,24 @@ string JArray::describe()
 
     ss << elements << "/" << _capacity << endl;
 
-    ss << " ["; // start of array
+    //ss << " ["; // start of array
     for (int i = 0; i < elements; i++) {
 
-        ss << " " << numbers[i];
+        //ss << " " << numbers[i];
+        ss << numbers[i];
 
         // for all but the last element
         if (i != (elements - 1))
-            ss << ",";
+            //ss << ",";
+            ss << ", ";
 
         // every chunk'th except at the beggining or end
         if ((i + 1) != 0 && 0 == ((i + 1) % chunk) && i != (elements - 1)) {
             ss << endl;
-            ss << "  "; // indent the next line
+            //ss << "  "; // indent the next line
         }
     }
-    ss << " ]"; // end of array
+    //ss << " ]"; // end of array
 
     return ss.str();
 }
