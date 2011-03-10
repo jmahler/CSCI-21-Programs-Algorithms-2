@@ -30,14 +30,15 @@ int main(int argc, char** argv)
     if (argc >= 2 && "-h" == string(argv[1])) {
         // help/usage
         cout << "USAGE:\n"
-             << "  ./main                   # opens \"lab3input.txt\"\n"
+             << "  ./main -h                # this help screen\n"
+             << "  ./main                   # reads \"lab3input.txt\"\n"
              << "  ./main -                 # reads input from stdin\n"
              << "  ./main <file>            # reads input from <file>\n"
              << "\n"
              << "  # pipe commands from a file\n"
              << "    cat lab3input.txt | ./main -\n"
              << "  # execute commands interactively\n"
-             << "  ./main -\n"
+             << "   ./main -\n"
              << "\n"
              << "COMMANDS:\n"
              << "  i  <val> <idx>      # replace value at index\n"
@@ -74,7 +75,7 @@ int main(int argc, char** argv)
         if ("-" == input_file) {
             pfrom = &cin;
         } else {
-            // Whatever they specified, it is not working.
+            // Whatever they specified, it is incorrect.
             cerr << "Unable to open file named '" << input_file << "'.\n";
             cerr << "Does the file exist and do you have sufficient permissions?\n";
             exit(1);
@@ -83,6 +84,7 @@ int main(int argc, char** argv)
         // assign the valid input file stream
         pfrom = &_from;
     }
+    // the stream (from) is used for the rest of the program
     istream &from = (*pfrom);
     // }}}
 
@@ -131,7 +133,6 @@ int main(int argc, char** argv)
                 cout << idx << " is an invalid index" << endl;
             else
                 cout << val << " inserted at index " << idx << endl;
-
         } else if (cmd == "ii") {
             // insert
             int val, idx, err;

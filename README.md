@@ -9,6 +9,31 @@ INTRODUCTON
 
 A simple dynamic array and a utility to test it using commands from a file.
 
+The utility is run as shown below (./main -h)
+
+    USAGE:
+      ./main -h                # this help screen
+      ./main                   # reads "lab3input.txt"
+      ./main -                 # reads input from stdin
+      ./main <file>            # reads input from <file>
+    
+      # pipe commands from a file
+        cat lab3input.txt | ./main -
+      # execute commands interactively
+       ./main -
+    
+    COMMANDS:
+      i  <val> <idx>      # replace value at index
+      ii <val> <idx>      # insert value at index
+      g  <idx>            # get value at index
+      a  <val>            # append a value
+      r  <idx>            # remove value at index
+      c                   # get capacity
+      n                   # get size
+      p                   # describe the array
+      -1                  # quit
+      # see also lab3.html for command descriptions
+
 AUTHOR
 ------
 
