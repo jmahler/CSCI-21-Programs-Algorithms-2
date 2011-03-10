@@ -126,6 +126,43 @@ int main(int argc, char** argv)
     }
     // }}}
 
+    // {{{ near autoexpand check
+    /* Tests insert bounds when near the point of autoexpansion.
+     */
+    {
+    JArray ja(2, true);
+    
+    assert(ja.capacity() <= 2);
+
+    assert(-1 == ja.insert(10, 1));
+    assert(-1 == ja.insert(10, 2));
+    assert(-1 == ja.insert(10, 3));
+    assert(-1 == ja.insert(10, 4));
+
+    assert(-1 != ja.insert(10, 0));
+
+    assert(-1 == ja.insert(10, 2));
+    assert(-1 == ja.insert(10, 3));
+    assert(-1 == ja.insert(10, 4));
+
+    assert(-1 != ja.insert(11, 1));
+
+    assert(-1 == ja.insert(10, 3));
+    assert(-1 == ja.insert(10, 4));
+    assert(-1 == ja.insert(10, 5));
+
+    assert(-1 != ja.insert(12, 2));
+
+    // it should have expanded
+
+    assert(ja.capacity() > 2);
+
+    assert(-1 == ja.insert(10, 4));
+    assert(-1 == ja.insert(10, 5));
+    assert(-1 == ja.insert(10, 6));
+    }
+    // }}}
+
     // {{{ autosize test
     {
     JArray ja0(5, true);
