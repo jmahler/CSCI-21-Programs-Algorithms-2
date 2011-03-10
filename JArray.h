@@ -16,15 +16,17 @@ using namespace std;
  *  #include "JArray.h";
  *
  *  JArray a(5, true);  // (capacity, autosize)
- *  int val, err, index;
- *  bool torf;
+ *  int val, index;
+ *  int err;
+ *  string str;
+ *  bool errp;
  *
- *  val = a.get(index);
- *  torf = a.get(index, val);
+ *  errp = a.get(index, val);
  *
  *  err = a.insert(val, index);
- *  err = a.remove(index);
  *  err = a.replace(val, index);
+
+ *  err = a.remove(index);
  *
  *  err = a.push(val);
  *  err = a.pop();
@@ -32,7 +34,7 @@ using namespace std;
  *  val = a.capacity();
  *  val = a.size();
  *
- *  a.describe();
+ *  str = a.describe();
  *
  * @endcode
  */
@@ -78,17 +80,9 @@ public:
      *
      * When autocollapse is on the array will be collapsed as needed.
      */
-    JArray(int capacity=5, bool autosize=true, bool autocollapse=false);
+    JArray(int capacity=5, bool autosize=false, bool autocollapse=false);
 
     ~JArray() { delete[] numbers; };
-
-    /**
-     * Retrieves the element at the given index.
-     *
-     * @returns value at index,
-     *      -1 on error
-     */
-    int get(const int index);
 
     /**
      * Retrieves the element at the given index
@@ -108,6 +102,8 @@ public:
      * the value at the end will be discarded.
      * A value cannot be inserted at a position greater than 1 beyond
      * the last most element (no gaps).
+     *
+     * See also replace() and push().
      */
     int insert(const int val, const int index);
 

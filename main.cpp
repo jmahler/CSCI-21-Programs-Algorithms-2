@@ -9,7 +9,7 @@
  *
  * Detailed application requirements are available
  * at [<a href="http://foobt.net/csci21/S3513_11/labs/lab3.html">csci21/S3513_11/labs/lab3</a>]
- * and duplicated with this source [lab3.html].
+ * and duplicated with this source [lab3-rev02.html].
  *
  * @author  Jeremiah Mahler <jmmahler@gmail.com>
  */
@@ -49,8 +49,7 @@ int main(int argc, char** argv)
              << "  c                   # get capacity\n"
              << "  n                   # get size\n"
              << "  p                   # describe the array\n"
-             << "  -1                  # quit\n"
-             << "  # see also lab3.html for command descriptions\n";
+             << "  -1                  # quit\n";
 
         exit(0);
     }
@@ -148,11 +147,12 @@ int main(int argc, char** argv)
         } else if (cmd == "g") {
             // get a value
             int val, idx;
+            bool err;
 
             ss >> idx;
 
-            val = ja.get(idx);
-            if (-1 == val)
+            err = ja.get(idx, val);
+            if (err)
                 cout << idx << " is an invalid index" << endl;
             else
                 cout << "value at " << idx << ": " << val << endl;

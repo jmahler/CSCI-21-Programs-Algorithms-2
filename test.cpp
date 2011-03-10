@@ -9,15 +9,13 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
+    int val;
+
     // {{{ fixed size tests
     {
     JArray ja0(5, false);
     assert(5 == ja0.capacity());
     assert(0 == ja0.size());
-
-    // invalid value, valid index
-    assert(-1 == ja0.insert(-1, 0));
-    assert(-1 == ja0.insert(-1000, 0));
 
     for (int i = 0; i < 5; i++) {
         assert(-1 != ja0.insert(i, i));
@@ -28,10 +26,11 @@ int main(int argc, char** argv)
     assert(-1 == ja0.push(666));
 
     for (int i = 0; i < 5; i++) {
-        assert(i == ja0.get(i));
+        assert(ja0.get(i, val));
+        assert(i == val);
     }
 
-    assert(-1 == ja0.get(5));
+    assert(! ja0.get(5, val));
 
     assert(-1 == ja0.remove(6));
     assert(-1 == ja0.remove(5));
@@ -40,15 +39,22 @@ int main(int argc, char** argv)
     assert(4 == ja0.size());
     assert(5 == ja0.capacity());
 
-    assert(1 == ja0.get(1));
-    assert(3 == ja0.get(2));
-    assert(4 == ja0.get(3));
-    assert(-1 != ja0.replace(12, 3));
-    assert(1 == ja0.get(1));
-    assert(3 == ja0.get(2));
-    assert(12 == ja0.get(3));
+    assert(ja0.get(1, val));
+    assert(1 == val);
+    assert(ja0.get(2, val));
+    assert(3 == val);
+    assert(ja0.get(3, val));
+    assert(4 == val);
 
-    assert(-1 == ja0.get(4));
+    assert(-1 != ja0.replace(12, 3));
+    assert(ja0.get(1, val));
+    assert(1 == val);
+    assert(ja0.get(2, val));
+    assert(3 == val);
+    assert(ja0.get(3, val));
+    assert(12 == val);
+
+    assert(! ja0.get(4, val));
 
     for (int i = 0; i < 4; i++) {
         assert(ja0.pop() > -1);
@@ -81,6 +87,45 @@ int main(int argc, char** argv)
     }
     // }}}
 
+    // {{{ bounds checks
+    {
+    JArray ja(5, false);
+    
+    // cant insert beyond the next available (no gaps)
+    assert(-1 == ja.insert(10, 1));
+    assert(-1 != ja.insert(10, 0));
+
+    assert(-1 == ja.insert(66, 2));
+    assert(-1 != ja.insert(66, 1));
+
+    assert(-1 == ja.insert(12, 3));
+    assert(-1 != ja.insert(12, 2));
+
+    // [10,  66,  12]
+
+    assert(-1 != ja.insert(9, 0)); 
+
+    // [9, 10,  66,  12]
+
+    assert(-1 != ja.replace(11, 2));
+
+    // [9, 10,  11,  12]
+
+    assert(ja.get(0, val));
+    assert(9 == val);
+    assert(ja.get(1, val));
+    assert(10 == val);
+    assert(ja.get(2, val));
+    assert(11 == val);
+    assert(ja.get(3, val));
+    assert(12 == val);
+    assert(! ja.get(4, val));
+    assert(! ja.get(5, val));
+
+    assert(4 == ja.size());
+    }
+    // }}}
+
     // {{{ autosize test
     {
     JArray ja0(5, true);
@@ -95,7 +140,8 @@ int main(int argc, char** argv)
     assert(121 == ja0.size());
 
     for (int i = 0; i < 121; i++) {
-        assert(i == ja0.get(i));
+        assert(ja0.get(i, val));
+        assert(i == val);
     }
 
     for (int i = 0; i < 121; i++) {
@@ -140,7 +186,8 @@ int main(int argc, char** argv)
 
     // all the previously stored values should be the same
     for (int i = 0; i < (250 - 200); i++) {
-        assert(i == ja0.get(i));
+        assert(ja0.get(i, val));
+        assert(val == i);
     }
 
     // has the ccapacity been decreased?
@@ -156,16 +203,30 @@ int main(int argc, char** argv)
 
     assert(! ja0.get(0, x));
     assert(! ja0.get(2, x));
-    assert(-1 == ja0.get(0));
 
     ja0.push(12);
     assert(ja0.get(0, x));
     assert(12 == x);
-    assert(12 == ja0.get(0));
 
     for (int i = 1; i < 10; i++) {
         assert(! ja0.get(i, x));
     }
+    }
+    // }}}
+
+    // {{{ negative values
+    {
+    JArray ja(5, false);
+    assert(-1 != ja.insert(-1, 0));
+    assert(-1 != ja.insert(-2, 1));
+    assert(-1 != ja.push(-3));
+
+    assert(ja.get(0, val));
+    assert(-1 == val);
+    assert(ja.get(1, val));
+    assert(-2 == val);
+    assert(ja.get(2, val));
+    assert(-3 == val);
     }
     // }}}
 

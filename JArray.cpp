@@ -23,10 +23,7 @@ JArray::JArray(int __capacity, bool _autosize, bool _autocollapse)
 // {{{ JArray::is_valid_val
 bool JArray::is_valid_val(const int val)
 {
-    if (val >= 0)
-        return true;
-
-    return false;
+    return true;
 }
 // }}}
 
@@ -66,16 +63,6 @@ bool JArray::is_assignable_index(const int i)
     // index == elments && elements < _capacity
 
     return true;
-}
-// }}}
-
-// {{{ JArray::get
-int JArray::get(const int i)
-{
-    if (! is_gettable_index(i))
-        return -1;
-
-    return numbers[i];
 }
 // }}}
 

@@ -32,7 +32,6 @@ The utility is run as shown below (./main -h)
       n                   # get size
       p                   # describe the array
       -1                  # quit
-      # see also lab3.html for command descriptions
 
 AUTHOR
 ------
