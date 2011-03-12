@@ -44,6 +44,8 @@ using namespace std;
  *  a.bsort(true);
  *  a.bsort(false);
  *
+ *  cout << a;
+ *
  * @endcode
  */
 template<class T>
@@ -331,7 +333,7 @@ public:
      *
      * Values included are: capacity, number of elements, and all the values.
      */
-    string describe()
+    string describe() const
 	{
 		static const int chunk = 10;  // values per line
 
@@ -366,7 +368,7 @@ public:
     /**
      * Performs a bubble sort of the array.
 	 *
-	 * @args sort ascending (true) else descending(false)
+	 * @arg sort ascending (true) else descending(false)
      */
 	void bsort(const bool asc_else_desc=true)
 	{
@@ -392,7 +394,7 @@ public:
     /**
      * Performs an insertion sort of the array.
 	 *
-	 * @args sort ascending (true) else descending(false)
+	 * @arg sort ascending (true) else descending(false)
      */
 	void isort(const bool asc_else_desc=true)
 	{
@@ -411,6 +413,19 @@ public:
 		}
 	}
 	// }}}
+
+	// {{{ operator<<(JArray<T>)
+	/**
+	 * Output operator for JArray<T> object.
+	 */
+	friend ostream& operator<<(ostream &out, const JArray<T>& ja) {
+		out << ja.describe();
+
+		return out;
+	}
+	// }}}
+
 };
+
 
 // vim:foldmethod=marker

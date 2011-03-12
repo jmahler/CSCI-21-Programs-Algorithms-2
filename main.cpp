@@ -188,7 +188,8 @@ int main(int argc, char** argv)
         } else if (cmd == "n") {
             cout << "array has " << ja.size() << " elements" << endl;
         } else if (cmd == "p") {
-            cout << ja.describe() << endl;
+            //cout << ja.describe() << endl;
+            cout << ja << endl;
         } else if (cmd == "s") {
 			// sort
 			char type;
