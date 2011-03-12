@@ -31,12 +31,12 @@ int main(int argc, char** argv)
         // help/usage
         cout << "USAGE:\n"
              << "  ./main -h                # this help screen\n"
-             << "  ./main                   # reads \"lab3input.txt\"\n"
+             << "  ./main                   # reads \"lab4input.txt\"\n"
              << "  ./main -                 # reads input from stdin\n"
              << "  ./main <file>            # reads input from <file>\n"
              << "\n"
              << "  # pipe commands from a file\n"
-             << "    cat lab3input.txt | ./main -\n"
+             << "    cat lab4input.txt | ./main -\n"
              << "  # execute commands interactively\n"
              << "   ./main -\n"
              << "\n"
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
     // }}}
 
     // {{{ input stream setup
-    string input_file = "lab3input.txt"; // default
+    string input_file = "lab4input.txt"; // default
     istream *pfrom;  // *pfrom is used to build &from at end
 
     if (argc == 2)
@@ -110,7 +110,7 @@ int main(int argc, char** argv)
     ss >> autosize;
     }
 
-    JArray ja(capacity, autosize);
+    JArray<int> ja(capacity, autosize);
 
     // all the rest of thie lines
     string line;

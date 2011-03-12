@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 
     // {{{ fixed size tests
     {
-    JArray ja0(5, false);
+    JArray<int> ja0(5, false);
     assert(5 == ja0.capacity());
     assert(0 == ja0.size());
 
@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 
     {
     // fixed size with capacity of 0
-    JArray ja0(0, false);
+    JArray<int> ja0(0, false);
     assert(0 == ja0.capacity());
     assert(0 == ja0.size());
     assert(-1 == ja0.replace(0, 0));
@@ -77,7 +77,7 @@ int main(int argc, char** argv)
 
     {
     // fixed size with capacity of 1
-    JArray ja0(1, false);
+    JArray<int> ja0(1, false);
     assert(1 == ja0.capacity());
     assert(0 == ja0.size());
     assert(-1 != ja0.replace(0, 0));
@@ -89,7 +89,7 @@ int main(int argc, char** argv)
 
     // {{{ bounds checks
     {
-    JArray ja(5, false);
+    JArray<int> ja(5, false);
     
     // cant insert beyond the next available (no gaps)
     assert(-1 == ja.insert(10, 1));
@@ -130,7 +130,7 @@ int main(int argc, char** argv)
     /* Tests insert bounds when near the point of autoexpansion.
      */
     {
-    JArray ja(2, true);
+    JArray<int> ja(2, true);
     
     assert(ja.capacity() <= 2);
 
@@ -165,7 +165,7 @@ int main(int argc, char** argv)
 
     // {{{ autosize test
     {
-    JArray ja0(5, true);
+    JArray<int> ja0(5, true);
     assert(5 == ja0.capacity());
     assert(0 == ja0.size());
 
@@ -194,7 +194,7 @@ int main(int argc, char** argv)
 
     {
     // autosize with capacity of 0
-    JArray ja0(0, true);
+    JArray<int> ja0(0, true);
     assert(0 == ja0.capacity());
     assert(0 == ja0.size());
     //assert(-1 != ja0.insert(0, 0));
@@ -206,7 +206,7 @@ int main(int argc, char** argv)
 
     // {{{ autocollapse test
     {
-    JArray ja0(5, true, true);
+    JArray<int> ja0(5, true, true);
 
     // add a bunch of values
     for (int i = 0; i < 250; i++) {
@@ -235,7 +235,7 @@ int main(int argc, char** argv)
 
     // {{{ get
     {
-    JArray ja0(1, false);
+    JArray<int> ja0(1, false);
     int x;
 
     assert(! ja0.get(0, x));
@@ -253,7 +253,7 @@ int main(int argc, char** argv)
 
     // {{{ negative values
     {
-    JArray ja(5, false);
+    JArray<int> ja(5, false);
     assert(-1 != ja.insert(-1, 0));
     assert(-1 != ja.insert(-2, 1));
     assert(-1 != ja.push(-3));
@@ -277,7 +277,7 @@ int main(int argc, char** argv)
     // tested OK 3/8/11
     /*
     while(1) {
-        JArray jaX(5, true);
+        JArray<int> jaX(5, true);
 
         for (int i = 0; i < 21; i++) {
             jaX.insert(i, 0);
