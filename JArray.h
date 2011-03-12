@@ -2,6 +2,8 @@
 #include <string>
 #include <sstream>
 
+#include <iostream>
+
 using namespace std;
 
 /**
@@ -35,6 +37,12 @@ using namespace std;
  *  val = a.size();
  *
  *  str = a.describe();
+ *  
+ *  a.isort(true);   // ascending
+ *  a.isort(false);  // descending
+ *
+ *  a.bsort(true);
+ *  a.bsort(false);
  *
  * @endcode
  */
@@ -127,7 +135,7 @@ public:
 
 		elements = 0;
 
-		numbers = new int[_capacity];
+		numbers = new T[_capacity];
 	}
 	// }}}
 
@@ -177,7 +185,7 @@ public:
 				// make some room
 				int new_capacity = (_capacity > 0) ? _capacity*2 : 2;
 
-				int* new_numbers = new int[new_capacity];
+				T* new_numbers = new T[new_capacity];
 				_capacity = new_capacity;
 
 				for (int i = 0; i < elements; i++) {
@@ -235,7 +243,7 @@ public:
 		 * number of elements.
 		 */
 		if (autocollapse && (elements > 0) && 0 == (_capacity % elements*2)) {
-			int* new_numbers = new int[elements];
+			T* new_numbers = new T[elements];
 			_capacity = elements;
 
 			for (int i = 0; i < elements; i++) {
@@ -351,6 +359,56 @@ public:
 		//ss << " ]"; // end of array
 
 		return ss.str();
+	}
+	// }}}
+
+	// {{{ bsort
+    /**
+     * Performs a bubble sort of the array.
+	 *
+	 * @args sort ascending (true) else descending(false)
+     */
+	void bsort(const bool asc_else_desc=true)
+	{
+		bool swapped;
+		int i, key, length;
+		length = elements;
+
+		do {
+			swapped = false;
+			for (i = 1; i < length; i++) {
+				key = numbers[i];
+				if (asc_else_desc ? (numbers[i-1] > key) : (numbers[i-1] < key)) {
+					numbers[i] = numbers[i-1];
+					numbers[i-1] = key;
+					swapped = true;
+				}
+			}
+		} while (swapped);
+	}
+	// }}}
+
+	// {{{ isort
+    /**
+     * Performs an insertion sort of the array.
+	 *
+	 * @args sort ascending (true) else descending(false)
+     */
+	void isort(const bool asc_else_desc=true)
+	{
+		int i, j, key, length;
+		length = elements;
+
+		for (i = 1; i < length; i++) {
+			key = numbers[i];
+			for (j = i-1; j >= 0; j--) {
+				if (asc_else_desc ? (numbers[j] < key) : (numbers[j] > key))
+					break;
+
+				numbers[j+1] = numbers[j];
+			}
+			numbers[j+1] = key;
+		}
 	}
 	// }}}
 };

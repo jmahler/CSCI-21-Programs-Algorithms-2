@@ -286,5 +286,87 @@ int main(int argc, char** argv)
     */
     // }}}
 
+    // {{{ sort
+    {
+    JArray<int> ja(5, false);
+	// 1 3 5 7
+    assert(-1 != ja.insert(7, 0));
+    assert(-1 != ja.insert(3, 1));
+    assert(-1 != ja.push(5));
+    assert(-1 != ja.push(1));
+
+	ja.isort(true); // ascending
+
+    assert(ja.get(0, val));
+    assert(1 == val);
+    assert(ja.get(1, val));
+    assert(3 == val);
+    assert(ja.get(2, val));
+    assert(5 == val);
+    assert(ja.get(3, val));
+    assert(7 == val);
+    }
+
+    {
+    JArray<int> ja(5, false);
+	// 1 3 5 7
+    assert(-1 != ja.insert(7, 0));
+    assert(-1 != ja.insert(3, 1));
+    assert(-1 != ja.push(5));
+    assert(-1 != ja.push(1));
+
+	ja.isort(false); // descending
+
+    assert(ja.get(0, val));
+    assert(7 == val);
+    assert(ja.get(1, val));
+    assert(5 == val);
+    assert(ja.get(2, val));
+    assert(3 == val);
+    assert(ja.get(3, val));
+    assert(1 == val);
+    }
+
+    {
+    JArray<int> ja(5, true);
+	// 1 3 5 7
+    assert(-1 != ja.insert(7, 0));
+    assert(-1 != ja.insert(3, 1));
+    assert(-1 != ja.push(5));
+    assert(-1 != ja.push(1));
+
+	ja.bsort(true); // ascending
+
+    assert(ja.get(0, val));
+    assert(1 == val);
+    assert(ja.get(1, val));
+    assert(3 == val);
+    assert(ja.get(2, val));
+    assert(5 == val);
+    assert(ja.get(3, val));
+    assert(7 == val);
+    }
+
+    {
+    JArray<int> ja(5, false);
+	// 1 3 5 7
+    assert(-1 != ja.insert(7, 0));
+    assert(-1 != ja.insert(3, 1));
+    assert(-1 != ja.push(5));
+    assert(-1 != ja.push(1));
+
+	ja.bsort(false); // descending
+
+    assert(ja.get(0, val));
+    assert(7 == val);
+    assert(ja.get(1, val));
+    assert(5 == val);
+    assert(ja.get(2, val));
+    assert(3 == val);
+    assert(ja.get(3, val));
+    assert(1 == val);
+    }
+    // }}}
+
     cout << "All tests passed.\n";
 }

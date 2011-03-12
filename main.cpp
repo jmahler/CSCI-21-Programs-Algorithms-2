@@ -18,6 +18,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <ctype.h>  // tolower
 
 #include "JArray.h"
 
@@ -188,6 +189,30 @@ int main(int argc, char** argv)
             cout << "array has " << ja.size() << " elements" << endl;
         } else if (cmd == "p") {
             cout << ja.describe() << endl;
+        } else if (cmd == "s") {
+			// sort
+			char type;
+			char order;
+			bool asc_else_desc; // ascending else descending
+
+            ss >> type;
+            ss >> order;
+			type = tolower(type);
+			order = tolower(order);
+
+			if (order == 'a') {
+				asc_else_desc = true;
+			} else {
+				asc_else_desc = false;
+			}
+
+			if (type == 'b') {
+				// bubble sort
+				ja.bsort(asc_else_desc);
+			} else if (type == 'i') {
+				// insertion sort
+				ja.isort(asc_else_desc);
+			}
         } else if (cmd == "-1") {
             exit(0); // quit
         }
