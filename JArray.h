@@ -47,12 +47,13 @@ private:
     int  elements;       // number of elements, next available position
     bool autosize;
     bool autocollapse;
-    int  chunk_size;     // size of chunks to use during realloc
 
+	// {{{ is_valid_val
     /*
      * Is the given value valid?
      */
     bool is_valid_val(const T value) { return true; };
+	// }}}
 
 	// {{{ is_assignable_index
     /*
@@ -105,7 +106,7 @@ private:
 
 public:
 
-	// {{{ JArray<T>::JArray
+	// {{{ JArray
     /**
      * Create a new array object.
      *
@@ -127,8 +128,6 @@ public:
 		elements = 0;
 
 		numbers = new int[_capacity];
-
-		chunk_size = 5;
 	}
 	// }}}
 
@@ -343,7 +342,7 @@ public:
 				//ss << ",";
 				ss << ", ";
 
-			// every chunk'th except at the beggining or end
+			// every chunk'th except at the begining or end
 			if ((i + 1) != 0 && 0 == ((i + 1) % chunk) && i != (elements - 1)) {
 				ss << endl;
 				//ss << "  "; // indent the next line
