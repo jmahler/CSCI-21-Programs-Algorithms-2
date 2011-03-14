@@ -418,7 +418,7 @@ public:
 	/**
 	 * Output operator for JArray<T> object.
 	 */
-	friend ostream& operator<<(ostream &out, const JArray<T>& ja) {
+	friend ostream& operator<<(ostream& out, const JArray<T>& ja) {
 		out << ja.describe();
 
 		return out;
