@@ -1,0 +1,29 @@
+void shellSort (int list[], int last)
+{
+	increment = last/2
+
+	loop1 increment != 0
+		
+		current = increment
+
+		loop2 current <= last
+
+			tempHold = list[current]
+			iterator = current - increment
+
+			loop3 iterator >= 0 && tempHold < list[iterator]
+
+				list[iterator+increment] = list[iterator]
+				iterator = iterator - increment
+
+			end loop3
+
+			list[iterator+increment] = tempHold
+			current++
+
+		end loop2
+
+		increment = increment/2
+
+	end loop1
+}

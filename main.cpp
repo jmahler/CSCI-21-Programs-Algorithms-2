@@ -188,7 +188,6 @@ int main(int argc, char** argv)
         } else if (cmd == "n") {
             cout << "array has " << ja.size() << " elements" << endl;
         } else if (cmd == "p") {
-            //cout << ja.describe() << endl;
             cout << ja << endl;
         } else if (cmd == "s") {
 			// sort
@@ -209,9 +208,11 @@ int main(int argc, char** argv)
 
 			if (type == 'b') {
 				// bubble sort
+            	cout << "bubble sorting in " << ((asc_else_desc) ? "ascending" : "descending") << " order" << endl;
 				ja.bsort(asc_else_desc);
 			} else if (type == 'i') {
 				// insertion sort
+            	cout << "insertion sorting in " << ((asc_else_desc) ? "ascending" : "descending") << " order" << endl;
 				ja.isort(asc_else_desc);
 			}
         } else if (cmd == "-1") {
