@@ -1,16 +1,14 @@
 
-#include <string>
-#include <sstream>
-
 #include <iostream>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
 /**
  *
- * JArray provides a simple dynamic array for storing integers.
- * It includes features such as length validation and dynamic expansion
- * and collapsing.
+ * JArray provides a simple dynamic array with sorting functions
+ * and a utility to test it using commands from a file.
  *
  * <h2>Synopsis</h2>
  *
@@ -27,7 +25,7 @@ using namespace std;
  *
  *  err = a.insert(val, index);
  *  err = a.replace(val, index);
-
+ *
  *  err = a.remove(index);
  *
  *  err = a.push(val);
@@ -38,9 +36,11 @@ using namespace std;
  *
  *  str = a.describe();
  *  
+ *  // Insertion Sort
  *  a.isort(true);   // ascending
  *  a.isort(false);  // descending
  *
+ *  // Bubble Sort
  *  a.bsort(true);
  *  a.bsort(false);
  *
@@ -366,7 +366,7 @@ public:
 
 	// {{{ bsort
     /**
-     * Performs a bubble sort of the array.
+     * Performs a Bubble Sort of the array.
 	 *
 	 * @arg sort ascending (true) else descending(false)
      */
@@ -392,7 +392,7 @@ public:
 
 	// {{{ isort
     /**
-     * Performs an insertion sort of the array.
+     * Performs an Insertion Sort of the array.
 	 *
 	 * @arg sort ascending (true) else descending(false)
      */

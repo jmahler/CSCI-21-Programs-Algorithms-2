@@ -188,32 +188,36 @@ int main(int argc, char** argv)
         } else if (cmd == "n") {
             cout << "array has " << ja.size() << " elements" << endl;
         } else if (cmd == "p") {
+			// print
             cout << ja << endl;
         } else if (cmd == "s") {
 			// sort
-			char type;
-			char order;
+
+			string type;
+			string order;
 			bool asc_else_desc; // ascending else descending
 
             ss >> type;
             ss >> order;
-			type = tolower(type);
-			order = tolower(order);
+			type[0] = tolower(type[0]);
+			order[0] = tolower(order[0]);
 
-			if (order == 'a') {
-				asc_else_desc = true;
-			} else {
+			if (order[0] == 'd') {
 				asc_else_desc = false;
+			} else {
+				asc_else_desc = true;
 			}
 
-			if (type == 'b') {
+			if (type[0] == 'b') {
 				// bubble sort
             	cout << "bubble sorting in " << ((asc_else_desc) ? "ascending" : "descending") << " order" << endl;
 				ja.bsort(asc_else_desc);
-			} else if (type == 'i') {
+			} else if (type[0] == 'i') {
 				// insertion sort
             	cout << "insertion sorting in " << ((asc_else_desc) ? "ascending" : "descending") << " order" << endl;
 				ja.isort(asc_else_desc);
+			} else {
+            	cout << "unknown sort type '" << type << "'" << endl;
 			}
         } else if (cmd == "-1") {
             exit(0); // quit
