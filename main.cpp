@@ -147,15 +147,15 @@ int main(int argc, char** argv)
         } else if (cmd == "g") {
             // get a value
             int val, idx;
-            bool err;
+            bool ok;
 
             ss >> idx;
 
-            err = ja.get(idx, val);
-            if (err)
-                cout << idx << " is an invalid index" << endl;
-            else
+            ok = ja.get(idx, val);
+            if (ok)
                 cout << "value at " << idx << ": " << val << endl;
+            else
+                cout << idx << " is an invalid index" << endl;
         } else if (cmd == "a") {
             // append a value
             int val;
