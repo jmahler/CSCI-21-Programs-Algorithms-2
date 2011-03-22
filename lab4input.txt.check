@@ -1,0 +1,41 @@
+0/25
+
+99 added
+23 added
+5 added
+101 added
+2 added
+0 added
+14 added
+bubble sorting in ascending order
+7/25
+0, 2, 5, 14, 23, 99, 101
+array has 7 elements
+array capacity is 25
+782 added
+44 added
+42 added
+array has 10 elements
+array capacity is 25
+91 added
+value at 0 removed
+10 is an invalid index
+91 added
+insertion sorting in ascending order
+11/25
+2, 5, 14, 23, 42, 44, 91, 91, 99, 101, 
+782
+10 inserted at index 0
+20 inserted at index 2
+value at 0: 10
+value at 10: 782
+value at 9 removed
+value at 8 removed
+value at 7 removed
+9 is an invalid index
+8 is an invalid index
+value at 7: 782
+97 added
+bubble sorting in descending order
+9/25
+782, 97, 91, 44, 42, 23, 20, 10, 5
