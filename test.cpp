@@ -11,7 +11,128 @@ int main(int argc, char** argv)
 {
     int val;
 
-    // {{{ fixed size tests
+    // {{{ replace()
+    {
+    JArray<int> ja0(2, true);
+    assert(-1 == ja0.replace(1, 0));
+    assert(-1 != ja0.insert(1, 0));
+    assert(-1 == ja0.replace(2, 1));
+	// replace cannot expand the array
+    }
+    // }}}
+
+    // {{{ insert(), autosize
+    {
+    JArray<int> ja(2, true);
+
+	// invalid indexes
+    assert(-1 == ja.insert(123,  1));
+    assert(-1 == ja.insert(123, -1));
+
+	for (int i = 0; i < 10; i++) {
+    	assert(-1 != ja.insert(i, i));
+	}
+	for (int i = 0; i < 10; i++) {
+		assert(i == ja.get(i));
+	}
+    }
+    // }}}
+
+    // {{{ insert(), fixed size
+    {
+    JArray<int> ja(2, false);
+	int val;
+
+	// invalid indexes
+    assert(-1 == ja.insert(123,  1));
+    assert(-1 == ja.insert(123, -1));
+
+	for (int i = 0; i < 2; i++) {
+    	assert(-1 != ja.insert(i, i));
+	}
+	for (int i = 0; i < 2; i++) {
+		assert(i == ja.get(i));
+	}
+	for (int i = 2; i < 20; i++) {
+		assert(! ja.get(i, val));
+	}
+
+    }
+    // }}}
+
+    // {{{ remove(), autosize
+    {
+    JArray<int> ja0(2, true);
+	int val;
+
+	assert(0 == ja0.size());
+
+	// can't remove invalid indexes
+    assert(-1 == ja0.remove(1));
+    assert(-1 == ja0.remove(0));
+
+	// add some, remove some
+    assert(-1 != ja0.insert(1, 0));
+	assert(1 == ja0.size());
+
+    assert(-1 != ja0.insert(2, 1));
+	assert(2 == ja0.size());
+
+	ja0.get(1, val);
+	assert(2 == val);
+
+    assert(-1 != ja0.remove(1));
+	assert(1 == ja0.size());
+
+	ja0.get(0, val);
+	assert(1 == val);
+
+    assert(-1 != ja0.remove(0));
+	assert(0 == ja0.size());
+    }
+    // }}}
+
+    // {{{ get(index)
+    {
+    JArray<int> ja(2, true);
+
+    assert(-1 != ja.insert(1, 0));
+    assert(-1 != ja.insert(2, 0));
+
+	// [2, 1]
+	assert(2 == ja.get(0));
+	assert(1 == ja.get(1));
+
+	try {
+		ja.get(2);  // invalid index	
+
+		assert(false); // should never get here
+	} catch (InvalidIndexError err) {
+		assert(true);
+	}
+
+    }
+    // }}}
+
+    // {{{ get(index, val)
+    {
+    JArray<int> ja0(1, false);
+    int x;
+
+    assert(! ja0.get(0, x));
+    assert(! ja0.get(2, x));
+
+    ja0.push(12);
+    assert(ja0.get(0, x));
+    assert(12 == x);
+
+    for (int i = 1; i < 10; i++) {
+        assert(! ja0.get(i, x));
+    }
+    }
+    // }}}
+
+    // {{{ misc, fixed size
     {
     JArray<int> ja0(5, false);
     assert(5 == ja0.capacity());
@@ -80,7 +201,7 @@ int main(int argc, char** argv)
     JArray<int> ja0(1, false);
     assert(1 == ja0.capacity());
     assert(0 == ja0.size());
-    assert(-1 != ja0.replace(0, 0));
+    //assert(-1 != ja0.replace(0, 0));
     assert(-1 != ja0.insert(0, 0));  // discards a value
     assert(-1 != ja0.pop());
     assert(-1 != ja0.push(0));
@@ -233,45 +354,33 @@ int main(int argc, char** argv)
     }
     // }}}
 
-    // {{{ get
-    {
-    JArray<int> ja0(1, false);
-    int x;
-
-    assert(! ja0.get(0, x));
-    assert(! ja0.get(2, x));
-
-    ja0.push(12);
-    assert(ja0.get(0, x));
-    assert(12 == x);
-
-    for (int i = 1; i < 10; i++) {
-        assert(! ja0.get(i, x));
-    }
-    }
-    // }}}
-
-    // {{{ negative values
+    // {{{ values
     {
     JArray<int> ja(5, false);
+
     assert(-1 != ja.insert(-1, 0));
     assert(-1 != ja.insert(-2, 1));
     assert(-1 != ja.push(-3));
 
     assert(ja.get(0, val));
     assert(-1 == val);
+	assert(-1 == ja.get(0));
+
     assert(ja.get(1, val));
     assert(-2 == val);
+	assert(-2 == ja.get(1));
+
     assert(ja.get(2, val));
     assert(-3 == val);
+	assert(-3 == ja.get(2));
     }
     // }}}
 
     // {{{ memory leak test
     /*
      * This section will create and destroy a large number of objects.
-     * A good way to monitor the memory consumption will this is running
-     * is by using "top".
+     * A good way to monitor the memory consumption is by using the
+	 * program "top"
      */
     // tested OK 2/23/11
     // tested OK 3/8/11
@@ -286,7 +395,7 @@ int main(int argc, char** argv)
     */
     // }}}
 
-    // {{{ sort
+    // {{{ insertion sort, ascending
     {
     JArray<int> ja(5, false);
 	// 1 3 5 7
@@ -306,7 +415,9 @@ int main(int argc, char** argv)
     assert(ja.get(3, val));
     assert(7 == val);
     }
+	// }}}
 
+	// {{{ insertion sort, descending
     {
     JArray<int> ja(5, false);
 	// 1 3 5 7
@@ -326,7 +437,9 @@ int main(int argc, char** argv)
     assert(ja.get(3, val));
     assert(1 == val);
     }
+	// }}}
 
+	// {{{ bubble sort, ascending
     {
     JArray<int> ja(5, true);
 	// 1 3 5 7
@@ -346,7 +459,9 @@ int main(int argc, char** argv)
     assert(ja.get(3, val));
     assert(7 == val);
     }
+	// }}}
 
+	// {{{ bubble sort, descending
     {
     JArray<int> ja(5, false);
 	// 1 3 5 7

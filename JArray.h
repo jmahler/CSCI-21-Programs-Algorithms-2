@@ -1,9 +1,15 @@
 
 #include <iostream>
-#include <sstream>
 #include <string>
 
 using namespace std;
+
+// exception
+/**
+ * InvalidIndexError is thrown by some functions when an invalid
+ * index is requested.
+ */
+struct InvalidIndexError {};
 
 /**
  *
@@ -23,6 +29,12 @@ using namespace std;
  *
  *  errp = a.get(index, val);
  *
+ *  try {
+ *      val a.get(index);
+ *  } catch (InvalidIndexError err) {
+ *		// error!
+ *  }
+ *
  *  err = a.insert(val, index);
  *  err = a.replace(val, index);
  *
@@ -34,8 +46,6 @@ using namespace std;
  *  val = a.capacity();
  *  val = a.size();
  *
- *  str = a.describe();
- *  
  *  // Insertion Sort
  *  a.isort(true);   // ascending
  *  a.isort(false);  // descending
@@ -57,62 +67,6 @@ private:
     int  elements;       // number of elements, next available position
     bool autosize;
     bool autocollapse;
-
-	// {{{ is_valid_val
-    /*
-     * Is the given value valid?
-     */
-    bool is_valid_val(const T value) { return true; };
-	// }}}
-
-	// {{{ is_assignable_index
-    /*
-     * Is the requested index valid?
-     * Returns true if a value could be retrieved or assigned
-     *  to the given index.
-     */
-    bool is_assignable_index(const int index)
-	{
-		// negative indexs are invalid
-		if (index < 0)
-			return false;
-
-		// Cant add an element beyond the last one
-		// and there are no valid elements beyond the last one
-		if (index > elements)
-			return false;
-
-		if (index < elements)
-			return true;
-
-		// index == elements
-
-		if (elements == _capacity) {  // were out of room
-			if (autosize) {
-				// we could make room
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		// index == elments && elements < _capacity
-
-		return true;
-	}
-	// }}}
-
-	// {{{ is_gettable_index
-    /*
-     * Could a value be retrieved from the given index?
-     *
-     * @returns true if yes, false otherwise
-     */
-    bool is_gettable_index(const int index)
-	{
-    	return (index >= 0 && index < elements);
-	}
-	// }}}
 
 public:
 
@@ -143,7 +97,7 @@ public:
 
     ~JArray() { delete[] numbers; };
 
-	// {{{ get
+	// {{{ get(index, &val)
     /**
      * Retrieves the element at the given index
      * and assigns to the reference val.
@@ -152,11 +106,30 @@ public:
      */
 	bool get(const int index, T& val)
 	{
-		if (! is_gettable_index(index))
-			return false;
+		if (index >= 0 && index < elements) {
+			val = numbers[index];
+			return true;  // OK
+		}
 
-		val = numbers[index];
-		return true; // OK
+		return false; // error: invalid index
+	}
+	// }}}
+
+	// {{{ get(index)
+    /**
+     * Retrieves the element at the given index.
+     *
+     * @returns value on success, throws InvalidIndexError on error
+	 *
+	 * @exception InvalidIndexError
+     */
+	T get(const int index)
+	{
+		if (index >= 0 && index < elements) {
+			return numbers[index];
+		}
+
+		throw InvalidIndexError();
 	}
 	// }}}
 
@@ -176,12 +149,15 @@ public:
      */
 	int insert(const T val, const int index)
 	{
-		if (! is_valid_val(val))
-			return -1;
+		// Assuming we could autosize if needed (will be checked later)
+		//  is the requested index valid?
+		if (index >= 0 && index <= elements) {
+			// probably OK, autosize will be checked later
+		} else {
+			return -1;  // error: invalid index
+		}
 
-		if (! is_assignable_index(index))
-			return -1;
-
+		// Autosize if necessary and possible
 		if (elements == _capacity) { // were out of room
 			if (autosize) {
 				// make some room
@@ -197,20 +173,24 @@ public:
 				delete[] numbers;
 
 				numbers = new_numbers;
+			} else {
+				return -1;  // error: no more room
 			}
 		}
 
-		// we could'nt make any room
+		// we could not make any room
 		if (index >= _capacity)
-			return -1;
+			return -1;  // error
 
 		// The end is different depending on whether we have
 		// room or if elements are being discarded.
 		int end;
 		if (_capacity > elements) {
+			// no elements will be discarded
 			end = elements;
 			elements++;
 		} else {
+			// an element will be discarded (over written)
 			end = _capacity - 1;
 		}
 
@@ -218,6 +198,7 @@ public:
 		for (int j = end; j > index; j--)
 			numbers[j] = numbers[j-1];
 
+		// finally assign the val
 		numbers[index] = val;
 
 		return 0; // OK
@@ -232,8 +213,11 @@ public:
      */
 	int remove(const int index)
 	{
-		if (! is_assignable_index(index) || ! is_gettable_index(index))
-			return -1;
+		if (index >= 0 && index < elements) {
+			// OK, valid index
+		} else {
+			return -1;  // error
+		}
 
 		for (int j = index; j < elements; j++)
 			numbers[j] = numbers[j+1];
@@ -265,18 +249,19 @@ public:
     /**
      *
      * Replace the value at the given index with the specified value.
-     *
+	 *
      * @returns -1 on error
+	 *
+	 * It will not expand the array create new elements it can only
+	 * replace already present elements.
+	 * See insert() if you want to add elements.
      */
 	int replace(const T val, const int index)
 	{
-		if (! is_valid_val(val))
-			return -1;
-
-		if (! is_assignable_index(index))
-			return -1;
-
-		numbers[index] = val;
+		if (index >= 0 && index < elements)
+			numbers[index] = val;
+		else
+			return -1;  // error
 
 		return 0; // OK
 	}
@@ -325,43 +310,6 @@ public:
      * @returns number of elements in array
      */
     int size() { return elements; };
-	// }}}
-
-	// {{{ describe
-    /**
-     * @returns a string describing the array
-     *
-     * Values included are: capacity, number of elements, and all the values.
-     */
-    string describe() const
-	{
-		static const int chunk = 10;  // values per line
-
-		stringstream ss;
-
-		ss << elements << "/" << _capacity << endl;
-
-		//ss << " ["; // start of array
-		for (int i = 0; i < elements; i++) {
-
-			//ss << " " << numbers[i];
-			ss << numbers[i];
-
-			// for all but the last element
-			if (i != (elements - 1))
-				//ss << ",";
-				ss << ", ";
-
-			// every chunk'th except at the begining or end
-			if ((i + 1) != 0 && 0 == ((i + 1) % chunk) && i != (elements - 1)) {
-				ss << endl;
-				//ss << "  "; // indent the next line
-			}
-		}
-		//ss << " ]"; // end of array
-
-		return ss.str();
-	}
 	// }}}
 
 	// {{{ bsort
@@ -419,7 +367,28 @@ public:
 	 * Output operator for JArray<T> object.
 	 */
 	friend ostream& operator<<(ostream& out, const JArray<T>& ja) {
-		out << ja.describe();
+		static const int chunk = 10;  // number of values per line
+
+		out << ja.elements << "/" << ja._capacity << endl;
+
+		//out << " ["; // start of array
+		for (int i = 0; i < ja.elements; i++) {
+
+			//out << " " << numbers[i];
+			out << ja.numbers[i];
+
+			// for all but the last element
+			if (i != (ja.elements - 1))
+				//out << ",";
+				out << ", ";
+
+			// every chunk'th except at the begining or end
+			if ((i + 1) != 0 && 0 == ((i + 1) % chunk) && i != (ja.elements - 1)) {
+				out << endl;
+				//out << "  "; // indent the next line
+			}
+		}
+		//out << " ]"; // end of array
 
 		return out;
 	}
