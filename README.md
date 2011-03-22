@@ -44,9 +44,9 @@ This project was completed to satisfy [project 4][lab4]
 in the class "Programs and Algorithms 2".
 This class was taught by [Boyd Trolinger][boyd] during the Spring of
 2011 at [Butte College][butte].
-This project is publicly hosted on [Github][gith] under the name [CSCI-21-Programs-Algorithms-2-project04][prj].
+This project is publicly hosted on [Github][gith] under the name [CSCI-21-Programs-Algorithms-2-project04][prj4].
 
- [lab3]: http://foobt.net/csci21/S3513_11/labs/lab4.html
+ [lab4]: http://foobt.net/csci21/S3513_11/labs/lab4.html
  [butte]: http://www.butte.edu
  [boyd]: http://www.foobt.net
  [prj4]: https://github.com/jmahler/CSCI-21-Programs-Algorithms-2-project04
