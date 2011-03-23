@@ -18,7 +18,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <ctype.h>  // tolower
+#include <cctype>  // tolower()
 
 #include "JArray.h"
 
