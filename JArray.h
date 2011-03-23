@@ -4,7 +4,6 @@
 
 using namespace std;
 
-// exception
 /**
  * InvalidIndexError is thrown by some functions when an invalid
  * index is requested.
@@ -61,12 +60,11 @@ struct InvalidIndexError {};
 template<class T>
 class JArray {
 private:
-    T* numbers;
-    int  _capacity;
-    // _capacity cannot be named capacity because it conflicts with capacity()
-    int  elements;       // number of elements, next available position
-    bool autosize;
-    bool autocollapse;
+    T* _numbers;
+    int  _capacity;     // current capacity, can vary if autosize on
+    int  _elements;      // number of elements, next available position
+    bool _autosize;      // allow autosizing true/false
+    bool _autocollapse;  // allow autocollapsing true/false
 
 public:
 
@@ -79,23 +77,23 @@ public:
      *
      * When autocollapse is on the array will be collapsed as needed.
      */
-	JArray(int __capacity=5, bool _autosize=false, bool _autocollapse=false)
+	JArray(int capacity=5, bool autosize=false, bool autocollapse=false)
 	{
-		if (__capacity < 0)
+		if (capacity < 0)
 			_capacity = 0;
 		else
-			_capacity = __capacity;
+			_capacity = capacity;
 
-		autosize = _autosize;
-		autocollapse = _autocollapse;
+		_autosize = autosize;
+		_autocollapse = autocollapse;
 
-		elements = 0;
+		_elements = 0;
 
-		numbers = new T[_capacity];
+		_numbers = new T[_capacity];
 	}
 	// }}}
 
-    ~JArray() { delete[] numbers; };
+    ~JArray() { delete[] _numbers; };
 
 	// {{{ get(index, &val)
     /**
@@ -106,8 +104,8 @@ public:
      */
 	bool get(const int index, T& val)
 	{
-		if (index >= 0 && index < elements) {
-			val = numbers[index];
+		if (index >= 0 && index < _elements) {
+			val = _numbers[index];
 			return true;  // OK
 		}
 
@@ -125,8 +123,8 @@ public:
      */
 	T get(const int index)
 	{
-		if (index >= 0 && index < elements) {
-			return numbers[index];
+		if (index >= 0 && index < _elements) {
+			return _numbers[index];
 		}
 
 		throw InvalidIndexError();
@@ -151,28 +149,28 @@ public:
 	{
 		// Assuming we could autosize if needed (will be checked later)
 		//  is the requested index valid?
-		if (index >= 0 && index <= elements) {
+		if (index >= 0 && index <= _elements) {
 			// probably OK, autosize will be checked later
 		} else {
 			return -1;  // error: invalid index
 		}
 
 		// Autosize if necessary and possible
-		if (elements == _capacity) { // were out of room
-			if (autosize) {
+		if (_elements == _capacity) { // were out of room
+			if (_autosize) {
 				// make some room
 				int new_capacity = (_capacity > 0) ? _capacity*2 : 2;
 
 				T* new_numbers = new T[new_capacity];
 				_capacity = new_capacity;
 
-				for (int i = 0; i < elements; i++) {
-					new_numbers[i] = numbers[i];
+				for (int i = 0; i < _elements; i++) {
+					new_numbers[i] = _numbers[i];
 				}
 
-				delete[] numbers;
+				delete[] _numbers;
 
-				numbers = new_numbers;
+				_numbers = new_numbers;
 			} else {
 				return -1;  // error: no more room
 			}
@@ -185,10 +183,10 @@ public:
 		// The end is different depending on whether we have
 		// room or if elements are being discarded.
 		int end;
-		if (_capacity > elements) {
+		if (_capacity > _elements) {
 			// no elements will be discarded
-			end = elements;
-			elements++;
+			end = _elements;
+			_elements++;
 		} else {
 			// an element will be discarded (over written)
 			end = _capacity - 1;
@@ -196,10 +194,10 @@ public:
 
 		// shift all previous elements
 		for (int j = end; j > index; j--)
-			numbers[j] = numbers[j-1];
+			_numbers[j] = _numbers[j-1];
 
 		// finally assign the val
-		numbers[index] = val;
+		_numbers[index] = val;
 
 		return 0; // OK
 	}
@@ -213,32 +211,32 @@ public:
      */
 	int remove(const int index)
 	{
-		if (index >= 0 && index < elements) {
+		if (index >= 0 && index < _elements) {
 			// OK, valid index
 		} else {
 			return -1;  // error
 		}
 
-		for (int j = index; j < elements; j++)
-			numbers[j] = numbers[j+1];
+		for (int j = index; j < _elements; j++)
+			_numbers[j] = _numbers[j+1];
 
-		elements--;
+		_elements--;
 
 		/* When there is atleast one elment and the capacity is twice as
 		 * large as the number of elements it will be collapsed to the
 		 * number of elements.
 		 */
-		if (autocollapse && (elements > 0) && 0 == (_capacity % elements*2)) {
-			T* new_numbers = new T[elements];
-			_capacity = elements;
+		if (_autocollapse && (_elements > 0) && 0 == (_capacity % _elements*2)) {
+			T* new_numbers = new T[_elements];
+			_capacity = _elements;
 
-			for (int i = 0; i < elements; i++) {
-				new_numbers[i] = numbers[i];
+			for (int i = 0; i < _elements; i++) {
+				new_numbers[i] = _numbers[i];
 			}
 
-			delete[] numbers;
+			delete[] _numbers;
 
-			numbers = new_numbers;
+			_numbers = new_numbers;
 		}
 
     	return 0; // OK
@@ -258,8 +256,8 @@ public:
      */
 	int replace(const T val, const int index)
 	{
-		if (index >= 0 && index < elements)
-			numbers[index] = val;
+		if (index >= 0 && index < _elements)
+			_numbers[index] = val;
 		else
 			return -1;  // error
 
@@ -276,7 +274,7 @@ public:
      */
 	int push(const T val)
 	{
-    	return insert(val, elements);
+    	return insert(val, _elements);
 	}
 	// }}}
 
@@ -288,7 +286,7 @@ public:
      */
 	int pop()
 	{
-		return remove((elements - 1));
+		return remove((_elements - 1));
 	}
 	// }}}
 
@@ -309,7 +307,7 @@ public:
     /**
      * @returns number of elements in array
      */
-    int size() { return elements; };
+    int size() { return _elements; };
 	// }}}
 
 	// {{{ bsort
@@ -322,15 +320,15 @@ public:
 	{
 		bool swapped;
 		int i, key, length;
-		length = elements;
+		length = _elements;
 
 		do {
 			swapped = false;
 			for (i = 1; i < length; i++) {
-				key = numbers[i];
-				if (asc_else_desc ? (numbers[i-1] > key) : (numbers[i-1] < key)) {
-					numbers[i] = numbers[i-1];
-					numbers[i-1] = key;
+				key = _numbers[i];
+				if (asc_else_desc ? (_numbers[i-1] > key) : (_numbers[i-1] < key)) {
+					_numbers[i] = _numbers[i-1];
+					_numbers[i-1] = key;
 					swapped = true;
 				}
 			}
@@ -347,17 +345,17 @@ public:
 	void isort(const bool asc_else_desc=true)
 	{
 		int i, j, key, length;
-		length = elements;
+		length = _elements;
 
 		for (i = 1; i < length; i++) {
-			key = numbers[i];
+			key = _numbers[i];
 			for (j = i-1; j >= 0; j--) {
-				if (asc_else_desc ? (numbers[j] < key) : (numbers[j] > key))
+				if (asc_else_desc ? (_numbers[j] < key) : (_numbers[j] > key))
 					break;
 
-				numbers[j+1] = numbers[j];
+				_numbers[j+1] = _numbers[j];
 			}
-			numbers[j+1] = key;
+			_numbers[j+1] = key;
 		}
 	}
 	// }}}
@@ -369,21 +367,21 @@ public:
 	friend ostream& operator<<(ostream& out, const JArray<T>& ja) {
 		static const int chunk = 10;  // number of values per line
 
-		out << ja.elements << "/" << ja._capacity << endl;
+		out << ja._elements << "/" << ja._capacity << endl;
 
 		//out << " ["; // start of array
-		for (int i = 0; i < ja.elements; i++) {
+		for (int i = 0; i < ja._elements; i++) {
 
 			//out << " " << numbers[i];
-			out << ja.numbers[i];
+			out << ja._numbers[i];
 
 			// for all but the last element
-			if (i != (ja.elements - 1))
+			if (i != (ja._elements - 1))
 				//out << ",";
 				out << ", ";
 
 			// every chunk'th except at the begining or end
-			if ((i + 1) != 0 && 0 == ((i + 1) % chunk) && i != (ja.elements - 1)) {
+			if ((i + 1) != 0 && 0 == ((i + 1) % chunk) && i != (ja._elements - 1)) {
 				out << endl;
 				//out << "  "; // indent the next line
 			}

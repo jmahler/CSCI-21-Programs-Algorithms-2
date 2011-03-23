@@ -8,8 +8,8 @@
  * at <a href="http://www.butte.edu">Butte College</a> during Spring 2011.
  *
  * Detailed application requirements are available
- * at [<a href="http://foobt.net/csci21/S3513_11/labs/lab4.html">csci21/S3513_11/labs/lab4</a>]
- * and duplicated with this source [lab4.html].
+ * at [<a href="http://foobt.net/csci21/S3513_11/labs/lab4.html">csci21/S3513_11/labs/lab4</a>, <a href="http://foobt.net/csci21/S3513_11/labs/lab3.html">csci21/S3513_11/labs/lab3</a>]
+ * and duplicated with this source [lab3.html, lab4.html].
  *
  * @author  Jeremiah Mahler <jmmahler@gmail.com>
  */

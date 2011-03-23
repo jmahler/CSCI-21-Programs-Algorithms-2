@@ -22,16 +22,22 @@ JArray.o: JArray.cpp JArray.h
 # The check file should be updated and checked manually.
 #lab4input.txt.check: main lab4input.txt
 #	./main > $@
+#lab3input.txt.check: main lab3input.txt
+#	./main lab3input.txt > $@
 
 lab4input.txt.out: main lab4input.txt
 	./main > $@
 
+lab3input.txt.out: lab3input.txt main
+	./main $< > $@
+
 # Run 'check' to run the unit tests and to check for
 # differences between the check file (lab4input.txt.check).
-check: lab4input.txt.out lab4input.txt.check test
+check: test lab4input.txt.out lab4input.txt.check lab3input.txt.out lab3input.txt.check
 	./test
 	# OK if diff shows no differences
 	diff lab4input.txt.out lab4input.txt.check
+	diff lab3input.txt.out lab3input.txt.check
 
 clean:
 	-rm -f main test
