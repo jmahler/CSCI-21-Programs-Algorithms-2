@@ -113,7 +113,7 @@ int main(int argc, char** argv)
 
     JArray<int> ja(capacity, autosize);
 
-    // all the rest of thie lines
+    // all the rest of the lines
     string line;
     while (getline(from, line)) {
 
