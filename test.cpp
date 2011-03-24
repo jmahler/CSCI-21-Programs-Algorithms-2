@@ -326,35 +326,6 @@ int main(int argc, char** argv)
     }
     // }}}
 
-    // {{{ autocollapse test
-    {
-    JArray<int> ja0(5, true, true);
-
-    // add a bunch of values
-    for (int i = 0; i < 250; i++) {
-        ja0.insert(i, i);
-    }
-
-    assert(250 <= ja0.capacity());
-    assert(250 == ja0.size());
-
-    // remove atleast half the elements
-    for (int i = 0; i < 200; i++) {
-        ja0.pop();
-    }
-
-    // all the previously stored values should be the same
-    for (int i = 0; i < (250 - 200); i++) {
-        assert(ja0.get(i, val));
-        assert(val == i);
-    }
-
-    // has the ccapacity been decreased?
-    assert(ja0.capacity() < 200);
-    assert((250 - 200) == ja0.size());
-    }
-    // }}}
-
     // {{{ values
     {
     JArray<int> ja(5, false);

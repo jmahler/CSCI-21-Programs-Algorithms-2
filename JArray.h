@@ -61,7 +61,6 @@ private:
     int  _capacity;     // current capacity, can vary if autosize on
     int  _elements;      // number of elements, next available position
     bool _autosize;      // allow autosizing true/false
-    bool _autocollapse;  // allow autocollapsing true/false
 
 public:
 
@@ -73,9 +72,8 @@ public:
      * expanded as needed to accommodate the number of elements.
 	 * When off the array will have a fixed maximum capacity.
      *
-     * When autocollapse is on the array will be collapsed as needed.
      */
-	JArray(int capacity=5, bool autosize=false, bool autocollapse=false)
+	JArray(int capacity=5, bool autosize=false)
 	{
 		if (capacity < 0)
 			_capacity = 0;
@@ -83,7 +81,6 @@ public:
 			_capacity = capacity;
 
 		_autosize = autosize;
-		_autocollapse = autocollapse;
 
 		_elements = 0;
 
@@ -218,24 +215,6 @@ public:
 			_numbers[j] = _numbers[j+1];
 
 		_elements--;
-
-		/* autocollapse:
-		 * When there is atleast one elment and the capacity is twice as
-		 * large as the number of elements it will be collapsed to the
-		 * number of elements.
-		 */
-		if (_autocollapse && (_elements > 0) && 0 == (_capacity % _elements*2)) {
-			T* new_numbers = new T[_elements];
-			_capacity = _elements;
-
-			for (int i = 0; i < _elements; i++) {
-				new_numbers[i] = _numbers[i];
-			}
-
-			delete[] _numbers;
-
-			_numbers = new_numbers;
-		}
 
     	return 0; // OK
 	}
