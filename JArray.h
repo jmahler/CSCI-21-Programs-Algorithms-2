@@ -13,6 +13,9 @@ struct InvalidIndexError {};
  *
  * JArray provides a simple dynamic array with sorting functions.
  *
+ * In general the API tries to be similar to that for vectors in the
+ * standard library although it does not support iterators.
+ *
  * <h2>Synopsis</h2>
  *
  * @code
@@ -26,21 +29,25 @@ struct InvalidIndexError {};
  *  errp = a.get(index, val);
  *
  *  try {
- *      val a.get(index);
+ *      val = a.at(index);
  *  } catch (InvalidIndexError err) {
  *      // error!
  *  }
  *
- *  err = a.insert(val, index);
- *  err = a.replace(val, index);
+ *  err = a.insert(index, val);
+ *  err = a.replace(index, val);
+ *  err = a.erase(index);
+ *  a.clear();
  *
- *  err = a.remove(index);
- *
- *  err = a.push(val);
- *  a.pop();
+ *  err = a.push_back(val);
+ *  a.pop_back();
  *
  *  val = a.capacity();
  *  val = a.size();
+
+ *  if (a.empty()) {
+ *      // it IS empty
+ *  }
  *
  *  // Insertion Sort
  *  a.isort(true);   // ascending
@@ -68,9 +75,9 @@ public:
     /**
      * Create a new array object.
      *
-     * When autosize is on the capacity of the array
-     * expanded as needed to accommodate the number of elements.
-	 * When off the array will have a fixed maximum capacity.
+     * When autosize is on (true) the capacity of the array
+     * will be expanded as needed to accommodate the number of elements.
+	 * When off (false) the array will have a fixed maximum capacity.
      *
      */
 	JArray(int capacity=5, bool autosize=false)
@@ -108,7 +115,7 @@ public:
 	}
 	// }}}
 
-	// {{{ get(index)
+	// {{{ at(index)
     /**
      * Retrieves the element at the given index.
      *
@@ -116,7 +123,7 @@ public:
 	 *
 	 * @exception InvalidIndexError
      */
-	T get(const int index)
+	T at(const int index)
 	{
 		if (index >= 0 && index < _elements) {
 			return _numbers[index];
@@ -138,9 +145,9 @@ public:
      * A value cannot be inserted at a position greater than one beyond
      * the last most element (no gaps).
      *
-     * See also replace() and push().
+     * See also replace() and push_back().
      */
-	int insert(const T val, const int index)
+	int insert(const int index, const T val)
 	{
 		// If we assume we could autosize if needed (will be checked later)
 		// is the requested index valid?
@@ -197,13 +204,13 @@ public:
 	}
 	// }}}
 
-	// {{{ remove
+	// {{{ erase
     /**
      * Remove the element at the given index (0 offset).
      *
      * @returns 0 on success, -1 on error (invalid index)
      */
-	int remove(const int index)
+	int erase(const int index)
 	{
 		if (index >= 0 && index < _elements) {
 			// OK, valid index
@@ -230,7 +237,7 @@ public:
 	 * elements that are already present.
 	 * See insert() if you want to add elements.
      */
-	int replace(const T val, const int index)
+	int replace(const int index, const T val)
 	{
 		if (index >= 0 && index < _elements)
 			_numbers[index] = val;
@@ -241,9 +248,9 @@ public:
 	}
 	// }}}
 
-	// {{{ push
+	// {{{ push_back
     /**
-     * Inserts a value in the next available slot.
+     * Adds a value to the back of the array.
 	 *
      * @returns 0 on success, -1 on error
 	 *
@@ -252,22 +259,47 @@ public:
 	 *
      * See also (insert()).
      */
-	int push(const T val)
+	int push_back(const T val)
 	{
-    	return insert(val, _elements);
+    	return insert(_elements, val);
 	}
 	// }}}
 
-	// {{{ pop
+	// {{{ pop_back
     /**
-     * Removes the value at the last slot.
+     * Removes one value from the back.
 	 *
 	 * If no values are left nothing is removed and no error is raised.
      */
-	void pop()
+	void pop_back()
 	{
 		if (_elements > 0)
-			remove((_elements - 1));
+			_elements--;
+	}
+	// }}}
+
+	// {{{ empty
+    /**
+     * Tests whether the array is empty or not.
+	 *
+	 * @returns true if empty, false otherwise
+     */
+	bool empty()
+	{
+		if (0 == _elements)
+			return true;
+		// else
+			return false;
+	}
+	// }}}
+
+	// {{{ clear
+    /**
+     * Clear all values from the array.
+     */
+	void clear()
+	{
+		_elements = 0;
 	}
 	// }}}
 

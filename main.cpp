@@ -131,7 +131,7 @@ int main(int argc, char** argv)
             ss >> val;
             ss >> idx;
         
-            err = ja.replace(val, idx);
+            err = ja.replace(idx, val);
             if (-1 == err)
                 cout << idx << " is an invalid index" << endl;
             else
@@ -143,7 +143,7 @@ int main(int argc, char** argv)
             ss >> val;
             ss >> idx;
         
-            err = ja.insert(val, idx);
+            err = ja.insert(idx, val);
             if (-1 == err)
                 cout << idx << " is an invalid index" << endl;
             else
@@ -166,7 +166,7 @@ int main(int argc, char** argv)
 
             ss >> val;
 
-            int err = ja.push(val);
+            int err = ja.push_back(val);
             if (-1 == err)
                 cout << "array is filled to capacity" << endl;
             else
@@ -177,7 +177,7 @@ int main(int argc, char** argv)
 
             ss >> idx;
 
-            int err = ja.remove(idx);
+            int err = ja.erase(idx);
 
             if (-1 == err)
                 cout << idx << " is an invalid index" << endl;

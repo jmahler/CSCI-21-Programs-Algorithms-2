@@ -14,9 +14,9 @@ int main(int argc, char** argv)
     // {{{ replace()
     {
     JArray<int> ja0(2, true);
-    assert(-1 == ja0.replace(1, 0));
-    assert(-1 != ja0.insert(1, 0));
-    assert(-1 == ja0.replace(2, 1));
+    assert(-1 == ja0.replace(0, 1));
+    assert(-1 != ja0.insert(0, 1));
+    assert(-1 == ja0.replace(1, 2));
 	// replace cannot expand the array
     }
     // }}}
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     	assert(-1 != ja.insert(i, i));
 	}
 	for (int i = 0; i < 10; i++) {
-		assert(i == ja.get(i));
+		assert(i == ja.at(i));
 	}
     }
     // }}}
@@ -44,14 +44,14 @@ int main(int argc, char** argv)
 	int val;
 
 	// invalid indexes
-    assert(-1 == ja.insert(123,  1));
-    assert(-1 == ja.insert(123, -1));
+    assert(-1 == ja.insert(1, 123));
+    assert(-1 == ja.insert(-1, 123));
 
 	for (int i = 0; i < 2; i++) {
     	assert(-1 != ja.insert(i, i));
 	}
 	for (int i = 0; i < 2; i++) {
-		assert(i == ja.get(i));
+		assert(i == ja.at(i));
 	}
 	for (int i = 2; i < 20; i++) {
 		assert(! ja.get(i, val));
@@ -60,51 +60,60 @@ int main(int argc, char** argv)
     }
     // }}}
 
-    // {{{ remove(), autosize
+    // {{{ erase(), autosize
     {
     JArray<int> ja0(2, true);
 	int val;
 
 	assert(0 == ja0.size());
 
-	// can't remove invalid indexes
-    assert(-1 == ja0.remove(1));
-    assert(-1 == ja0.remove(0));
+	// can't erase invalid indexes
+    assert(-1 == ja0.erase(1));
+    assert(-1 == ja0.erase(0));
 
-	// add some, remove some
-    assert(-1 != ja0.insert(1, 0));
+	// add some, erase some
+    assert(-1 != ja0.insert(0, 1));
 	assert(1 == ja0.size());
 
-    assert(-1 != ja0.insert(2, 1));
+    assert(-1 != ja0.insert(1, 2));
 	assert(2 == ja0.size());
 
 	ja0.get(1, val);
 	assert(2 == val);
 
-    assert(-1 != ja0.remove(1));
+    assert(-1 != ja0.erase(1));
 	assert(1 == ja0.size());
 
 	ja0.get(0, val);
 	assert(1 == val);
 
-    assert(-1 != ja0.remove(0));
+    assert(-1 != ja0.erase(0));
 	assert(0 == ja0.size());
     }
     // }}}
 
-    // {{{ get(index)
+    // {{{ empty
+    {
+    JArray<int> ja(2, true);
+	assert(ja.empty());
+	ja.push_back(1);
+	assert(! ja.empty());
+	}
+    // }}}
+
+    // {{{ at(index)
     {
     JArray<int> ja(2, true);
 
-    assert(-1 != ja.insert(1, 0));
-    assert(-1 != ja.insert(2, 0));
+    assert(-1 != ja.insert(0, 1));
+    assert(-1 != ja.insert(0, 2));
 
 	// [2, 1]
-	assert(2 == ja.get(0));
-	assert(1 == ja.get(1));
+	assert(2 == ja.at(0));
+	assert(1 == ja.at(1));
 
 	try {
-		ja.get(2);  // invalid index	
+		ja.at(2);  // invalid index	
 
 		assert(false); // should never get here
 	} catch (InvalidIndexError err) {
@@ -122,7 +131,7 @@ int main(int argc, char** argv)
     assert(! ja0.get(0, x));
     assert(! ja0.get(2, x));
 
-    ja0.push(12);
+    ja0.push_back(12);
     assert(ja0.get(0, x));
     assert(12 == x);
 
@@ -144,7 +153,7 @@ int main(int argc, char** argv)
     assert(5 == ja0.capacity());
     assert(5 == ja0.size());
 
-    assert(-1 == ja0.push(666));
+    assert(-1 == ja0.push_back(666));
 
     for (int i = 0; i < 5; i++) {
         assert(ja0.get(i, val));
@@ -153,9 +162,9 @@ int main(int argc, char** argv)
 
     assert(! ja0.get(5, val));
 
-    assert(-1 == ja0.remove(6));
-    assert(-1 == ja0.remove(5));
-    assert(-1 != ja0.remove(2));
+    assert(-1 == ja0.erase(6));
+    assert(-1 == ja0.erase(5));
+    assert(-1 != ja0.erase(2));
 
     assert(4 == ja0.size());
     assert(5 == ja0.capacity());
@@ -167,7 +176,7 @@ int main(int argc, char** argv)
     assert(ja0.get(3, val));
     assert(4 == val);
 
-    assert(-1 != ja0.replace(12, 3));
+    assert(-1 != ja0.replace(3, 12));
     assert(ja0.get(1, val));
     assert(1 == val);
     assert(ja0.get(2, val));
@@ -178,9 +187,9 @@ int main(int argc, char** argv)
     assert(! ja0.get(4, val));
 
     for (int i = 0; i < 4; i++) {
-		ja0.pop();
+		ja0.pop_back();
     }
-    ja0.pop();
+    ja0.pop_back();
 
     assert(0 == ja0.size());
     assert(5 == ja0.capacity());
@@ -193,7 +202,7 @@ int main(int argc, char** argv)
     assert(0 == ja0.size());
     assert(-1 == ja0.replace(0, 0));
     assert(-1 == ja0.insert(0, 0));
-    assert(-1 == ja0.push(0));
+    assert(-1 == ja0.push_back(0));
     }
 
     {
@@ -203,8 +212,8 @@ int main(int argc, char** argv)
     assert(0 == ja0.size());
     //assert(-1 != ja0.replace(0, 0));
     assert(-1 != ja0.insert(0, 0));  // discards a value
-    ja0.pop();
-    assert(-1 != ja0.push(0));
+    ja0.pop_back();
+    assert(-1 != ja0.push_back(0));
     }
     // }}}
 
@@ -213,22 +222,22 @@ int main(int argc, char** argv)
     JArray<int> ja(5, false);
     
     // cant insert beyond the next available (no gaps)
-    assert(-1 == ja.insert(10, 1));
-    assert(-1 != ja.insert(10, 0));
+    assert(-1 == ja.insert(1, 10));
+    assert(-1 != ja.insert(0, 10));
 
-    assert(-1 == ja.insert(66, 2));
-    assert(-1 != ja.insert(66, 1));
+    assert(-1 == ja.insert(2, 66));
+    assert(-1 != ja.insert(1, 66));
 
-    assert(-1 == ja.insert(12, 3));
-    assert(-1 != ja.insert(12, 2));
+    assert(-1 == ja.insert(3, 12));
+    assert(-1 != ja.insert(2, 12));
 
     // [10,  66,  12]
 
-    assert(-1 != ja.insert(9, 0)); 
+    assert(-1 != ja.insert(0, 9)); 
 
     // [9, 10,  66,  12]
 
-    assert(-1 != ja.replace(11, 2));
+    assert(-1 != ja.replace(2, 11));
 
     // [9, 10,  11,  12]
 
@@ -255,32 +264,38 @@ int main(int argc, char** argv)
     
     assert(ja.capacity() <= 2);
 
-    assert(-1 == ja.insert(10, 1));
-    assert(-1 == ja.insert(10, 2));
-    assert(-1 == ja.insert(10, 3));
-    assert(-1 == ja.insert(10, 4));
+	// out of bounds
+    assert(-1 == ja.insert(1, 10));
+    assert(-1 == ja.insert(2, 10));
+    assert(-1 == ja.insert(3, 10));
+    assert(-1 == ja.insert(4, 10));
 
-    assert(-1 != ja.insert(10, 0));
+	// insert one value
+    assert(-1 != ja.insert(0, 10));
 
-    assert(-1 == ja.insert(10, 2));
-    assert(-1 == ja.insert(10, 3));
-    assert(-1 == ja.insert(10, 4));
+	// out of bounds
+    assert(-1 == ja.insert(2, 10));
+    assert(-1 == ja.insert(3, 10));
+    assert(-1 == ja.insert(4, 10));
 
-    assert(-1 != ja.insert(11, 1));
+	// insert another value
+    assert(-1 != ja.insert(1, 11));
 
-    assert(-1 == ja.insert(10, 3));
-    assert(-1 == ja.insert(10, 4));
-    assert(-1 == ja.insert(10, 5));
+	// out of bounds
+    assert(-1 == ja.insert(3, 10));
+    assert(-1 == ja.insert(4, 10));
+    assert(-1 == ja.insert(5, 10));
 
-    assert(-1 != ja.insert(12, 2));
+	// insert another value
+    assert(-1 != ja.insert(2, 12));
 
     // it should have expanded
-
     assert(ja.capacity() > 2);
 
-    assert(-1 == ja.insert(10, 4));
-    assert(-1 == ja.insert(10, 5));
-    assert(-1 == ja.insert(10, 6));
+	// out of bounds
+    assert(-1 == ja.insert(4, 10));
+    assert(-1 == ja.insert(5, 10));
+    assert(-1 == ja.insert(6, 10));
     }
     // }}}
 
@@ -304,9 +319,9 @@ int main(int argc, char** argv)
 
     for (int i = 0; i < 121; i++) {
         if (i % 2) {
-            assert(-1 != ja0.remove(0));
+            assert(-1 != ja0.erase(0));
         } else {
-            ja0.pop();
+            ja0.pop_back();
         }
     }
 
@@ -320,7 +335,7 @@ int main(int argc, char** argv)
     assert(0 == ja0.capacity());
     assert(0 == ja0.size());
     //assert(-1 != ja0.insert(0, 0));
-    assert(-1 != ja0.push(0));
+    assert(-1 != ja0.push_back(0));
     assert(ja0.capacity() > 0);
     assert(ja0.size() > 0);
     }
@@ -330,21 +345,21 @@ int main(int argc, char** argv)
     {
     JArray<int> ja(5, false);
 
-    assert(-1 != ja.insert(-1, 0));
-    assert(-1 != ja.insert(-2, 1));
-    assert(-1 != ja.push(-3));
+    assert(-1 != ja.insert(0, -1));
+    assert(-1 != ja.insert(1, -2));
+    assert(-1 != ja.push_back(-3));
 
     assert(ja.get(0, val));
     assert(-1 == val);
-	assert(-1 == ja.get(0));
+	assert(-1 == ja.at(0));
 
     assert(ja.get(1, val));
     assert(-2 == val);
-	assert(-2 == ja.get(1));
+	assert(-2 == ja.at(1));
 
     assert(ja.get(2, val));
     assert(-3 == val);
-	assert(-3 == ja.get(2));
+	assert(-3 == ja.at(2));
     }
     // }}}
 
@@ -363,7 +378,7 @@ int main(int argc, char** argv)
         JArray<int> jaX(5, true, true);
 
         for (int i = 0; i < 21; i++) {
-            jaX.insert(i, 0);
+            jaX.insert(0, i);
         }
     }
 	*/
@@ -377,19 +392,19 @@ int main(int argc, char** argv)
 
 		while (1) {
 			for (int i = 0; i < 150; i++) {
-				jaX.push(i);
+				jaX.push_back(i);
 			}
 
 			for (int i = 0; i < 50; i++) {
-				jaX.pop();
+				jaX.pop_back();
 			}
 
 			for (int i = 0; i < 100; i++) {
-				jaX.push(i);
+				jaX.push_back(i);
 			}
 
 			for (int i = 0; i < 200; i++) {
-				jaX.pop();
+				jaX.pop_back();
 			}
 		}
 	}
@@ -400,10 +415,10 @@ int main(int argc, char** argv)
     {
     JArray<int> ja(5, false);
 	// 1 3 5 7
-    assert(-1 != ja.insert(7, 0));
-    assert(-1 != ja.insert(3, 1));
-    assert(-1 != ja.push(5));
-    assert(-1 != ja.push(1));
+    assert(-1 != ja.insert(0, 7));
+    assert(-1 != ja.insert(1, 3));
+    assert(-1 != ja.push_back(5));
+    assert(-1 != ja.push_back(1));
 
 	ja.isort(true); // ascending
 
@@ -422,10 +437,10 @@ int main(int argc, char** argv)
     {
     JArray<int> ja(5, false);
 	// 1 3 5 7
-    assert(-1 != ja.insert(7, 0));
-    assert(-1 != ja.insert(3, 1));
-    assert(-1 != ja.push(5));
-    assert(-1 != ja.push(1));
+    assert(-1 != ja.insert(0, 7));
+    assert(-1 != ja.insert(1, 3));
+    assert(-1 != ja.push_back(5));
+    assert(-1 != ja.push_back(1));
 
 	ja.isort(false); // descending
 
@@ -444,10 +459,10 @@ int main(int argc, char** argv)
     {
     JArray<int> ja(5, true);
 	// 1 3 5 7
-    assert(-1 != ja.insert(7, 0));
-    assert(-1 != ja.insert(3, 1));
-    assert(-1 != ja.push(5));
-    assert(-1 != ja.push(1));
+    assert(-1 != ja.insert(0, 7));
+    assert(-1 != ja.insert(1, 3));
+    assert(-1 != ja.push_back(5));
+    assert(-1 != ja.push_back(1));
 
 	ja.bsort(true); // ascending
 
@@ -466,10 +481,10 @@ int main(int argc, char** argv)
     {
     JArray<int> ja(5, false);
 	// 1 3 5 7
-    assert(-1 != ja.insert(7, 0));
-    assert(-1 != ja.insert(3, 1));
-    assert(-1 != ja.push(5));
-    assert(-1 != ja.push(1));
+    assert(-1 != ja.insert(0, 7));
+    assert(-1 != ja.insert(1, 3));
+    assert(-1 != ja.push_back(5));
+    assert(-1 != ja.push_back(1));
 
 	ja.bsort(false); // descending
 
@@ -481,6 +496,24 @@ int main(int argc, char** argv)
     assert(3 == val);
     assert(ja.get(3, val));
     assert(1 == val);
+    }
+    // }}}
+
+    // {{{ clear
+    {
+    JArray<int> ja;
+
+    assert(ja.capacity() > 0);
+    assert(0 == ja.size());
+
+	ja.push_back(1);
+	ja.push_back(2);
+
+    assert(2 == ja.size());
+
+	ja.clear();
+
+    assert(0 == ja.size());
     }
     // }}}
 
