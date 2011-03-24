@@ -178,9 +178,9 @@ int main(int argc, char** argv)
     assert(! ja0.get(4, val));
 
     for (int i = 0; i < 4; i++) {
-        assert(ja0.pop() > -1);
+		ja0.pop();
     }
-    assert(-1 == ja0.pop());
+    ja0.pop();
 
     assert(0 == ja0.size());
     assert(5 == ja0.capacity());
@@ -203,7 +203,7 @@ int main(int argc, char** argv)
     assert(0 == ja0.size());
     //assert(-1 != ja0.replace(0, 0));
     assert(-1 != ja0.insert(0, 0));  // discards a value
-    assert(-1 != ja0.pop());
+    ja0.pop();
     assert(-1 != ja0.push(0));
     }
     // }}}
@@ -306,15 +306,16 @@ int main(int argc, char** argv)
         if (i % 2) {
             assert(-1 != ja0.remove(0));
         } else {
-            assert(-1 != ja0.pop());
+            ja0.pop();
         }
     }
 
     assert(0 == ja0.size());
     }
+    // }}}
 
+    // {{{ autosize with capacity of 0
     {
-    // autosize with capacity of 0
     JArray<int> ja0(0, true);
     assert(0 == ja0.capacity());
     assert(0 == ja0.size());
@@ -376,23 +377,52 @@ int main(int argc, char** argv)
     }
     // }}}
 
-    // {{{ memory leak test
+    // {{{ memory leak test #1
     /*
      * This section will create and destroy a large number of objects.
      * A good way to monitor the memory consumption is by using the
 	 * program "top"
      */
-    // tested OK 2/23/11
+    // tested OK 3/24/11
     // tested OK 3/8/11
-    /*
+    // tested OK 2/23/11
+	// #1
+	/*
     while(1) {
-        JArray<int> jaX(5, true);
+        JArray<int> jaX(5, true, true);
 
         for (int i = 0; i < 21; i++) {
             jaX.insert(i, 0);
         }
     }
-    */
+	*/
+	// }}}
+
+	// {{{ memory leak test #2
+	// tested OK 3/24/11
+	/*
+	{
+        JArray<int> jaX(5, true, true);
+
+		while (1) {
+			for (int i = 0; i < 150; i++) {
+				jaX.push(i);
+			}
+
+			for (int i = 0; i < 50; i++) {
+				jaX.pop();
+			}
+
+			for (int i = 0; i < 100; i++) {
+				jaX.push(i);
+			}
+
+			for (int i = 0; i < 200; i++) {
+				jaX.pop();
+			}
+		}
+	}
+	*/
     // }}}
 
     // {{{ insertion sort, ascending

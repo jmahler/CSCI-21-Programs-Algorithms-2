@@ -5,15 +5,13 @@
 using namespace std;
 
 /**
- * InvalidIndexError is thrown by some functions when an invalid
- * index is requested.
+ * InvalidIndexError may be thrown when an invalid index is requested.
  */
 struct InvalidIndexError {};
 
 /**
  *
- * JArray provides a simple dynamic array with sorting functions
- * and a utility to test it using commands from a file.
+ * JArray provides a simple dynamic array with sorting functions.
  *
  * <h2>Synopsis</h2>
  *
@@ -23,7 +21,6 @@ struct InvalidIndexError {};
  *  JArray<int> a(5, true);  // (capacity, autosize)
  *  int val, index;
  *  int err;
- *  string str;
  *  bool errp;
  *
  *  errp = a.get(index, val);
@@ -31,7 +28,7 @@ struct InvalidIndexError {};
  *  try {
  *      val a.get(index);
  *  } catch (InvalidIndexError err) {
- *		// error!
+ *      // error!
  *  }
  *
  *  err = a.insert(val, index);
@@ -40,7 +37,7 @@ struct InvalidIndexError {};
  *  err = a.remove(index);
  *
  *  err = a.push(val);
- *  err = a.pop();
+ *  a.pop();
  *
  *  val = a.capacity();
  *  val = a.size();
@@ -60,7 +57,7 @@ struct InvalidIndexError {};
 template<class T>
 class JArray {
 private:
-    T* _numbers;
+    T*   _numbers;
     int  _capacity;     // current capacity, can vary if autosize on
     int  _elements;      // number of elements, next available position
     bool _autosize;      // allow autosizing true/false
@@ -74,6 +71,7 @@ public:
      *
      * When autosize is on the capacity of the array
      * expanded as needed to accommodate the number of elements.
+	 * When off the array will have a fixed maximum capacity.
      *
      * When autocollapse is on the array will be collapsed as needed.
      */
@@ -98,7 +96,7 @@ public:
 	// {{{ get(index, &val)
     /**
      * Retrieves the element at the given index
-     * and assigns to the reference val.
+     * and assigns it to the reference val.
      *
      * @returns true on success, false on error
      */
@@ -140,15 +138,15 @@ public:
      * All the values above will be shifted to accommodate the new value.
      * If the array is full and is of fixed size (autosize = false)
      * the value at the end will be discarded.
-     * A value cannot be inserted at a position greater than 1 beyond
+     * A value cannot be inserted at a position greater than one beyond
      * the last most element (no gaps).
      *
      * See also replace() and push().
      */
 	int insert(const T val, const int index)
 	{
-		// Assuming we could autosize if needed (will be checked later)
-		//  is the requested index valid?
+		// If we assume we could autosize if needed (will be checked later)
+		// is the requested index valid?
 		if (index >= 0 && index <= _elements) {
 			// probably OK, autosize will be checked later
 		} else {
@@ -158,11 +156,9 @@ public:
 		// Autosize if necessary and possible
 		if (_elements == _capacity) { // were out of room
 			if (_autosize) {
-				// make some room
 				int new_capacity = (_capacity > 0) ? _capacity*2 : 2;
 
 				T* new_numbers = new T[new_capacity];
-				_capacity = new_capacity;
 
 				for (int i = 0; i < _elements; i++) {
 					new_numbers[i] = _numbers[i];
@@ -170,9 +166,10 @@ public:
 
 				delete[] _numbers;
 
+				_capacity = new_capacity;
 				_numbers = new_numbers;
 			} else {
-				return -1;  // error: no more room
+				return -1;  // error: can't make more room
 			}
 		}
 
@@ -207,7 +204,7 @@ public:
     /**
      * Remove the element at the given index (0 offset).
      *
-     * @returns -1 on error
+     * @returns 0 on success, -1 on error (invalid index)
      */
 	int remove(const int index)
 	{
@@ -222,7 +219,8 @@ public:
 
 		_elements--;
 
-		/* When there is atleast one elment and the capacity is twice as
+		/* autocollapse:
+		 * When there is atleast one elment and the capacity is twice as
 		 * large as the number of elements it will be collapsed to the
 		 * number of elements.
 		 */
@@ -245,13 +243,12 @@ public:
 
 	// {{{ replace
     /**
-     *
      * Replace the value at the given index with the specified value.
 	 *
-     * @returns -1 on error
+     * @returns 0 on success, -1 on error
 	 *
-	 * It will not expand the array create new elements it can only
-	 * replace already present elements.
+	 * It will not expand the array, it can only replace
+	 * elements that are already present.
 	 * See insert() if you want to add elements.
      */
 	int replace(const T val, const int index)
@@ -268,9 +265,13 @@ public:
 	// {{{ push
     /**
      * Inserts a value in the next available slot.
+	 *
+     * @returns 0 on success, -1 on error
+	 *
+	 * If the array is of fixed size (autosize = false) it
+	 * will return an error if there is no room left.
+	 *
      * See also (insert()).
-     *
-     * @returns -1 on error
      */
 	int push(const T val)
 	{
@@ -281,12 +282,13 @@ public:
 	// {{{ pop
     /**
      * Removes the value at the last slot.
-     *
-     * @returns -1 on error
+	 *
+	 * If no values are left nothing is removed and no error is raised.
      */
-	int pop()
+	void pop()
 	{
-		return remove((_elements - 1));
+		if (_elements > 0)
+			remove((_elements - 1));
 	}
 	// }}}
 
@@ -305,7 +307,7 @@ public:
 
 	// {{{ size
     /**
-     * @returns number of elements in array
+     * @returns number of elements currently stored in array
      */
     int size() { return _elements; };
 	// }}}
@@ -314,7 +316,8 @@ public:
     /**
      * Performs a Bubble Sort of the array.
 	 *
-	 * @arg sort ascending (true) else descending(false)
+	 * Sorts in ascending order if asc_else_desc is true, otherwise
+	 * sort in descending order.
      */
 	void bsort(const bool asc_else_desc=true)
 	{
@@ -340,7 +343,8 @@ public:
     /**
      * Performs an Insertion Sort of the array.
 	 *
-	 * @arg sort ascending (true) else descending(false)
+	 * Sorts in ascending order if asc_else_desc is true, otherwise
+	 * it sorts in descending order.
      */
 	void isort(const bool asc_else_desc=true)
 	{
@@ -363,6 +367,9 @@ public:
 	// {{{ operator<<(JArray<T>)
 	/**
 	 * Output operator for JArray<T> object.
+	 *
+	 * If you would like to output the object to a string see
+	 * "string stream" (sstream) in the standard library.
 	 */
 	friend ostream& operator<<(ostream& out, const JArray<T>& ja) {
 		static const int chunk = 10;  // number of values per line
@@ -393,6 +400,5 @@ public:
 	// }}}
 
 };
-
 
 // vim:foldmethod=marker
