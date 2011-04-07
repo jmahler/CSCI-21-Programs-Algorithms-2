@@ -7,7 +7,8 @@ CSCI 21 - Programs and Algorithms 2 - Project 5
 INTRODUCTON
 -----------
 
-A discrete event simulator ([Wikipedia: Discrete event simulation][wikdisc]).
+A discrete event simulation ([Wikipedia: Discrete event simulation][wikdisc])
+of a simplified burger restaurant.
 
 AUTHOR
 ------

@@ -1,7 +1,10 @@
 
 INCLUDE=
 
-OBJECTS=Customer.o Queue.o
+OBJECTS=Customer.o Queue.o HamburgerCustomer.o \
+		MilkshakeCustomer.o PlatterCustomer.o \
+		CustomerStats.o
+
 CC=g++
 CFLAGS=-Wall -ansi -pedantic $(INCLUDE)
 

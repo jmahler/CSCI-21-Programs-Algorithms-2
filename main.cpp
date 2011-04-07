@@ -1,123 +1,166 @@
+/**
+ * @mainpage
+ *
+ * A discrete event simulation of a simplified burger restaurant.
+ *
+ *
+ * This program was completed for "project 5" of the
+ * class CSCI 21 taught by <a href="http://www.foobt.net">Boyd Trolinger</a>
+ * at <a href="http://www.butte.edu">Butte College</a> during Spring 2011.
+ *
+ * Detailed application requirements are available
+ * at [<a href="http://foobt.net/csci21/S3513_11/labs/lab5.html">csci21/S3513_11/labs/lab5</a>]
+ * and duplicated with this source [lab5.html].
+ *
+ * @author  Jeremiah Mahler <jmmahler@gmail.com>
+ */
 
 #include <iostream>
-#include <stdlib.h>  // random()
+#include <sstream>
+#include <cstdlib>  // random()
 #include <vector>
 
 #include "Customer.h"
+#include "CustomerStats.h"
+#include "HamburgerCustomer.h"
+#include "MilkshakeCustomer.h"
+#include "PlatterCustomer.h"
 #include "Queue.h"
 
 using namespace std;
 
-int main(int argc, char** argv) {
+int main(int argc, char* argv[]) {
 
-	// config, TODO
+	// global configs with default values,
+	// altered by command line arguments
 	int end_time = 100;
-	int num_cashiers = 1;
-	const bool DEBUG = true;
+	int num_cashiers = 2;
+	bool VERBOSE = false;
+
+	// {{{ process command line arguments
+	string usage;
+	{
+	stringstream ssu(stringstream::out);
+	ssu << "USAGE:\n"
+		<< "  ./main [args]\n"
+		<< endl
+		<< "  -h                    help screen\n"
+		<< "  -v                    verbose output\n"
+		<< "  -t <time>             length of time simulation should run\n"
+		<< "  -c <num cashiers>     number of cashiers\n"
+		<< endl;
+	usage = ssu.str();
+	}
+
+	for (int i = 1; i < argc; i++) {
+		string arg0(argv[i]);
+
+		if (arg0 == "-h") {
+			cout << usage;
+			return 0;
+		} else if (arg0 == "-v") {
+			VERBOSE = true;
+		} else if (arg0 == "-t") {
+			if ((i + 1) < argc) {
+				i++;
+				string arg1(argv[i]);
+				stringstream si(arg1);
+				si >> end_time;
+			} else {
+				cerr << " option -t requires an argument\n";
+				cerr << usage;
+				return 1;
+			}
+		} else if (arg0 == "-c") {
+			if ((i + 1) < argc) {
+				i++;
+				string arg1(argv[i]);
+				stringstream si(arg1);
+				si >> num_cashiers;
+			} else {
+				cerr << " option -c requires an argument\n";
+				cerr << usage;
+				return 1;
+			}
+		}
+	}
+	// }}}
 
 	int clock = 0;
 	int uid_alloc = 1;
 
 	srandom(time(0));
 
-	if (DEBUG) {
+	if (VERBOSE) {
 		cout << "num cashiers: " << num_cashiers << endl
 			 << "simulation time: " << end_time << endl
 			 << endl;
 	}
 
 	Queue<Customer*> queue;
-	vector<Customer*> customer_history;
+	CustomerStats custStats;
+
 	Customer** cashiers = new Customer*[num_cashiers];
+	for (int i = 0; i < num_cashiers; i++) {
+		cashiers[i] = NULL;
+	}
 
 	while (++clock <= end_time) {
-		if (DEBUG)
+		if (VERBOSE)
 			cout << "CLOCK: " << clock << endl;
 
 		// {{{ new customer?
 		if ((random() % 100) < 50) {
-			if (DEBUG)
+			if (VERBOSE)
 				cout << "new customer\n";
 
 			// new customer
-			Customer* new_customer = new Customer();
-
-			new_customer->setEnterQueueTime(clock);
-			new_customer->setUid(uid_alloc++);
+			Customer* new_customer;
+			// the dynamic object is created below for the specific type
 
 			/* 50% hamburger
 			 * 35% milkshake
 			 * 15% platter
-			 * The total percent probablity should add to 100%
+			 * The total percent probability should add to 100%
 			 */
 			int rt = (random() % 100);
 
 			if (rt < 15) { // 15%
-				// platter
-				new_customer->setName("platter");
-
-				// time to serve set to random value between 5-7 minutes
-				new_customer->setTimeToServe((random() % 2) + 2);
-
-				// 10% of these customers are VIPs and will be moved
-				// to the front of the waiting line if they have been
-				// waiting for more than 10 minutes
-				if ((random() % 100) < 10) {
-					new_customer->setVipTime(10);
-				}
-
+				new_customer = new PlatterCustomer(clock);
 			} else if (rt < (15 + 35)) {  // 35%
-				// milkshake
-				new_customer->setName("milkshake");
-
-				// time to serve set to random value between 2-3 minutes
-				new_customer->setTimeToServe((random() % 2) + 2);
-
-				// 50% of these customers will give up and
-				// depart the waiting line if they have to wait more
-				// than 10 minutes.
-				if ((random() % 100) < 50) {
-					new_customer->setPatience(10);
-				}
-
+				new_customer = new MilkshakeCustomer(clock);
 			//} else if (rt < (15 + 35 + 50)) {  // 50%
 			} else {
-				// hamburger
-				new_customer->setName("hamburger");
-
-				// random service time modifier between 0-5 to
-				// represent their lack of decisiveness
-				new_customer->setDecisionTime((random() % 6));
-
-				// time to serve set to random value between 3-5 minutes
-				new_customer->setTimeToServe((random() % 3) + 3);
+				new_customer = new HamburgerCustomer(clock);
 			}
 
-			queue.push_back(new_customer); // to back of queue
+			new_customer->setUid(uid_alloc++);
+
+			queue.push_back(new_customer); // to the end of the line
 		}
-
 		// }}}
-	
-		// {{{ are any cashiers finished with customers?
+
+		// {{{ are any cashiers finished with customers? XXX
 		for (int i = 0; i < num_cashiers; i++) {
-			Customer* cust = cashiers[i];
 
-			if (cust != NULL) {
-				int ts = cust->getTimeToServe();
-				int sts = cust->getServeTimeStart();
+			if (cashiers[i] != NULL) {
+				Customer* cust = cashiers[i];
 
-				if (DEBUG)
-					cout << "cashier " << i << " serving customer " << cust->getUid() << ", time left: " << ((sts + ts) - clock) << endl;
+				int si = cust->getServiceIval();
+				int st = cust->getServiceTime();
+
+				if (VERBOSE)
+					cout << "cashier " << i << " serving customer " << cust->getUid() << ", time left: " << ((st + si) - clock) << endl;
 				
-				if ((clock - sts) >= ts) {
-					if (DEBUG)
+				if (clock >= (st + si)) {
+					if (VERBOSE)
 						cout << "customer " << cust->getUid() << " served, " << "cashier " << i << " now available\n";
 
-					// you've been served!
-					cust->setServeTimeEnd(clock);
+					cust->setDeparted(clock);
 
-					// record
-					customer_history.push_back(cust);
+					custStats.recordCustomer(cust);
+
+					delete cust;
 
 					cashiers[i] = NULL;  // cashier now available
 				}
@@ -125,43 +168,42 @@ int main(int argc, char** argv) {
 		}
 		// }}}
 
-		// {{{ check for VIP's, move to front
-		{
-		Queue<Customer*>::iterator ic;
-		int i = 0;	
+	// {{{ check for VIP's, move to front
+	{
+	Queue<Customer*>::iterator ic;
+	int i = 0;	
 
-		for (ic = queue.begin(), i = 0; ic < queue.end(); ic++, i++) {
+	for (ic = queue.begin(), i = 0; ic < queue.end(); ic++, i++) {
 
-			int eqt = (*ic)->getEnterQueueTime();
-			int vipt = (*ic)->getVipTime();
+		int at = (*ic)->getArrivalTime();
+		int vipi = (*ic)->getVipIval();
 
-			if ((clock - eqt) > vipt) {
-				queue.to_front(ic);
+		if ((clock - at) > vipi) {
+			queue.to_front(ic);
 
-				if (DEBUG)
-					cout << "vip customer " << (*ic)->getUid() << " has waited over " << vipt << " minutes; moving to front\n";
+			if (VERBOSE)
+				cout << "VIP customer " << (*ic)->getUid() << " has waited over " << vipi << " minutes; moving to front\n";
 
-				ic = queue.begin() + i;  // fix invalidated iterator
-			}
+			ic = queue.begin() + i;  // fix invalidated iterator
 		}
-		}
-		// }}}
+	}
+	}
+	// }}}
 
 	// {{{ assign waiting customers to open cashiers
 	{
 	int num_waiting = queue.size();
 
-	if (DEBUG)
+	if (VERBOSE)
 		cout << num_waiting << " customers waiting.\n";
 
 	for (int i = 0; (i < num_cashiers) && (num_waiting > 0); i++) {
 		if (cashiers[i] == NULL) {  // a cashier is open
 
 			Customer* c = queue.front();
-			c->setLeaveQueueTime(clock);
-			c->setServeTimeStart(clock);
+			c->setServiced(clock);
 
-			if (DEBUG)
+			if (VERBOSE)
 				cout << "assigned customer " << c->getUid() << " to cashier " << i << endl;
 
 			// assign customer at front to a cashier
@@ -181,23 +223,28 @@ int main(int argc, char** argv) {
 	Queue<Customer*>::iterator ic;
 	int i = 0;	
 
-	for (ic = queue.begin(), i = 0; ic < queue.end(); ic++, i++) {
+	for (ic = queue.begin(), i = 0; ic < queue.end(); ic = queue.begin() + i) {
 
-		int eqt = (*ic)->getEnterQueueTime();
+		int at = (*ic)->getArrivalTime();
 		int pt = (*ic)->getPatience();
 
-		if ((clock - eqt) > pt) {
+		if ((clock - at) > pt) {
 
-			if (DEBUG)
+			if (VERBOSE)
 				cout << "customer " << (*ic)->getUid() << " has lost their patience and left" << endl;
 
-			(*ic)->setLeaveQueueTime(clock);
+			(*ic)->setDeparted(clock);
 
-			customer_history.push_back(*ic);
+			custStats.recordCustomer(*ic);
+
+			delete (*ic);
 
 			queue.erase(ic);
 
-			ic = queue.begin() + i;  // fix invalidated iterator
+			// since we erased a position, the current position is the next
+			// i = i;
+		} else {
+			i++;
 		}
 	}
 	}
@@ -206,86 +253,24 @@ int main(int argc, char** argv) {
 	}
 
 	// {{{ summary
-	{
-	int num_left = 0;    // left queue without buying
-	float pcnt_num_left;
-	int num_in_queue = queue.size();
 	int num_being_served = 0;
-	int num_served = customer_history.size();  // complete
-	int total_num_customers;
-	float avg_queue_time = 0;
-
-	float pcnt_milkshakes = 0;
-	float pcnt_platters = 0;
-	float pcnt_hamburgers = 0;
-
-	Queue<Customer*>::iterator ic;
-	for (ic = queue.begin(); ic < queue.end(); ic++) {
-		Customer* cust = (*ic);
-
-	}
-
-	{
-	unsigned int sum_queue_time = 0;
-	int n_queue_time = 0;
-
-	int num_milkshakes = 0;
-	int num_platters = 0;
-	int num_hamburgers = 0;
-
-	vector<Customer*>::iterator ic;
-	for (ic = customer_history.begin(); ic < customer_history.end(); ic++) {
-		Customer* c = (*ic);
-
-		if (c->beenServed()) {
-			sum_queue_time += (c->getLeaveQueueTime() - c->getEnterQueueTime());
-			n_queue_time++;
-		} else {
-			num_left++;	
-		}
-
-		if ("milkshake" == c->getName()) {
-			num_milkshakes++;
-		} else if ("platter" == c->getName()) {
-			num_platters++;
-		} else if ("hamburger" == c->getName()) {
-			num_hamburgers++;
-		}
-	}
-
-	avg_queue_time = ((float) (sum_queue_time)) / ((float) n_queue_time);
-
-	pcnt_milkshakes = (((float) (num_milkshakes)) / ((float) num_served)) * 100;
-	pcnt_platters = (((float) (num_platters)) / ((float) num_served)) * 100;
-	pcnt_hamburgers = (((float) (num_hamburgers)) / ((float) num_served)) * 100;
-
-	}
-
-	pcnt_num_left = (( (float) num_left) / ((float) num_served)) * 100;
-
 	for (int i = 0; i < num_cashiers; i++) {
 		if (cashiers[i] != NULL) {
 			num_being_served++;
 		}
 	}
 
-	cout << endl;
-	cout << "Summary:\n";
-	cout << endl;
-	cout << "number currently in queue: " << num_in_queue << endl;
-	cout << "number being served: " << num_being_served << endl;
-	cout << endl;
-	cout << "time elapsed (minutes): " << (clock - 1) << endl;
-	cout << "number of cashiers: " << num_cashiers << endl;
-	cout << "number served: " << num_served << endl;
-	cout << "number left (without being served): " << num_left << " (" << pcnt_num_left << "%)\n";
-	cout << "average time in queue: " << avg_queue_time << " (minutes) " << endl;
-	cout << "percent hamburgers: " << pcnt_hamburgers << " % " << endl;
-	cout << "percent milkshakes: " << pcnt_milkshakes << " % " << endl;
-	cout << "percent platters: " << pcnt_platters << " % " << endl;
+	int num_in_queue = queue.size();
 
-
-	}
+	cout 
+		<< endl
+		<< "              ***  SIMULATION COMPLETE ***\n"
+		<< endl
+		<< "simulation time: " << end_time << endl
+		<< "number of cashiers: " << num_cashiers << endl
+		<< "number of customers still being served: " << num_being_served << endl
+		<< "number of customers still in queue: " << num_in_queue << endl
+		<< custStats;
 	// }}}
 
 	delete[] cashiers;

@@ -1,3 +1,4 @@
+#pragma once
 
 #include <vector>
 
@@ -5,7 +6,7 @@
  * A Queue is a container providing FIFO (first in first out) operation.
  *
  * This particular Queue implementation inherits from the standard class 'vector'
- * so all of those operations are available in addition to the additional
+ * so all of those operations are available in addition to the 
  * ones defined here.
  */
 template<class T>
@@ -25,7 +26,7 @@ public:
 
 	// {{{ pop_front()
 	/**
-	 * Remove the element at the FRONT of the queue.
+	 * Remove the element at the front of the queue.
 	 */
 	void pop_front()
 	{
@@ -40,7 +41,7 @@ public:
 	/**
 	 * Move an element to the front of the queue.
 	 *
-	 * @arg iterator of position to move
+	 * @arg iterator of position to move to front
 	 */
 	void to_front(typename Queue<T>::iterator from)
 	{
