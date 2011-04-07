@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
 	int end_time = 100;
 	int num_cashiers = 2;
 	bool VERBOSE = false;
+	int rate = 80;  // rate of incoming customers /100
 
 	// {{{ process command line arguments
 	string usage;
@@ -47,6 +48,7 @@ int main(int argc, char* argv[]) {
 		<< "  -v                    verbose output\n"
 		<< "  -t <time>             length of time simulation should run\n"
 		<< "  -c <num cashiers>     number of cashiers\n"
+		<< "  -r <%>                probability of new customer 1-100%\n"
 		<< endl;
 	usage = ssu.str();
 	}
@@ -90,7 +92,25 @@ int main(int argc, char* argv[]) {
 				cerr << " option -c requires an argument\n";
 				return 1;
 			}
+		} else if (arg0 == "-r") {
+			if ((i + 1) < argc) {
+				i++;
+				string arg1(argv[i]);
+				stringstream si(arg1);
+				si >> rate;
+
+				if (rate <= 0 || rate > 100) {
+					cerr << " option -r, rate must be from 1 to 100 (%)\n";
+					return 1;
+				}
+
+				rate -= 1; // adjust for 1 to 100 -> 0 to 99
+			} else {
+				cerr << " option -r requires an argument\n";
+				return 1;
+			}
 		}
+
 	}
 	// }}}
 
@@ -113,7 +133,7 @@ int main(int argc, char* argv[]) {
 			cout << "CLOCK: " << clock << endl;
 
 		// {{{ new customer?
-		if ((random() % 100) < 50) {
+		if ((random() % 100) < rate) {
 			if (VERBOSE)
 				cout << "new customer\n";
 
@@ -279,6 +299,7 @@ int main(int argc, char* argv[]) {
 		<< "number of cashiers: " << num_cashiers << endl
 		<< "number of customers still being served: " << num_being_served << endl
 		<< "number of customers still in queue: " << num_in_queue << endl
+		<< "probability of new customer arriving: " << (rate + 1) << "%" << endl
 		<< custStats;
 	// }}}
 
