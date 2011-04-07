@@ -65,6 +65,11 @@ int main(int argc, char* argv[]) {
 				string arg1(argv[i]);
 				stringstream si(arg1);
 				si >> end_time;
+
+				if (end_time <= 0) {
+					cerr << " option -t, time must be greater than or equal to 1\n";
+					return 1;
+				}
 			} else {
 				cerr << " option -t requires an argument\n";
 				cerr << usage;
@@ -76,9 +81,13 @@ int main(int argc, char* argv[]) {
 				string arg1(argv[i]);
 				stringstream si(arg1);
 				si >> num_cashiers;
+
+				if (num_cashiers <= 0) {
+					cerr << " option -c, number of cashiers must be greater than or equal to 1\n";
+					return 1;
+				}
 			} else {
 				cerr << " option -c requires an argument\n";
-				cerr << usage;
 				return 1;
 			}
 		}
