@@ -50,6 +50,7 @@ public:
 		this->insert(this->begin(), x);
 	}
 	// }}}
+
 };
 
 // vim:foldmethod=marker

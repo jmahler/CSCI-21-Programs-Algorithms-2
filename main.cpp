@@ -6,8 +6,7 @@
  *
  * This program was completed for "project 5" of the
  * class CSCI 21 taught by <a href="http://www.foobt.net">Boyd Trolinger</a>
- * at <a href="http://www.butte.edu">Butte College</a> during Spring 2011.
- *
+ * at <a href="http://www.butte.edu">Butte College</a> during Spring 2011.<br>
  * Detailed application requirements are available
  * at [<a href="http://foobt.net/csci21/S3513_11/labs/lab5.html">csci21/S3513_11/labs/lab5</a>]
  * and duplicated with this source [lab5.html].
@@ -88,22 +87,17 @@ int main(int argc, char* argv[]) {
 
 	int clock = 0;
 	int uid_alloc = 1;
-
 	srandom(time(0));
 
-	if (VERBOSE) {
-		cout << "num cashiers: " << num_cashiers << endl
-			 << "simulation time: " << end_time << endl
-			 << endl;
-	}
 
-	Queue<Customer*> queue;
+	Queue<Customer*> waitingLine;
 	CustomerStats custStats;
 
 	Customer** cashiers = new Customer*[num_cashiers];
 	for (int i = 0; i < num_cashiers; i++) {
 		cashiers[i] = NULL;
 	}
+
 
 	while (++clock <= end_time) {
 		if (VERBOSE)
@@ -136,11 +130,11 @@ int main(int argc, char* argv[]) {
 
 			new_customer->setUid(uid_alloc++);
 
-			queue.push_back(new_customer); // to the end of the line
+			waitingLine.push_back(new_customer); // to the end of the line
 		}
 		// }}}
 
-		// {{{ are any cashiers finished with customers? XXX
+		// {{{ are any cashiers finished with customers?
 		for (int i = 0; i < num_cashiers; i++) {
 
 			if (cashiers[i] != NULL) {
@@ -149,9 +143,6 @@ int main(int argc, char* argv[]) {
 				int si = cust->getServiceIval();
 				int st = cust->getServiceTime();
 
-				if (VERBOSE)
-					cout << "cashier " << i << " serving customer " << cust->getUid() << ", time left: " << ((st + si) - clock) << endl;
-				
 				if (clock >= (st + si)) {
 					if (VERBOSE)
 						cout << "customer " << cust->getUid() << " served, " << "cashier " << i << " now available\n";
@@ -163,96 +154,105 @@ int main(int argc, char* argv[]) {
 					delete cust;
 
 					cashiers[i] = NULL;  // cashier now available
+				} else {
+					if (VERBOSE)
+						cout << "cashier " << i << " serving customer " << cust->getUid() << ", time left: " << ((st + si) - clock) << endl;
 				}
 			}
 		}
 		// }}}
 
-	// {{{ check for VIP's, move to front
-	{
-	Queue<Customer*>::iterator ic;
-	int i = 0;	
+		// {{{ check for VIP's, move to front
+		{
+		Queue<Customer*>::iterator ic;
+		int i = 0;	
 
-	for (ic = queue.begin(), i = 0; ic < queue.end(); ic++, i++) {
+		for (ic = waitingLine.begin(), i = 0; ic < waitingLine.end(); ic++, i++) {
 
-		int at = (*ic)->getArrivalTime();
-		int vipi = (*ic)->getVipIval();
+			int at = (*ic)->getArrivalTime();
+			int vipi = (*ic)->getVipIval();
 
-		if ((clock - at) > vipi) {
-			queue.to_front(ic);
+			if ((clock - at) > vipi) {
+				waitingLine.to_front(ic);
 
-			if (VERBOSE)
-				cout << "VIP customer " << (*ic)->getUid() << " has waited over " << vipi << " minutes; moving to front\n";
+				if (VERBOSE)
+					cout << "VIP customer " << (*ic)->getUid() << " has waited over " << vipi << " minutes; moving to front\n";
 
-			ic = queue.begin() + i;  // fix invalidated iterator
+				ic = waitingLine.begin() + i;  // fix invalidated iterator
+			}
 		}
-	}
-	}
-	// }}}
-
-	// {{{ assign waiting customers to open cashiers
-	{
-	int num_waiting = queue.size();
-
-	if (VERBOSE)
-		cout << num_waiting << " customers waiting.\n";
-
-	for (int i = 0; (i < num_cashiers) && (num_waiting > 0); i++) {
-		if (cashiers[i] == NULL) {  // a cashier is open
-
-			Customer* c = queue.front();
-			c->setServiced(clock);
-
-			if (VERBOSE)
-				cout << "assigned customer " << c->getUid() << " to cashier " << i << endl;
-
-			// assign customer at front to a cashier
-			cashiers[i] = c;
-
-			// remove customer from queue
-			queue.pop_front();
-
-			num_waiting--;
 		}
-	}
-	}
-	// }}}
+		// }}}
 
-	// {{{ have any impatient customers left?
-	{
-	Queue<Customer*>::iterator ic;
-	int i = 0;	
+		// {{{ assign waiting customers to open cashiers
+		{
+		int num_waiting = waitingLine.size();
 
-	for (ic = queue.begin(), i = 0; ic < queue.end(); ic = queue.begin() + i) {
+		if (VERBOSE)
+			cout << num_waiting << " customers waiting.\n";
 
-		int at = (*ic)->getArrivalTime();
-		int pt = (*ic)->getPatience();
+		for (int i = 0; (i < num_cashiers) && (num_waiting > 0); i++) {
+			if (cashiers[i] == NULL) {  // a cashier is open
 
-		if ((clock - at) > pt) {
+				Customer* c = waitingLine.front();
+				c->setServiced(clock);
 
-			if (VERBOSE)
-				cout << "customer " << (*ic)->getUid() << " has lost their patience and left" << endl;
+				if (VERBOSE)
+					cout << "assigned customer " << c->getUid() << " to cashier " << i << endl;
 
-			(*ic)->setDeparted(clock);
+				// assign customer at front to a cashier
+				cashiers[i] = c;
 
-			custStats.recordCustomer(*ic);
+				// remove customer from queue
+				waitingLine.pop_front();
 
-			delete (*ic);
-
-			queue.erase(ic);
-
-			// since we erased a position, the current position is the next
-			// i = i;
-		} else {
-			i++;
+				num_waiting--;
+			}
 		}
-	}
-	}
-	// }}}
+		}
+		// }}}
+
+		// {{{ have any impatient customers left?
+		{
+		Queue<Customer*>::iterator ic;
+		int i = 0;	
+
+		for (ic = waitingLine.begin(), i = 0; ic < waitingLine.end(); ic = waitingLine.begin() + i) {
+
+			int at = (*ic)->getArrivalTime();
+			int pt = (*ic)->getPatience();
+
+			if ((clock - at) > pt) {
+
+				if (VERBOSE)
+					cout << "customer " << (*ic)->getUid() << " has lost their patience and left" << endl;
+
+				(*ic)->setDeparted(clock);
+
+				custStats.recordCustomer(*ic);
+
+				delete (*ic);
+
+				waitingLine.erase(ic);
+				// invalidates pointer, fixed in for loop
+
+				// since we erased a position, the current position is the next
+				// i = i;
+			} else {
+				i++;
+			}
+		}
+		}
+		// }}}
 
 	}
 
 	// {{{ summary
+
+	// CustomerStats takes care of most of the statistics but
+	// it only has access to the departed customers.
+	// Any additional statistics must be calculated here.
+
 	int num_being_served = 0;
 	for (int i = 0; i < num_cashiers; i++) {
 		if (cashiers[i] != NULL) {
@@ -260,7 +260,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-	int num_in_queue = queue.size();
+	int num_in_queue = waitingLine.size();
 
 	cout 
 		<< endl

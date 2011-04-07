@@ -239,7 +239,7 @@ public:
 
 	// {{{ setPatience()
 	/**
-	 * Set the interval of time the customer is willing to wait before
+	 * Set the interval of time the customer is willing to wait in line before
 	 * they lose their patience and leave.
 	 *
 	 * @arg int interval
@@ -251,9 +251,10 @@ public:
 
 	// {{{ getPatience()
 	/**
-	 * Get the customers patience level.
+	 * Get the amount of time (interval) the customer is willing
+	 * to wait in line before they lose their patience and leave.
 	 *
-	 * @returns int patience
+	 * @returns int interval
 	 */
 	int getPatience() {
 		return patienceIval;

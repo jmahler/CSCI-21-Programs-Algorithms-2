@@ -43,7 +43,10 @@ class CustomerStats {
 	/**
 	 * Output operator for customer statistics.
 	 *
-	 * Displays lots of statistics and calculations.
+	 * Displays various useful statistics and calculations
+	 * such as the percentage of different types of customers,
+	 * the number of customer served, the number of customers that
+	 * left without buying, etc.
 	 */
 	friend ostream& operator<<(ostream& out, CustomerStats& cs)
 	{
