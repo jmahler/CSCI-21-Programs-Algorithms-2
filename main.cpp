@@ -3,6 +3,8 @@
  *
  * A discrete event simulation of a simplified burger restaurant.
  *
+ * To get a list of options and commands run: 
+ \verbatim ./main -h \endverbatim
  *
  * This program was completed for "project 5" of the
  * class CSCI 21 taught by <a href="http://www.foobt.net">Boyd Trolinger</a>
