@@ -7,7 +7,7 @@ CSCI 21 - Programs and Algorithms 2 - Project 6
 INTRODUCTON
 -----------
 
-Singly and doubly linked lists.
+Doubly linked lists in C++.
 
 AUTHOR
 ------
