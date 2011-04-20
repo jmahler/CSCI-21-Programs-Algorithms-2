@@ -166,7 +166,7 @@ public:
 	}
 	// }}}
 
-	// {{{ insert()
+	// {{{ insert(T)
 	/**
 	 * Insert data in to the list in sorted order.
 	 * 
@@ -226,7 +226,7 @@ private:
 
 public:
 
-	// {{{ remove()
+	// {{{ remove(T)
 	/**
 	 * Remove a data element from the list.
 	 *
