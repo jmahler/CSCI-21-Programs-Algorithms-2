@@ -41,17 +41,17 @@ int main(int argc, char** argv)
              << "   ./main -\n"
              << "\n"
              << "COMMANDS:\n"
+             << "  n                    # get the node count\n"
+             << "  puf <val>            # push a value to the FRONT\n"
+             << "  pub <val>            # push a value to the BACK\n"
+             << "  pof                  # pop a value from the FRONT\n"
+             << "  pob                  # pop a value from the BACK\n"
              << "  i   <val>            # insert value and keep sorted\n"
              << "  r   <val>            # remove a value\n"
              << "  rd  <val>            # remove a value and its duplicates\n"
-             << "  puf <val>            # push a value to the FRONT\n"
-             << "  pub <val>            # push a value to the BACK\n"
-             << "  pof <val>            # pop a value from the FRONT\n"
-             << "  pob <val>            # pop a value from the BACK\n"
              << "  f   <val>            # find a value\n"
              << "  fr  <val>            # find a value (recusive)\n"
              << "  d                    # display the array\n"
-             << "  n                    # get the node count\n"
              << "  c                    # clear all values\n"
              << "  cr                   # clear all values (recursive)\n"
              << "  -1                   # quit\n";
@@ -107,7 +107,31 @@ int main(int argc, char** argv)
         // ss >> var;
 
 		// See the help display for the command descriptions
-        if (cmd == "i") {
+		if (cmd == "n") {
+            cout << "node count is " << dl.getNodeCount() << endl;
+        } else if (cmd == "puf") {
+            int val;
+
+            ss >> val;
+        
+			dl.pushFront(val);
+
+			cout << "pushed " << val << " on to front of list" << endl;
+        } else if (cmd == "pub") {
+            int val;
+
+            ss >> val;
+        
+			dl.pushBack(val);
+
+			cout << "pushed " << val << " on to the back of list" << endl;
+        } else if (cmd == "pof") {
+			dl.popFront();
+			cout << "popped one from the front of list" << endl;
+        } else if (cmd == "pob") {
+			dl.popBack();
+			cout << "popped one from the back of list" << endl;
+		} else if (cmd == "i") {
             int val;
 
             ss >> val;
@@ -131,30 +155,6 @@ int main(int argc, char** argv)
 			dl.remove(val, false);
 
 			cout << val << "and its duplicates removed" << endl;
-        } else if (cmd == "puf") {
-            int val;
-
-            ss >> val;
-        
-			dl.pushFront(val);
-
-			cout << "pushed " << val << " on to front of list" << endl;
-        } else if (cmd == "pub") {
-            int val;
-
-            ss >> val;
-        
-			dl.pushBack(val);
-
-			cout << "pushed " << val << " on to the back of list" << endl;
-        } else if (cmd == "pof") {
-			dl.popFront();
-
-			cout << "popped one from the front of list" << endl;
-        } else if (cmd == "pob") {
-			dl.popBack();
-
-			cout << "popped one from the back of list" << endl;
         } else if (cmd == "f") {
             int val;
 
@@ -177,8 +177,6 @@ int main(int argc, char** argv)
 			}
         } else if (cmd == "d") {
             cout << dl << endl;
-        } else if (cmd == "n") {
-            cout << "node count is " << dl.getNodeCount() << endl;
         } else if (cmd == "c") {
 			dl.clear();
             cout << "all values cleared" << endl;
