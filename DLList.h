@@ -166,8 +166,107 @@ public:
 	}
 	// }}}
 
-	void insert(T); // TODO
-	bool remove(T); // TODO
+	// {{{ insert()
+	/**
+	 * Insert data in to the list in sorted order.
+	 * 
+	 * @arg data
+	 *
+	 * If the the list is unsorted its behaviour is undefined.
+	 * Comparison operators for the data type must be defined.
+	 */
+	void insert(T newData) {
+		if (0 == nodeCount) {
+			DLNode<T>* newNode = new DLNode<T>(newData);
+			head = tail = newNode;
+		} else if (newData <= head->getData()) {
+			// at beginning
+			DLNode<T>* newNode = new DLNode<T>(newData);
+
+			newNode->setNext(head);
+			head->setPrevious(newNode);
+
+			head = newNode;
+		} else {
+			// somewhere between head and tail
+			_insert(newData, head);
+		}
+
+		nodeCount++;
+	}
+private:
+	// The first node must never be NULL !
+	void _insert(T newData, DLNode<T>*& dln) {
+
+		DLNode<T>* nextNode = dln->getNext();
+
+		// insert here
+		if (NULL == nextNode) {
+			// at tail
+
+			DLNode<T>* newNode = new DLNode<T>(newData);
+			newNode->setPrevious(dln);
+			dln->setNext(newNode);
+
+			tail = newNode;
+		} else if (newData >= dln->getData() && newData <= nextNode->getData()) {
+			// between two defined nodes
+			DLNode<T>* newNode = new DLNode<T>(newData);
+
+			newNode->setPrevious(dln);
+			newNode->setNext(nextNode);
+
+			dln->setNext(newNode);
+			nextNode->setPrevious(newNode);
+		} else {
+			_insert(newData, dln->getNext());
+		}
+	}
+	// }}}
+
+public:
+
+	// {{{ remove()
+	/**
+	 * Remove a data element from the list.
+	 *
+	 * @arg data to be removed
+	 * @arg if there are duplicates, remove one or all
+	 */
+	void remove(T testData, bool one_or_all=true) {
+		DLNode<T>* cur;
+
+		cur = head;
+
+		while (cur) {
+			if (testData == cur->getData()) {
+				// remove this element
+
+				DLNode<T>* nextNode = cur->getNext();
+				DLNode<T>* previousNode = cur->getPrevious();
+
+				if (nextNode != NULL)
+					nextNode->setPrevious(previousNode);
+
+				if (previousNode != NULL)
+					previousNode->setNext(nextNode);
+
+				delete cur;
+
+				nodeCount--;
+				if (0 == nodeCount)
+					head = tail = NULL;
+
+				if (one_or_all)
+					break;
+			} else {
+				cur = cur->getNext();
+			}
+		}
+	}
+	// }}}
+
+	//void sort(); // TODO
 
 	// {{{ find(T)
 	/**
@@ -215,7 +314,24 @@ private:
 public:
 	// }}}
 
-	//friend ostream& operator<<(ostream&, const DLList<T>&); // TODO
+	// {{{ operator<<
+	/**
+	 * Output operator.
+	 */
+	friend ostream& operator<<(ostream& out, const DLList<T>& dll) {
+
+		DLNode<T>* cur = dll.head;
+
+		out << "( ";
+		while (cur) {
+			out << cur->getData() << " ";
+
+			cur = cur->getNext();
+		}
+		out << ")";
+		return out;
+	}
+	// }}}
 
 	// {{{ clear()
 	/*
@@ -241,7 +357,7 @@ public:
 	}
 	// }}}
 
-	// {{{ clear(Recursive)
+	// {{{ clearRecursive()
 	/*
 	 * Clear out all elements in the list.
 	 *

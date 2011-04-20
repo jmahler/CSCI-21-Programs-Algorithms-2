@@ -151,6 +151,99 @@ int main(int argc, char** argv)
 	}
 	// }}}
 
+	// {{{ DLList, insert
+	/*
+	{
+		DLList<int> dl1;
+
+		for (int i = 99; i >= 0; i--) {
+			dl1.insert(i);
+		}
+
+		assert(dl1.find(99));
+		assert(dl1.find(50));
+	}
+	*/
+	// }}}
+
+	// {{{ DLList, remove()
+	{
+	DLList<int> dl1;
+
+	for (int i = 0; i < 10; i++) {
+		dl1.insert(i);
+	}
+
+	dl1.remove(0, true); // one_or_all=true
+	dl1.remove(1);
+	dl1.remove(2);
+
+	assert(!dl1.find(0));
+	assert(!dl1.find(1));
+	assert(!dl1.find(2));
+	assert(dl1.find(3));
+	assert(dl1.find(4));
+	}
+	// }}}
+
+	// {{{ DLList, remove() with duplicates
+	{
+	DLList<int> dl1;
+
+	for (int i = 0; i < 5; i++) {
+		dl1.insert(i);
+		dl1.insert(i);
+	}
+
+	dl1.remove(0, true); // one_or_all=true
+	dl1.remove(1);
+	dl1.remove(2);
+
+	assert(dl1.find(0));
+	assert(dl1.find(1));
+	assert(dl1.find(2));
+	assert(dl1.find(3));
+	assert(dl1.find(4));
+	}
+	// }}}
+
+	// {{{ DLList, remove() with duplicates, one_or_all=false
+	{
+	DLList<int> dl1;
+
+	for (int i = 0; i < 5; i++) {
+		dl1.insert(i);
+		dl1.insert(i);
+	}
+
+	dl1.remove(0, false); // one_or_all=false
+	dl1.remove(1, false);
+	dl1.remove(2, false);
+
+	assert(!dl1.find(1));
+	assert(!dl1.find(2));
+	assert(!dl1.find(0));
+	assert(dl1.find(3));
+	assert(dl1.find(4));
+	}
+	// }}}
+
+	// {{{ DLList, operator<< 
+	/*
+	{
+		DLList<int> dl1;
+
+		//for (int i = 99; i >= 0; i--) {
+		for (int i = 0; i < 10; i++) {
+			dl1.insert((random() % 10) - 5);
+			dl1.insert(i);
+		}
+
+		cout << dl1 << endl;
+	}
+	*/
+	// }}}
+
 	// {{{ memory leak test
 	// 4/19/2011 tested OK
 	/*
