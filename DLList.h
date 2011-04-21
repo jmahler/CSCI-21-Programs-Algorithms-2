@@ -337,12 +337,19 @@ public:
 	/**
 	 * Output operator.
 	 */
-	friend ostream& operator<<(ostream& out, const DLList<T>& dll) {
-
+	friend ostream& operator<<(ostream& out, const DLList<T>& dll)
+	{
+		int n = 0;
 		DLNode<T>* cur = dll.head;
 
 		out << "( ";
 		while (cur) {
+			n++;
+
+			// wrap every 10 items
+			if (0 == (n % 10))
+				out << endl << "  ";
+
 			out << cur->getData() << " ";
 
 			cur = cur->getNext();
