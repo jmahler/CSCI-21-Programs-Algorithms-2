@@ -266,7 +266,26 @@ public:
 	}
 	// }}}
 
-	//void sort(); // TODO
+	// {{{ process
+	/**
+	 * Process the list by performing a function on every
+	 * data item in the list.
+	 *
+	 * @arg pointer to function
+	 */
+	void process(void (*fn)(T)) {
+		DLNode<T>* cur;
+
+		cur = head;
+
+		while (cur) {
+
+			(*fn)(cur->getData());
+
+			cur = cur->getNext();
+		}
+	}
+	// }}}
 
 	// {{{ find(T)
 	/**

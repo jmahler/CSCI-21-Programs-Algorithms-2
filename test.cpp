@@ -9,6 +9,12 @@
 
 using namespace std;
 
+int total = 0;
+
+void _sum(int x) {
+	total += x;
+}
+
 int main(int argc, char** argv)
 {
 	assert(true);
@@ -152,7 +158,6 @@ int main(int argc, char** argv)
 	// }}}
 
 	// {{{ DLList, insert
-	/*
 	{
 		DLList<int> dl1;
 
@@ -163,7 +168,6 @@ int main(int argc, char** argv)
 		assert(dl1.find(99));
 		assert(dl1.find(50));
 	}
-	*/
 	// }}}
 
 	// {{{ DLList, remove()
@@ -242,6 +246,22 @@ int main(int argc, char** argv)
 		cout << dl1 << endl;
 	}
 	*/
+	// }}}
+
+	// {{{ DLList, process
+	{
+		DLList<int> dl1;
+
+		total = 0;
+
+		dl1.insert(1);
+		dl1.insert(2);
+		dl1.insert(3);
+
+		dl1.process(_sum);
+
+		assert(6 == total);
+	}
 	// }}}
 
 	// {{{ memory leak test
