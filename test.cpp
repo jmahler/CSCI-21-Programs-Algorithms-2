@@ -7,6 +7,8 @@
 #include "DLNode.h"
 #include "DLList.h"
 
+#include "DataThing.h"
+
 using namespace std;
 
 int total = 0;
@@ -199,9 +201,9 @@ int main(int argc, char** argv)
 		dl1.insert(i);
 	}
 
-	dl1.remove(0, true); // one_or_all=true
-	dl1.remove(1);
-	dl1.remove(2);
+	dl1.remove(0, false); // all_or_one=false
+	dl1.remove(1, false);
+	dl1.remove(2, false);
 
 	assert(dl1.find(0));
 	assert(dl1.find(1));
@@ -211,7 +213,7 @@ int main(int argc, char** argv)
 	}
 	// }}}
 
-	// {{{ DLList, remove() with duplicates, one_or_all=false
+	// {{{ DLList, remove() with duplicates, all_or_one=true
 	{
 	DLList<int> dl1;
 
@@ -220,9 +222,9 @@ int main(int argc, char** argv)
 		dl1.insert(i);
 	}
 
-	dl1.remove(0, false); // one_or_all=false
-	dl1.remove(1, false);
-	dl1.remove(2, false);
+	dl1.remove(0, true); // all_or_one=true
+	dl1.remove(1, true);
+	dl1.remove(2, true);
 
 	assert(!dl1.find(1));
 	assert(!dl1.find(2));

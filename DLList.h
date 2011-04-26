@@ -13,6 +13,11 @@ using namespace std;
 template <class T>
 class DLList
 {
+private:
+	unsigned int nodeCount;
+	DLNode<T>* head;
+	DLNode<T>* tail;
+
 public:
 
 	// {{{ DLList()
@@ -167,33 +172,6 @@ public:
 	// }}}
 
 	// {{{ insert(T)
-	/**
-	 * Insert data in to the list in sorted order.
-	 * 
-	 * @arg data
-	 *
-	 * If the the list is unsorted its behaviour is undefined.
-	 * Comparison operators for the data type must be defined.
-	 */
-	void insert(T newData) {
-		if (0 == nodeCount) {
-			DLNode<T>* newNode = new DLNode<T>(newData);
-			head = tail = newNode;
-		} else if (newData <= head->getData()) {
-			// at beginning
-			DLNode<T>* newNode = new DLNode<T>(newData);
-
-			newNode->setNext(head);
-			head->setPrevious(newNode);
-
-			head = newNode;
-		} else {
-			// somewhere between head and tail
-			_insert(newData, head);
-		}
-
-		nodeCount++;
-	}
 private:
 	// The first node must never be NULL !
 	void _insert(T newData, DLNode<T>*& dln) {
@@ -222,9 +200,36 @@ private:
 			_insert(newData, dln->getNext());
 		}
 	}
-	// }}}
 
 public:
+	/**
+	 * Insert data in to the list in sorted order.
+	 * 
+	 * @arg data
+	 *
+	 * If the the list is unsorted its behaviour is undefined.
+	 * Comparison operators for the data type must be defined.
+	 */
+	void insert(T newData) {
+		if (0 == nodeCount) {
+			DLNode<T>* newNode = new DLNode<T>(newData);
+			head = tail = newNode;
+		} else if (newData <= head->getData()) {
+			// at beginning
+			DLNode<T>* newNode = new DLNode<T>(newData);
+
+			newNode->setNext(head);
+			head->setPrevious(newNode);
+
+			head = newNode;
+		} else {
+			// somewhere between head and tail
+			_insert(newData, head);
+		}
+
+		nodeCount++;
+	}
+	// }}}
 
 	// {{{ remove(T)
 	/**
@@ -233,7 +238,7 @@ public:
 	 * @arg data to be removed
 	 * @arg if there are duplicates, remove one or all
 	 */
-	void remove(T testData, bool one_or_all=true) {
+	void remove(T testData, bool all_or_one=true) {
 		DLNode<T>* cur;
 
 		cur = head;
@@ -257,7 +262,7 @@ public:
 				if (0 == nodeCount)
 					head = tail = NULL;
 
-				if (one_or_all)
+				if (!all_or_one)
 					break;
 			} else {
 				cur = cur->getNext();
@@ -309,14 +314,6 @@ public:
 	// }}}
 
 	// {{{ findRecursive(T)
-	/**
-	 * Find whether a data value is present (recursively).
-	 *
-	 * @returns true if yes, false otherwise
-	 */
-	bool findRecursive(T testData) {
-		return _findRecursive(testData, head);
-	}
 
 private:
 	bool _findRecursive(T &testData, DLNode<T>* dln) {
@@ -331,6 +328,14 @@ private:
 	}
 
 public:
+	/**
+	 * Find whether a data value is present (recursively).
+	 *
+	 * @returns true if yes, false otherwise
+	 */
+	bool findRecursive(T testData) {
+		return _findRecursive(testData, head);
+	}
 	// }}}
 
 	// {{{ operator<<
@@ -360,7 +365,7 @@ public:
 	// }}}
 
 	// {{{ clear()
-	/*
+	/**
 	 * Clear out all elements in the list.
 	 *
 	 * Normally this would only be used by the destructor.
@@ -384,7 +389,16 @@ public:
 	// }}}
 
 	// {{{ clearRecursive()
-	/*
+private:
+	void _clearRecursive(DLNode<T>*& dln) {
+		if (NULL != dln) {
+			_clearRecursive(dln->getNext());
+			delete dln;
+		}
+	}
+
+public:
+	/**
 	 * Clear out all elements in the list.
 	 *
 	 * Normally this would only be used by the destructor.
@@ -394,22 +408,7 @@ public:
 		head = tail = NULL;
 		nodeCount = 0;
 	}
-
-private:
-	void _clearRecursive(DLNode<T>*& dln) {
-		if (NULL == dln) {
-			// reached the end
-		} else {
-			_clearRecursive(dln->getNext());
-			delete dln;
-		}
-	}
 	// }}}
-
-private:
-	unsigned int nodeCount;
-	DLNode<T>* head;
-	DLNode<T>* tail;
 
 };
 

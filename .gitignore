@@ -1,1 +1,6 @@
 *.swp
+input.txt.out
+log
+main
+test
+doc/doxygen-doc
