@@ -20,6 +20,14 @@ private:
 
 public:
 
+// {{{ operator<<
+/**
+ * Output operator.
+ */
+template <class _T>
+friend ostream& operator<<(ostream& out, const DLList<_T>& dll);
+// }}}
+
 	// {{{ DLList()
 	/**
 	 * Construct a new doubly-linked list.
@@ -338,32 +346,6 @@ public:
 	}
 	// }}}
 
-	// {{{ operator<<
-	/**
-	 * Output operator.
-	 */
-	friend ostream& operator<<(ostream& out, const DLList<T>& dll)
-	{
-		int n = 0;
-		DLNode<T>* cur = dll.head;
-
-		out << "( ";
-		while (cur) {
-			n++;
-
-			// wrap every 10 items
-			if (0 == (n % 10))
-				out << endl << "  ";
-
-			out << cur->getData() << " ";
-
-			cur = cur->getNext();
-		}
-		out << ")";
-		return out;
-	}
-	// }}}
-
 	// {{{ clear()
 	/**
 	 * Clear out all elements in the list.
@@ -411,4 +393,31 @@ public:
 	// }}}
 
 };
+
+// {{{ operator<<
+/**
+ * Output operator.
+ */
+template<class T>
+ostream& operator<<(ostream& out, const DLList<T>& dll)
+{
+	int n = 0;
+	DLNode<T>* cur = dll.head;
+
+	out << "( ";
+	while (cur) {
+		n++;
+
+		// wrap every 10 items
+		if (0 == (n % 10))
+			out << endl << "  ";
+
+		out << cur->getData() << " ";
+
+		cur = cur->getNext();
+	}
+	out << ")";
+	return out;
+}
+// }}}
 
