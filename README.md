@@ -4,13 +4,13 @@ NAME
 
 Doubly linked lists in C++
 
-INTRODUCTON
------------
+INTRODUCTION
+------------
 
 This project implements a doubly linked list structure in C++ and
 provides a command line utility for testing it using commands from
 a file.
-The structure is built using C++'s template facilites and so it
+The structure is built using C++'s template facilities and so it
 is not specific to any type.
 The command line utility is type generic by using an abstract
 class (DataThing) and derived children (IntegerThing, BoolThing, ...).
@@ -103,7 +103,7 @@ This project includes an extensive test suite.
 All assertion tests are placed in 'test.cpp'.
 And verification of the proper output of the main program
 is checked by viewing the differences ('diff' command) of
-the varios check files.
+the various check files.
 To run all the tests run 'make check'.
 
 AUTHOR
