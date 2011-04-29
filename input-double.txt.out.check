@@ -1,0 +1,16 @@
+node count is 0
+( )
+inserted: 2.3
+inserted: 1.11
+inserted: 5.6
+inserted: 4.5
+inserted: 5.6
+inserted: -1.35
+inserted: -3.14
+( -3.14 -1.35 1.11 2.3 4.5 5.6 5.6 )
+removed: 2.3
+( -3.14 -1.35 1.11 4.5 5.6 5.6 )
+4.5 found
+4.5 found (recursive)
+4.51 not found
+4.51 not found (recursive)

@@ -20,6 +20,7 @@ puf B
 puf A
 pub D
 pub E
-c
+d
+cr
 d
 -1       # quit

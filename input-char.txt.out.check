@@ -1,0 +1,23 @@
+node count is 0
+( )
+A not found
+A not found (recursive)
+B not found
+B not found (recursive)
+inserted: B
+inserted: A
+inserted: C
+( A B C )
+A found
+A found (recursive)
+C found
+C found (recursive)
+all values cleared
+pushed C on to front of list
+pushed B on to front of list
+pushed A on to front of list
+pushed D on to the back of list
+pushed E on to the back of list
+( A B C D E )
+all values cleared (recursive)
+( )

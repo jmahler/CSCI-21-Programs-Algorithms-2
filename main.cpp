@@ -138,7 +138,7 @@ int main(int argc, char** argv)
         // help/usage
         cout << "USAGE:\n"
              << "  ./main -h                # this help screen\n"
-             << "  ./main                   # reads \"lab4input.txt\"\n"
+             << "  ./main                   # reads \"input-int.txt\"\n"
              << "  ./main -                 # reads input from stdin\n"
              << "  ./main <file>            # reads input from <file>\n"
              << "\n"
@@ -148,6 +148,8 @@ int main(int argc, char** argv)
              << "   ./main -\n"
              << "\n"
              << "COMMANDS:\n"
+             << "  <type>  (FIRST LINE) # set type on first line of file\n"
+             << "                       # integer, bool, char, double, string\n"
              << "  n                    # get the node count\n"
              << "  puf <val>            # push a value to the FRONT\n"
              << "  pub <val>            # push a value to the BACK\n"
@@ -168,7 +170,7 @@ int main(int argc, char** argv)
     // }}}
 
     // {{{ input stream setup
-    string input_file = "input.txt"; // default
+    string input_file = "input-int.txt"; // default
     istream *pfrom;  // *pfrom is used to build &from at end
 
     if (argc == 2)

@@ -1,0 +1,23 @@
+node count is 0
+( )
+true not found
+true not found (recursive)
+false not found
+false not found (recursive)
+node count is 0
+( )
+inserted: true
+inserted: false
+inserted: true
+( false true true )
+true found
+true found (recursive)
+false found
+false found (recursive)
+all values cleared
+pushed true on to front of list
+pushed false on to front of list
+pushed false on to front of list
+pushed true on to the back of list
+pushed true on to the back of list
+( false false true true true )

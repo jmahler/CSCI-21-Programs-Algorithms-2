@@ -1,16 +1,17 @@
-string
-n
-d
-f myString
-fr myString
+string      # type
+n           # node count
+d           # display the list
+f one       # find this string
+fr one
 i abc
-i ghi
+i ghi       # insert, out of order
 i def
+d           # display, (should be sorted)
+f abc       # find
+fr abc      # find, recursively
+fr aef      # find, (shouldn't be found)
+puf jkl     # push front
 d
-fr abc
-fr aef
-puf ijijij
+c           # clear
 d
-c
-d
--1       # quit
+-1          # quit

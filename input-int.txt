@@ -6,10 +6,8 @@ i 3
 d
 i 1
 d
--1
 i 2
 d
--1
 i 5
 i 4
 i 6
@@ -33,28 +31,29 @@ fr 12
 fr 6
 c
 d
+i 22
 i 1
-i 2
-i 3
 i 4
 i 5
+i 3
 i 6
+i 13
 i 7
 i 8
 i 9
 i 10 
 i 11
 i 12
-i 13
+i 2
 i 14
 i 15
-i 16
-i 17
 i 18
+i 18
+i 16
 i 19
+i 17
 i 20
 i 21
-i 22
 d
 cr
 d
