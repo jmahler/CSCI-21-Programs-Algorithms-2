@@ -1,7 +1,8 @@
 
 INCLUDES=DLNode.h DLList.h DataThing.h
 
-OBJECTS=
+OBJECTS=DataThing.o BoolThing.o IntegerThing.o \
+		CharThing.o DoubleThing.o StringThing.o
 
 CC=g++
 CFLAGS=-Wall -ansi -pedantic

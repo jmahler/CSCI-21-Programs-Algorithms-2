@@ -1,0 +1,16 @@
+string
+n
+d
+f myString
+fr myString
+i abc
+i ghi
+i def
+d
+fr abc
+fr aef
+puf ijijij
+d
+c
+d
+-1       # quit

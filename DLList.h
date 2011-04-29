@@ -182,7 +182,7 @@ friend ostream& operator<<(ostream& out, const DLList<_T>& dll);
 	// {{{ insert(T)
 private:
 	// The first node must never be NULL !
-	void _insert(T newData, DLNode<T>*& dln) {
+	void _insert(T newData, DLNode<T>*& dln, DLNode<T>*& newNode) {
 
 		DLNode<T>* nextNode = dln->getNext();
 
@@ -190,14 +190,12 @@ private:
 		if (NULL == nextNode) {
 			// at tail
 
-			DLNode<T>* newNode = new DLNode<T>(newData);
 			newNode->setPrevious(dln);
 			dln->setNext(newNode);
 
 			tail = newNode;
 		} else if (newData >= dln->getData() && newData <= nextNode->getData()) {
 			// between two defined nodes
-			DLNode<T>* newNode = new DLNode<T>(newData);
 
 			newNode->setPrevious(dln);
 			newNode->setNext(nextNode);
@@ -205,13 +203,13 @@ private:
 			dln->setNext(newNode);
 			nextNode->setPrevious(newNode);
 		} else {
-			_insert(newData, dln->getNext());
+			_insert(newData, dln->getNext(), newNode);
 		}
 	}
 
 public:
 	/**
-	 * Insert data in to the list in sorted order.
+	 * Insert data in to the list in ascending order.
 	 * 
 	 * @arg data
 	 *
@@ -219,12 +217,13 @@ public:
 	 * Comparison operators for the data type must be defined.
 	 */
 	void insert(T newData) {
+
+		DLNode<T>* newNode = new DLNode<T>(newData);
+
 		if (0 == nodeCount) {
-			DLNode<T>* newNode = new DLNode<T>(newData);
 			head = tail = newNode;
-		} else if (newData <= head->getData()) {
+		} else if (newNode->getData() <= head->getData()) {
 			// at beginning
-			DLNode<T>* newNode = new DLNode<T>(newData);
 
 			newNode->setNext(head);
 			head->setPrevious(newNode);
@@ -232,7 +231,7 @@ public:
 			head = newNode;
 		} else {
 			// somewhere between head and tail
-			_insert(newData, head);
+			_insert(newData, head, newNode);
 		}
 
 		nodeCount++;
@@ -264,6 +263,9 @@ public:
 				if (previousNode != NULL)
 					previousNode->setNext(nextNode);
 
+				if (cur == head)
+					head = nextNode;
+
 				delete cur;
 
 				nodeCount--;
@@ -272,9 +274,9 @@ public:
 
 				if (!all_or_one)
 					break;
-			} else {
-				cur = cur->getNext();
 			}
+
+			cur = cur->getNext();
 		}
 	}
 	// }}}

@@ -2,11 +2,16 @@ integer
 # input test commands for DLList (doubly linked list) library
 n
 d
-i 1
-i 2
 i 3
-i 4
+d
+i 1
+d
+-1
+i 2
+d
+-1
 i 5
+i 4
 i 6
 d
 r 2

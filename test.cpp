@@ -8,6 +8,8 @@
 #include "DLList.h"
 
 #include "DataThing.h"
+#include "BoolThing.h"
+#include "IntegerThing.h"
 
 using namespace std;
 
@@ -21,15 +23,39 @@ int main(int argc, char** argv)
 {
 	assert(true);
 
-	// {{{ test DLNode
+	// {{{ DLNode, int
 	{
 		//DLNode<int> n1;  // should fail, private
 		DLNode<int> n1(10);
 
 		assert(10 == n1.getData());
+		assert(11 != n1.getData());
 	}
+	// }}}
 
+	// {{{ DLNode, BoolThing
+	{
+		DLNode<BoolThing> x(true);
 
+		assert(true == x.getData().getValue());
+
+		x.setData(false);
+
+		assert(! x.getData().getValue());
+	}
+	// }}}
+
+	// {{{ DLNode, IntegerThing
+	{
+		DLNode<IntegerThing> a(1);
+		DLNode<IntegerThing> b(3);
+
+		assert(a.getData() < b.getData());
+		assert(a.getData() <= b.getData());
+		assert(a.getData() != b.getData());
+		assert(! (a.getData() >= b.getData()));
+		assert(! (a.getData() > b.getData()));
+	}
 	// }}}
 
 	// {{{ DLList, push pop
@@ -159,7 +185,7 @@ int main(int argc, char** argv)
 	}
 	// }}}
 
-	// {{{ DLList, insert
+	// {{{ DLList, insert [DISABLED]
 	{
 		DLList<int> dl1;
 
@@ -181,6 +207,7 @@ int main(int argc, char** argv)
 	}
 
 	dl1.remove(0, true); // one_or_all=true
+
 	dl1.remove(1);
 	dl1.remove(2);
 
@@ -189,6 +216,31 @@ int main(int argc, char** argv)
 	assert(!dl1.find(2));
 	assert(dl1.find(3));
 	assert(dl1.find(4));
+	}
+	// }}}
+
+	// {{{ DLList, remove()
+	{
+	DLList<int> dl1;
+
+	// 0 1 2
+	for (int i = 0; i < 3; i++) {
+		dl1.insert(i);
+	}
+
+	assert(dl1.find(0));
+	assert(dl1.find(1));
+	assert(dl1.find(2));
+
+	dl1.remove(2);
+	assert(dl1.find(0));
+	assert(dl1.find(1));
+	assert(!dl1.find(2));
+
+	dl1.remove(0);
+	assert(!dl1.find(0));
+	assert(dl1.find(1));
+	assert(!dl1.find(2));
 	}
 	// }}}
 
@@ -235,7 +287,6 @@ int main(int argc, char** argv)
 	// }}}
 
 	// {{{ DLList, operator<< 
-	/*
 	{
 		DLList<int> dl1;
 
@@ -244,10 +295,7 @@ int main(int argc, char** argv)
 			dl1.insert((random() % 10) - 5);
 			dl1.insert(i);
 		}
-
-		cout << dl1 << endl;
 	}
-	*/
 	// }}}
 
 	// {{{ DLList, process
@@ -293,6 +341,62 @@ int main(int argc, char** argv)
 		}
 	}
 	*/
+	// }}}
+
+	// {{{ BoolThing
+	{
+		BoolThing bl1;
+
+		bl1.print();
+
+		BoolThing bl2(false);
+		BoolThing bl3(true);
+		BoolThing bl4 = bl3;
+
+		bl1.setValue(true);
+
+		assert(bl1 != bl2);
+
+		assert(bl1.getId() != bl2.getId());
+
+		assert(bl1 == bl3);
+
+		assert(bl1.getId() != bl3.getId());
+		assert(bl4.getId() == bl3.getId());
+
+		bl1 = bl2;
+		assert(bl1.getId() != bl2.getId());
+		assert(bl1 == bl2);
+
+		assert(bl2 < bl3);
+
+		//cout << bl1 << endl;
+		//cout << bl2 << endl;
+		//cout << bl3 << endl;
+	}
+	// }}}
+
+	// {{{ DLList, BoolThing
+	{
+		DLList<BoolThing> dl;
+		assert(0 == dl.getNodeCount());
+
+		dl.pushFront(true);
+
+		assert(1 == dl.getNodeCount());
+	}
+	// }}}
+
+	// {{{ DLList, IntegerThing comparison
+	{
+	DLNode<IntegerThing> a(1);
+	DLNode<IntegerThing> b(3);
+
+	assert(0 <= (a.getData()).getValue());
+	assert(2 >= (a.getData()).getValue());
+
+	//assert(1 == dl.getNodeCount());
+	}
 	// }}}
 
 	cout << "All tests passed.\n";

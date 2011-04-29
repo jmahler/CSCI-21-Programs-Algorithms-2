@@ -10,8 +10,11 @@
 template<class T>
 class DLNode
 {
-
 private:
+
+	T* data;
+	DLNode* next;
+	DLNode* previous;
 
 	// {{{ DLNode()  (default constructor)
 	/*
@@ -30,22 +33,24 @@ public:
 	 * @arg initial value
 	 */
 	DLNode(const T &newData) {
-		data = newData;
+		data = new T(newData);
 		next = NULL;
 		previous = NULL;
 	}
 	// }}}
 
 	// {{{ ~DLNode()  (destructor)
-	~DLNode() { }
+	~DLNode() {
+		delete data;
+	}
 	// }}}
 
 	// {{{ setData()
 	/**
 	 * Set the data currently stored.
 	 */
-	void setData(T newData) {
-		data = newData;
+	void setData(const T &newData) {
+		*data = newData;
 	}
 	// }}}
 
@@ -56,7 +61,7 @@ public:
 	 * @return data stored
 	 */
 	T getData() {
-		return data;
+		return *data;
 	}
 	// }}}
 
@@ -115,11 +120,6 @@ public:
 	}
 	// }}}
 
-private:
-
-	T data;
-	DLNode* next;
-	DLNode* previous;
 };
 
 // vim:foldmethod=marker

@@ -1,0 +1,25 @@
+char
+# input test commands for DLList (doubly linked list) library
+n        # node count
+d
+f A   # find
+fr A
+f B
+fr B
+i B
+i A
+i C
+d
+f A
+fr A
+f C
+fr C
+c
+puf C
+puf B
+puf A
+pub D
+pub E
+c
+d
+-1       # quit

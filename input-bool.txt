@@ -1,0 +1,26 @@
+bool
+# input test commands for DLList (doubly linked list) library
+n        # node count
+d
+f true   # find
+fr true
+f false
+fr false
+n
+d        # display
+i true
+i false
+i true
+d
+f true
+fr true
+f false
+fr false
+c
+puf true
+puf false
+puf false
+pub true
+pub true
+d
+-1       # quit
