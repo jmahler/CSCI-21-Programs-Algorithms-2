@@ -243,7 +243,7 @@ public:
 	 * Remove a data element from the list.
 	 *
 	 * @arg data to be removed
-	 * @arg if there are duplicates, remove one or all
+	 * @arg if there are duplicates, remove all or one
 	 */
 	void remove(T testData, bool all_or_one=true) {
 		DLNode<T>* cur;
@@ -284,7 +284,8 @@ public:
 	// {{{ process
 	/**
 	 * Process the list by performing a function on every
-	 * data item in the list.
+	 * data item in the list.  The function will be called
+	 * with a single value, the data value of the element.
 	 *
 	 * @arg pointer to function
 	 */
@@ -410,7 +411,7 @@ ostream& operator<<(ostream& out, const DLList<T>& dll)
 	while (cur) {
 		n++;
 
-		// wrap every 10 items
+		// wrap every 10 elements
 		if (0 == (n % 10))
 			out << endl << "  ";
 
@@ -423,3 +424,4 @@ ostream& operator<<(ostream& out, const DLList<T>& dll)
 }
 // }}}
 
+// vim:foldmethod=marker

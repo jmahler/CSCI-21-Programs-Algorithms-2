@@ -19,7 +19,7 @@ private:
 	// {{{ DLNode()  (default constructor)
 	/*
 	 * The default constructor should never be used because
-	 * the value will be undefined.
+	 * the value would be undefined.
 	 */
 	DLNode() { }
 	// }}}
@@ -60,8 +60,8 @@ public:
 	 *
 	 * @return data stored
 	 */
-	T getData() {
-		return *data;
+	T getData() const {
+		return (*data);
 	}
 	// }}}
 

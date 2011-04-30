@@ -22,11 +22,12 @@
 #include "DLList.h"
 
 #include "DataThing.h"
-#include "StringThing.h"
-#include "IntegerThing.h"
-#include "DoubleThing.h"
-#include "CharThing.h"
+
 #include "BoolThing.h"
+#include "CharThing.h"
+#include "DoubleThing.h"
+#include "IntegerThing.h"
+#include "StringThing.h"
 
 using namespace std;
 

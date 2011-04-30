@@ -62,5 +62,5 @@ clean:
 	-rm -f test
 	-rm -f $(OBJECTS)
 	-rm -f *.out
-
+	-rm -f README.htm
 

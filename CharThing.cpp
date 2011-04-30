@@ -2,16 +2,20 @@
 #include "CharThing.h"
 
 CharThing::CharThing()
+	: DataThing()
 {
 	val = 0;  // default
 }
 
-CharThing::CharThing(char newVal)
+CharThing::CharThing(const char newVal)
+	: DataThing()
 {
 	val = newVal;
 }
 
-CharThing::CharThing(const string& strVal) {
+CharThing::CharThing(const string& strVal)
+	: DataThing()
+{
 	stringstream ss(strVal);
 	char newVal;
 
@@ -20,60 +24,18 @@ CharThing::CharThing(const string& strVal) {
 	val = newVal;
 }
 
-CharThing::~CharThing() { }
+CharThing::~CharThing() {}
 
-string CharThing::print() const {
-	stringstream ss;
-
-	ss << DataThing::print();
-
-	ss << val;
-
-	return ss.str();
+CharThing::CharThing(const CharThing& s)
+	:DataThing(s)
+{
+	val = s.val;
 }
 
-void CharThing::setValue(char newBVal) {
-	val = newBVal;
-}
-
-
-char CharThing::getValue() const {
-	return val;
-}
-
-CharThing& CharThing::operator=(const CharThing& s) {
+CharThing& CharThing::operator=(const CharThing& s)
+{
 	val = s.val;
 
 	return *this;
-}
-
-ostream& operator<<(ostream& out, const CharThing& s) {
-	out << s.print();
-
-	return out;
-}
-
-bool operator==(const CharThing& lhs, const CharThing& rhs) {
-	return (lhs.getValue() == rhs.getValue());
-}
-
-bool operator<(const CharThing& lhs, const CharThing& rhs) {
-	return (lhs.getValue() < rhs.getValue());
-}
-
-bool operator<=(const CharThing& lhs, const CharThing& rhs) {
-	return (lhs.getValue() <= rhs.getValue());
-}
-
-bool operator>(const CharThing& lhs, const CharThing& rhs) {
-	return (rhs.getValue() < lhs.getValue());
-}
-
-bool operator>=(const CharThing& lhs, const CharThing& rhs) {
-	return (rhs.getValue() <= lhs.getValue());
-}
-
-bool operator!=(const CharThing& lhs, const CharThing& rhs) {
-	return (rhs.getValue() != lhs.getValue());
 }
 

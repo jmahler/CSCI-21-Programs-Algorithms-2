@@ -8,13 +8,17 @@
 #include "DLList.h"
 
 #include "DataThing.h"
+
 #include "BoolThing.h"
+#include "CharThing.h"
 #include "IntegerThing.h"
+#include "StringThing.h"
+#include "DoubleThing.h"
 
 using namespace std;
 
+// used as a function pointer by process()
 int total = 0;
-
 void _sum(int x) {
 	total += x;
 }
@@ -33,6 +37,121 @@ int main(int argc, char** argv)
 	}
 	// }}}
 
+	// {{{ BoolThing
+	{
+		BoolThing bl1;
+
+		bl1.print();
+
+		BoolThing bl2(false);
+		BoolThing bl3(true);
+		BoolThing bl4 = bl3;
+
+		bl1.setValue(true);
+
+		assert(bl1 != bl2);
+
+		assert(bl1.getId() != bl2.getId());
+
+		assert(bl1 == bl3);
+
+		assert(bl1.getId() != bl3.getId());
+		assert(bl4.getId() == bl3.getId());
+
+		bl1 = bl2;  // assignment operator
+		assert(bl1.getId() != bl2.getId());
+		assert(bl1 == bl2);
+
+		assert(bl2 < bl3);
+
+		//cout << bl1 << endl;
+		//cout << bl2 << endl;
+		//cout << bl3 << endl;
+	}
+	// }}}
+
+	// {{{ IntegerThing
+	{
+		IntegerThing t1(10);
+		IntegerThing t2(20);
+
+		assert(10 == t1.getValue());
+		assert(20 == t2.getValue());
+
+		t1.setValue(13);
+		assert(13 == t1.getValue());
+
+		assert(!(t1 == t2));
+		assert((t1 < t2));
+	}
+	// }}}
+
+	// {{{ CharThing
+	{
+		CharThing t1('A');
+		CharThing t2('B');
+
+		assert('A' == t1.getValue());
+		assert('B' == t2.getValue());
+
+		t1.setValue('C');
+		assert('C' == t1.getValue());
+		assert('A' != t1.getValue());
+
+		assert(!(t1 == t2));
+	}
+	// }}}
+
+	// {{{ StringThing
+	{
+		StringThing t1("abc");
+		StringThing t2("DeF");
+
+		assert("abc" == t1.getValue());
+		assert("DeF" == t2.getValue());
+
+		t1.setValue("ghi");
+		assert("ghi" == t1.getValue());
+		assert("abc" != t1.getValue());
+
+		assert(!(t1 == t2));
+	}
+	// }}}
+
+	// {{{ DoubleThing
+	{
+		DoubleThing t1(1.124);
+		DoubleThing t2(-10.5);
+
+		assert(1.124 == t1.getValue());
+		assert(-10.5 == t2.getValue());
+
+		t1.setValue(3.14159);
+		assert(3.14159 == t1.getValue());
+
+		assert(!(t1 == t2));
+		assert((t1 > t2));
+	}
+	// }}}
+
+	// {{{ DLNode, IntegerThing
+	{
+		DLNode<IntegerThing> a(1);
+		DLNode<IntegerThing> b(3);
+
+		assert(1 == a.getData().getValue());
+		assert(3 == b.getData().getValue());
+
+		assert(a.getData() < b.getData());
+		assert(b.getData() > a.getData());
+		assert(b.getData() >= a.getData());
+		assert(a.getData() <= b.getData());
+		assert(a.getData() != b.getData());
+		assert(! (a.getData() >= b.getData()));
+		assert(! (a.getData() > b.getData()));
+	}
+	// }}}
+
 	// {{{ DLNode, BoolThing
 	{
 		DLNode<BoolThing> x(true);
@@ -42,19 +161,6 @@ int main(int argc, char** argv)
 		x.setData(false);
 
 		assert(! x.getData().getValue());
-	}
-	// }}}
-
-	// {{{ DLNode, IntegerThing
-	{
-		DLNode<IntegerThing> a(1);
-		DLNode<IntegerThing> b(3);
-
-		assert(a.getData() < b.getData());
-		assert(a.getData() <= b.getData());
-		assert(a.getData() != b.getData());
-		assert(! (a.getData() >= b.getData()));
-		assert(! (a.getData() > b.getData()));
 	}
 	// }}}
 
@@ -286,18 +392,6 @@ int main(int argc, char** argv)
 	}
 	// }}}
 
-	// {{{ DLList, operator<< 
-	{
-		DLList<int> dl1;
-
-		//for (int i = 99; i >= 0; i--) {
-		for (int i = 0; i < 10; i++) {
-			dl1.insert((random() % 10) - 5);
-			dl1.insert(i);
-		}
-	}
-	// }}}
-
 	// {{{ DLList, process
 	{
 		DLList<int> dl1;
@@ -314,7 +408,30 @@ int main(int argc, char** argv)
 	}
 	// }}}
 
-	// {{{ memory leak test
+	// {{{ DLList, BoolThing
+	{
+		DLList<BoolThing> dl;
+		assert(0 == dl.getNodeCount());
+
+		dl.pushFront(true);
+
+		assert(1 == dl.getNodeCount());
+	}
+	// }}}
+
+	// {{{ DLList, IntegerThing comparison
+	{
+	DLNode<IntegerThing> a(1);
+	DLNode<IntegerThing> b(3);
+
+	assert(0 <= (a.getData()).getValue());
+	assert(2 >= (a.getData()).getValue());
+
+	//assert(1 == dl.getNodeCount());
+	}
+	// }}}
+
+	// {{{ memory leak test [DISABLED]
 	// 4/19/2011 tested OK
 	/*
 	{
@@ -343,60 +460,33 @@ int main(int argc, char** argv)
 	*/
 	// }}}
 
-	// {{{ BoolThing
+	// {{{ memory leak test, IntegerThing [DISABLED]
+	// 4/29/2011 tested OK
+	/*
 	{
-		BoolThing bl1;
+		DLList<IntegerThing> dl1;
 
-		bl1.print();
+		while (1) {
+			DLList<IntegerThing> dl2;
 
-		BoolThing bl2(false);
-		BoolThing bl3(true);
-		BoolThing bl4 = bl3;
+			assert(0 == dl1.getNodeCount());
+			assert(0 == dl2.getNodeCount());
 
-		bl1.setValue(true);
+			for (int i = 0; i < 100; i++) {
+				dl1.pushFront(i);
+				dl1.pushBack(i);
+			}
 
-		assert(bl1 != bl2);
+			for (int i = 0; i < 100; i++) {
+				dl2.pushFront(i);
+				dl2.pushBack(i);
+			}
 
-		assert(bl1.getId() != bl2.getId());
-
-		assert(bl1 == bl3);
-
-		assert(bl1.getId() != bl3.getId());
-		assert(bl4.getId() == bl3.getId());
-
-		bl1 = bl2;
-		assert(bl1.getId() != bl2.getId());
-		assert(bl1 == bl2);
-
-		assert(bl2 < bl3);
-
-		//cout << bl1 << endl;
-		//cout << bl2 << endl;
-		//cout << bl3 << endl;
+			//dl2.clearRecursive();
+			dl1.clear();
+		}
 	}
-	// }}}
-
-	// {{{ DLList, BoolThing
-	{
-		DLList<BoolThing> dl;
-		assert(0 == dl.getNodeCount());
-
-		dl.pushFront(true);
-
-		assert(1 == dl.getNodeCount());
-	}
-	// }}}
-
-	// {{{ DLList, IntegerThing comparison
-	{
-	DLNode<IntegerThing> a(1);
-	DLNode<IntegerThing> b(3);
-
-	assert(0 <= (a.getData()).getValue());
-	assert(2 >= (a.getData()).getValue());
-
-	//assert(1 == dl.getNodeCount());
-	}
+	*/
 	// }}}
 
 	cout << "All tests passed.\n";

@@ -2,16 +2,20 @@
 #include "DoubleThing.h"
 
 DoubleThing::DoubleThing()
+	: DataThing()
 {
 	val = 0;  // default
 }
 
-DoubleThing::DoubleThing(double newVal)
+DoubleThing::DoubleThing(const double newVal)
+	: DataThing()
 {
 	val = newVal;
 }
 
-DoubleThing::DoubleThing(const string& strVal) {
+DoubleThing::DoubleThing(const string& strVal)
+	: DataThing()
+{
 	stringstream ss(strVal);
 	double newVal;
 
@@ -20,25 +24,12 @@ DoubleThing::DoubleThing(const string& strVal) {
 	val = newVal;
 }
 
-DoubleThing::~DoubleThing() { }
+DoubleThing::~DoubleThing() {}
 
-string DoubleThing::print() const {
-	stringstream ss;
-
-	ss << DataThing::print();
-
-	ss << val;
-
-	return ss.str();
-}
-
-void DoubleThing::setValue(double newVal) {
-	val = newVal;
-}
-
-
-double DoubleThing::getValue() const {
-	return val;
+DoubleThing::DoubleThing(const DoubleThing& s)
+	: DataThing(s)
+{
+	val = s.val;
 }
 
 DoubleThing& DoubleThing::operator=(const DoubleThing& s) {
@@ -47,33 +38,4 @@ DoubleThing& DoubleThing::operator=(const DoubleThing& s) {
 	return *this;
 }
 
-ostream& operator<<(ostream& out, const DoubleThing& s) {
-	out << s.print();
-
-	return out;
-}
-
-bool operator==(const DoubleThing& lhs, const DoubleThing& rhs) {
-	return (lhs.getValue() == rhs.getValue());
-}
-
-bool operator<(const DoubleThing& lhs, const DoubleThing& rhs) {
-	return (lhs.getValue() < rhs.getValue());
-}
-
-bool operator<=(const DoubleThing& lhs, const DoubleThing& rhs) {
-	return (lhs.getValue() <= rhs.getValue());
-}
-
-bool operator>(const DoubleThing& lhs, const DoubleThing& rhs) {
-	return (rhs.getValue() < lhs.getValue());
-}
-
-bool operator>=(const DoubleThing& lhs, const DoubleThing& rhs) {
-	return (rhs.getValue() <= lhs.getValue());
-}
-
-bool operator!=(const DoubleThing& lhs, const DoubleThing& rhs) {
-	return (rhs.getValue() != lhs.getValue());
-}
 

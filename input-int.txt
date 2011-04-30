@@ -2,6 +2,7 @@ integer
 # input test commands for DLList (doubly linked list) library
 n
 d
+pidon
 i 3
 d
 i 1
