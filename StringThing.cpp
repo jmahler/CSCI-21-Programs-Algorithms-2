@@ -2,13 +2,13 @@
 #include "StringThing.h"
 
 StringThing::StringThing()
-	: DataThing()
+	: DataThing<string>()
 {
 	val = "";  // default
 }
 
 StringThing::StringThing(const string strVal)
-	: DataThing()
+	: DataThing<string>()
 {
 	val = strVal;
 }
@@ -16,7 +16,7 @@ StringThing::StringThing(const string strVal)
 StringThing::~StringThing() {}
 
 StringThing::StringThing(const StringThing& s)
-	: DataThing(s)
+	: DataThing<string>(s)
 {
 	val = s.val;
 }

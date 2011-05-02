@@ -2,19 +2,19 @@
 #include "IntegerThing.h"
 
 IntegerThing::IntegerThing()
-	: DataThing()
+	: DataThing<int>()
 {
 	val = 0;  // default
 }
 
 IntegerThing::IntegerThing(const int newVal)
-	: DataThing()
+	: DataThing<int>()
 {
 	val = newVal;
 }
 
 IntegerThing::IntegerThing(const string& strVal)
-	: DataThing()
+	: DataThing<int>()
 {
 	stringstream ss(strVal);
 	int newVal;
@@ -27,7 +27,7 @@ IntegerThing::IntegerThing(const string& strVal)
 IntegerThing::~IntegerThing() {}
 
 IntegerThing::IntegerThing(const IntegerThing& s)
-	: DataThing(s)
+	: DataThing<int>(s)
 {
 	val = s.val;
 }

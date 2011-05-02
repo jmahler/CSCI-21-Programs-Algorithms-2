@@ -2,19 +2,19 @@
 #include "DoubleThing.h"
 
 DoubleThing::DoubleThing()
-	: DataThing()
+	: DataThing<double>()
 {
 	val = 0;  // default
 }
 
 DoubleThing::DoubleThing(const double newVal)
-	: DataThing()
+	: DataThing<double>()
 {
 	val = newVal;
 }
 
 DoubleThing::DoubleThing(const string& strVal)
-	: DataThing()
+	: DataThing<double>()
 {
 	stringstream ss(strVal);
 	double newVal;
@@ -27,7 +27,7 @@ DoubleThing::DoubleThing(const string& strVal)
 DoubleThing::~DoubleThing() {}
 
 DoubleThing::DoubleThing(const DoubleThing& s)
-	: DataThing(s)
+	: DataThing<double>(s)
 {
 	val = s.val;
 }

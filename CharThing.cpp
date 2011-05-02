@@ -2,19 +2,19 @@
 #include "CharThing.h"
 
 CharThing::CharThing()
-	: DataThing()
+	: DataThing<char>()
 {
 	val = 0;  // default
 }
 
 CharThing::CharThing(const char newVal)
-	: DataThing()
+	: DataThing<char>()
 {
 	val = newVal;
 }
 
 CharThing::CharThing(const string& strVal)
-	: DataThing()
+	: DataThing<char>()
 {
 	stringstream ss(strVal);
 	char newVal;
@@ -27,7 +27,7 @@ CharThing::CharThing(const string& strVal)
 CharThing::~CharThing() {}
 
 CharThing::CharThing(const CharThing& s)
-	:DataThing(s)
+	:DataThing<char>(s)
 {
 	val = s.val;
 }

@@ -7,13 +7,13 @@ BoolThing::BoolThing()
 }
 
 BoolThing::BoolThing(const bool newVal)
-	: DataThing()
+	: DataThing<bool>()
 {
 	val = newVal;
 }
 
 BoolThing::BoolThing(const string& strVal)
-	: DataThing()
+	: DataThing<bool>()
 {
 	if (strVal == "true")
 		val = true;
@@ -24,7 +24,7 @@ BoolThing::BoolThing(const string& strVal)
 BoolThing::~BoolThing() {}
 
 BoolThing::BoolThing(const BoolThing& s)
-	: DataThing(s)
+	: DataThing<bool>(s)
 {
 	val = s.val;
 }
