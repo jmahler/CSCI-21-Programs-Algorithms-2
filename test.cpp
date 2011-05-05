@@ -126,32 +126,64 @@ int main() {
 	 */
 	assert(6 == bst1.getNodeCount());
 
+	// try to remove a non-existent node
+	assert(! bst1.remove(666));
+
 	assert(bst1.remove(-4));
 	assert(5 == bst1.getNodeCount());
 	assert(! bst1.find(-4));
-
-	assert(! bst1.remove(666));
+	assert(bst1.find(1));
+	assert(bst1.find(12));
+	assert(bst1.find(14));
+	assert(bst1.find(13));
+	assert(bst1.find(20));
 
 	assert(bst1.remove(1));
 	assert(4 == bst1.getNodeCount());
+	assert(! bst1.find(-4));
 	assert(! bst1.find(1));
+	assert(bst1.find(12));
+	assert(bst1.find(14));
+	assert(bst1.find(13));
+	assert(bst1.find(20));
 
 	assert(bst1.remove(20));
 	assert(3 == bst1.getNodeCount());
+	assert(! bst1.find(-4));
+	assert(! bst1.find(1));
+	assert(bst1.find(12));
+	assert(bst1.find(14));
+	assert(bst1.find(13));
 	assert(! bst1.find(20));
 
 	assert(bst1.remove(13));
 	assert(2 == bst1.getNodeCount());
+	assert(! bst1.find(-4));
+	assert(! bst1.find(1));
+	assert(bst1.find(12));
+	assert(bst1.find(14));
 	assert(! bst1.find(13));
+	assert(! bst1.find(20));
 
 	assert(bst1.remove(14));
 	assert(1 == bst1.getNodeCount());
+	assert(! bst1.find(-4));
+	assert(! bst1.find(1));
+	assert(bst1.find(12));
 	assert(! bst1.find(14));
+	assert(! bst1.find(13));
+	assert(! bst1.find(20));
 
 	assert(bst1.remove(12));
 	assert(0 == bst1.getNodeCount());
+	assert(! bst1.find(-4));
+	assert(! bst1.find(1));
 	assert(! bst1.find(12));
+	assert(! bst1.find(14));
+	assert(! bst1.find(13));
+	assert(! bst1.find(20));
 
+	// everything should fail on an empty list
 	assert(! bst1.remove(12));
 	assert(! bst1.remove(13));
 	assert(! bst1.remove(14));
