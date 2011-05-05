@@ -249,6 +249,40 @@ int main() {
 	}
 	// }}}
 
+	// {{{ BSTree, memeory leak test [DISABLED]
+	// A good way to test this program for memory leaks is
+	// to uncomment this section and then run this program
+	// while monitoring memory usage using the 'top' command.
+	//
+	// tested OK: 5/5/2011
+	/*
+	{
+	BSTree<int> bst1;
+
+	bst1.insert(3);
+	bst1.insert(1);
+	bst1.insert(2);
+
+	while (1) {
+		bst1.insert(4);
+		bst1.insert(5);
+		bst1.insert(6);
+		bst1.insert(7);
+
+		assert(7 == bst1.getNodeCount());
+
+		assert(bst1.remove(4));
+		assert(bst1.remove(6));
+		assert(bst1.remove(7));
+		assert(bst1.remove(5));
+
+		assert(3 == bst1.getNodeCount());
+	}
+
+	}
+	*/
+	// }}}
+
 	cout << "All tests passed.\n";
 
 	return 0; // OK
