@@ -51,7 +51,7 @@ int main() {
 	bst1.print();
 	// The values were inserted out of order
 	// but they should be printed in order.
-	cout << bst1.print();  // debug
+	//cout << bst1.print();  // debug
 
 	assert(6 == bst1.getNodeCount());
 	}
@@ -105,6 +105,62 @@ int main() {
 	assert(! bst1.find(19));
 	assert(bst1.find(20));
 	assert(! bst1.find(21));
+
+	}
+	// }}}
+
+	// {{{ BSTree, remove()
+	{
+	BSTree<int> bst1;
+
+	bst1.insert(12);
+	bst1.insert(14);
+	bst1.insert(1);
+	bst1.insert(13);
+	bst1.insert(-4);
+	bst1.insert(20);
+
+	/* 
+	 * Remove each item one by one and make sure
+	 * everything is correct at each step.
+	 */
+	assert(6 == bst1.getNodeCount());
+
+	assert(bst1.remove(-4));
+	assert(5 == bst1.getNodeCount());
+	assert(! bst1.find(-4));
+
+	assert(! bst1.remove(666));
+
+	assert(bst1.remove(1));
+	assert(4 == bst1.getNodeCount());
+	assert(! bst1.find(1));
+
+	assert(bst1.remove(20));
+	assert(3 == bst1.getNodeCount());
+	assert(! bst1.find(20));
+
+	assert(bst1.remove(13));
+	assert(2 == bst1.getNodeCount());
+	assert(! bst1.find(13));
+
+	assert(bst1.remove(14));
+	assert(1 == bst1.getNodeCount());
+	assert(! bst1.find(14));
+
+	assert(bst1.remove(12));
+	assert(0 == bst1.getNodeCount());
+	assert(! bst1.find(12));
+
+	assert(! bst1.remove(12));
+	assert(! bst1.remove(13));
+	assert(! bst1.remove(14));
+	assert(! bst1.remove(-10));
+	assert(! bst1.find(12));
+	assert(! bst1.find(13));
+	assert(! bst1.find(14));
+	assert(! bst1.find(-10));
+	assert(! bst1.find(3));
 
 	}
 	// }}}

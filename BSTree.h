@@ -188,7 +188,47 @@ class BSTree
 		}
 		// }}}
 
-		bool remove();
+		// {{{  remove(T&)
+	private:
+		bool _remove(BSTNode<T>*& treeRoot, const T& rmValue) {
+			if (NULL == treeRoot) {
+				return false;  // value not found
+			} else {
+				if (rmValue == treeRoot->getData()) {
+					// value to remove found!
+					BSTNode<T>* left = treeRoot->getLeft();	
+					BSTNode<T>* right = treeRoot->getRight();	
+
+					delete treeRoot;
+					treeRoot = NULL;
+					count--;
+
+					if (NULL == left && NULL == right) {
+						// nothing to reconnect
+					} else if (NULL == left) {
+						treeRoot = right;
+					} else if (NULL == right) {
+						treeRoot = left;
+					}
+
+					return true;
+				} else if (rmValue < treeRoot->getData()) {
+					return _remove(treeRoot->getLeft(), rmValue);
+				} else { // rmValue > data
+					return _remove(treeRoot->getRight(), rmValue);
+				}
+			}
+		}
+	public:	
+		/**
+		 * Remove a value from the tree.
+		 *
+		 * @returns true if value was found and removed, false otherwise
+		 */
+		bool remove(const T& rmValue) {
+			return _remove(root, rmValue);
+		}
+		// }}}
 
 		// {{{ find()
 	private:
