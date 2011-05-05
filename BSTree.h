@@ -34,22 +34,18 @@ class BSTree
 
 		// {{{ print()
 	private:
+		// inorder traversal
 		void _print(BSTNode<T>*& treeRoot, stringstream& ss) {
-			if (NULL == treeRoot) {
-				// done
-			} else {
-
+			if (NULL != treeRoot) {
 				_print(treeRoot->getLeft(), ss);
-
 				ss << " " << treeRoot->getData();
-
 				_print(treeRoot->getRight(), ss);
 			}
 		}
 	public:
 		/**
-		 * Convert the tree to string format suitable for printing.
-		 * Values will be in ascending order.
+		 * Traverse the tree in order and produce a string representing
+		 * it as a list.
 		 *
 		 * @returns string
 		 */
@@ -63,6 +59,87 @@ class BSTree
 		}
 		// }}}
 
+		// {{{ printr()
+	private:
+		// reverse order traversal
+		void _printr(BSTNode<T>*& treeRoot, stringstream& ss) {
+			if (NULL != treeRoot) {
+				_printr(treeRoot->getRight(), ss);
+				ss << " " << treeRoot->getData();
+				_printr(treeRoot->getLeft(), ss);
+			}
+		}
+	public:
+		/**
+		 * Traverse the tree in REVERSE order and produce a string representing
+		 * it as a list.
+		 *
+		 * @returns string
+		 */
+		string printr() {
+			stringstream ss;
+			ss << " (";
+			_printr(root, ss);
+			ss << " ) ";
+
+			return ss.str();
+		}
+		// }}}
+
+		// {{{ printp()
+	private:
+		// pre-order traversal
+		void _printp(BSTNode<T>*& treeRoot, stringstream& ss) {
+			if (NULL != treeRoot) {
+				ss << " " << treeRoot->getData();
+				_printp(treeRoot->getLeft(), ss);
+				_printp(treeRoot->getRight(), ss);
+			}
+		}
+	public:
+		/**
+		 * Perform a pre-order traversal of the tree and produce
+		 * a string representing it as a list.
+		 *
+		 * @returns string
+		 */
+		string printp() {
+			stringstream ss;
+			ss << " (";
+			_printp(root, ss);
+			ss << " ) ";
+
+			return ss.str();
+		}
+		// }}}
+
+		// {{{ prints()
+	private:
+		// post-order traversal
+		void _printe(BSTNode<T>*& treeRoot, stringstream& ss) {
+			if (NULL != treeRoot) {
+				_printe(treeRoot->getLeft(), ss);
+				_printe(treeRoot->getRight(), ss);
+				ss << " " << treeRoot->getData();
+			}
+		}
+	public:
+		/**
+		 * Perform a post-order traversal of the tree and produce
+		 * a string representing it as a list.
+		 *
+		 * @returns string
+		 */
+		string printe() {
+			stringstream ss;
+			ss << " (";
+			_printe(root, ss);
+			ss << " ) ";
+
+			return ss.str();
+		}
+		// }}}
+
 		// {{{ clear();
 	private:
 		void _clear(BSTNode<T>*& treeRoot) {
@@ -70,10 +147,10 @@ class BSTree
 				// end of branch, DONE
 			} else {
 				_clear(treeRoot->getLeft());
-
 				_clear(treeRoot->getRight());
 
 				delete treeRoot;
+				treeRoot = NULL;
 				count--;
 			}
 		}	
@@ -93,10 +170,11 @@ class BSTree
 			if (NULL == treeRoot) {
 				treeRoot = new BSTNode<T>(newData);
 				count++;
-			} else if (newData < treeRoot->getData())
-					_insert(newData, treeRoot->getLeft());
-			else if (newData > treeRoot->getData())
-					_insert(newData, treeRoot->getRight());
+			} else if (newData < treeRoot->getData()) {
+				_insert(newData, treeRoot->getLeft());
+			} else if (newData > treeRoot->getData()) {
+				_insert(newData, treeRoot->getRight());
+			}
 		}
 
 	public:

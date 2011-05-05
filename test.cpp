@@ -48,9 +48,10 @@ int main() {
 	bst1.insert(-4);
 	bst1.insert(20);
 
+	bst1.print();
 	// The values were inserted out of order
 	// but they should be printed in order.
-	//cout << bst1.print();  // debug
+	cout << bst1.print();  // debug
 
 	assert(6 == bst1.getNodeCount());
 	}
@@ -129,6 +130,33 @@ int main() {
 	assert(14 == *(bst1.getData(14)));
 	assert(20 == *(bst1.getData(20)));
 	assert(NULL == bst1.getData(21));
+
+	}
+	// }}}
+
+	// {{{ BSTree, print(), printr()
+	{
+	BSTree<int> bst1;
+
+	bst1.insert(12);
+	bst1.insert(14);
+	bst1.insert(1);
+	bst1.insert(13);
+	bst1.insert(-4);
+	bst1.insert(20);
+
+	// in order traversal
+	bst1.print();
+
+	// reverse order traversal
+	bst1.printr();
+	//cout << bst1.printr() << endl;
+
+	bst1.printp();
+	//cout << bst1.printp() << endl;
+
+	bst1.printe();
+	//cout << bst1.printe() << endl;
 
 	}
 	// }}}
