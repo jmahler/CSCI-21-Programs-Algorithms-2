@@ -216,9 +216,13 @@ int main() {
 	bst1.insert(2);
 	bst1.insert(4);
 
+	assert(bst1.find(2));
 	assert(bst1.find(3));
+	assert(bst1.find(4));
 	assert(bst1.remove(3));
-	assert(bst1.find(3));
+	assert(! bst1.find(3));
+	assert(bst1.find(2));
+	assert(bst1.find(4));
 	}
 	// }}}
 
