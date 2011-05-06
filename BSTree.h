@@ -190,11 +190,11 @@ class BSTree
 
 		// {{{  remove(T&)
 	private:
-		bool _remove(BSTNode<T>*& treeRoot, const T& rmValue) {
+		bool _remove(BSTNode<T>*& treeRoot, const T& target) {
 			if (NULL == treeRoot) {
 				return false;  // value not found
 			} else {
-				if (rmValue == treeRoot->getData()) {
+				if (target == treeRoot->getData()) {
 					// value to remove found!
 					BSTNode<T>* left = treeRoot->getLeft();	
 					BSTNode<T>* right = treeRoot->getRight();	
@@ -210,12 +210,13 @@ class BSTree
 					} else if (NULL == right) {
 						treeRoot = left;
 					}
+					// what about when both left and right are defined?
 
 					return true;
-				} else if (rmValue < treeRoot->getData()) {
-					return _remove(treeRoot->getLeft(), rmValue);
-				} else { // rmValue > data
-					return _remove(treeRoot->getRight(), rmValue);
+				} else if (target < treeRoot->getData()) {
+					return _remove(treeRoot->getLeft(), target);
+				} else { // target > data
+					return _remove(treeRoot->getRight(), target);
 				}
 			}
 		}
@@ -225,8 +226,8 @@ class BSTree
 		 *
 		 * @returns true if value was found and removed, false otherwise
 		 */
-		bool remove(const T& rmValue) {
-			return _remove(root, rmValue);
+		bool remove(const T& target) {
+			return _remove(root, target);
 		}
 		// }}}
 

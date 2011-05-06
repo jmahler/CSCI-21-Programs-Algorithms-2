@@ -197,6 +197,31 @@ int main() {
 	}
 	// }}}
 
+	// {{{ BSTree, remove()
+	{
+	BSTree<int> bst1;
+
+	/* Set up the following tree then
+	 * try and remove 3 (a doubly connected node).
+	 *
+	 *        5
+	 *      /   \
+	 *     3    10
+	 *    / \
+	 *   2   4
+	 */
+	bst1.insert(5);
+	bst1.insert(3);
+	bst1.insert(10);
+	bst1.insert(2);
+	bst1.insert(4);
+
+	assert(bst1.find(3));
+	assert(bst1.remove(3));
+	assert(bst1.find(3));
+	}
+	// }}}
+
 	// {{{ BSTree, getData()
 	{
 	BSTree<int> bst1;
