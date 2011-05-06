@@ -7,6 +7,13 @@
 
 using namespace std;
 
+/**
+ * EmptyTreeError may be thrown by a function that
+ * is given an empty tree but requires a populated one.
+ * Currently min() and max() use this exception.
+ */
+struct EmptyTreeError {};
+
 template <class T>
 class BSTree
 {
@@ -293,6 +300,58 @@ class BSTree
 		bool find(const T& data) {
 			return _find(root, data);
 			return true;
+		}
+		// }}}
+
+		// {{{ min()
+	private:
+		T _min(BSTNode<T>*& treeRoot) {
+			if (NULL == treeRoot) {
+				throw EmptyTreeError();
+			} else if (NULL == treeRoot->getLeft()) {
+				return treeRoot->getData();
+			}
+			// else
+			return (_min(treeRoot->getLeft()));
+		}
+	public:
+		/**
+		 * Find the minimum value in the tree.
+		 * The tree must be non-empty otherwise the EmptyTreeError exception
+		 * will be thrown.
+		 *
+		 * @returns value if found, throws EmptyTreeError on error
+		 *
+		 * @exception EmptyTreeError
+		 */
+		T min() {
+			return _min(root);
+		}
+		// }}}
+
+		// {{{ max()
+	private:
+		T _max(BSTNode<T>*& treeRoot) {
+			if (NULL == treeRoot) {
+				throw EmptyTreeError();
+			} else if (NULL == treeRoot->getRight()) {
+				return treeRoot->getData();
+			}
+			// else
+			return (_max(treeRoot->getRight()));
+		}
+	public:
+		/**
+		 * Find the maximum value in the tree.
+		 * The tree must be non-empty otherwise the EmptyTreeError exception
+		 * will be thrown.
+		 *
+		 * @returns value if found, throws EmptyTreeError on error
+		 *
+		 * @exception EmptyTreeError
+		 */
+		T max() {
+			return _max(root);
 		}
 		// }}}
 

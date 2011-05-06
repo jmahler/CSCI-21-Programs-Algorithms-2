@@ -336,6 +336,26 @@ int main() {
 	}
 	// }}}
 
+	// {{{ BSTree, min(), max()
+	{
+	BSTree<int> bst1;
+		/*
+		 *      5
+		 *     /  \
+		 *    3    6
+		 *     \
+		 *      4
+		 */
+		bst1.insert(5);
+		bst1.insert(6);
+		bst1.insert(3);
+		bst1.insert(4);
+
+		assert(3 == bst1.min());
+		assert(6 == bst1.max());
+	}
+	// }}}
+
 	// {{{ BSTree, memeory leak test [DISABLED]
 	// A good way to test this program for memory leaks is
 	// to uncomment this section and then run this program
