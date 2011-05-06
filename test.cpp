@@ -219,10 +219,68 @@ int main() {
 	assert(bst1.find(2));
 	assert(bst1.find(3));
 	assert(bst1.find(4));
+
 	assert(bst1.remove(3));
+	assert(4 == bst1.getNodeCount());
+
 	assert(! bst1.find(3));
 	assert(bst1.find(2));
 	assert(bst1.find(4));
+	}
+	// }}}
+
+	// {{{ BSTree, remove()
+	{
+	BSTree<int> bst1;
+
+	/* Set up the following tree then
+	 * try and remove 3 (a doubly connected node).
+	 *
+	 *        5
+	 *      /   \
+	 *     3    10
+	 *    / \
+	 *   2   4
+	 */
+	bst1.insert(5);
+	bst1.insert(3);
+	bst1.insert(10);
+	bst1.insert(2);
+	bst1.insert(4);
+
+	assert(bst1.remove(5));
+
+	assert(bst1.find(2));
+	assert(bst1.find(3));
+	assert(bst1.find(4));
+	assert(! bst1.find(5));
+	assert(bst1.find(10));
+	}
+	// }}}
+
+	// {{{ BSTree, remove()
+	// A good way to test this program for memory leaks is
+	// to uncomment this section and then run this program
+	// while monitoring memory usage using the 'top' command.
+	//
+	// tested OK: 5/5/2011
+	{
+	BSTree<int> bst1;
+		/*
+		 *    4
+		 *     \
+		 *      6
+		 */
+		bst1.insert(4);
+		bst1.insert(6);
+
+		assert(bst1.find(4));
+		assert(bst1.find(6));
+
+		assert(bst1.remove(4));
+		assert(! bst1.find(4));
+		assert(bst1.find(6));
+
 	}
 	// }}}
 
@@ -283,33 +341,110 @@ int main() {
 	// to uncomment this section and then run this program
 	// while monitoring memory usage using the 'top' command.
 	//
-	// tested OK: 5/5/2011
-	/*
+	// tested OK: 5/6/2011
 	{
 	BSTree<int> bst1;
 
+	/*
+	 *     3
+	 *    / 
+	 *   1   
+	 *    \
+	 *     2
+	 */
 	bst1.insert(3);
 	bst1.insert(1);
 	bst1.insert(2);
 
-	while (1) {
-		bst1.insert(4);
-		bst1.insert(5);
-		bst1.insert(6);
+	//while (1) {
+	//for (int i = 0; i < 100; i++) {
+
+	/*
+	 *      3
+	 *     /  \
+	 *    /    \
+	 *   1      7
+	 *    \    / \
+	 *     2  5   8
+	 *     ...
+	 */
+
 		bst1.insert(7);
+		bst1.insert(5);
+		bst1.insert(8);
+		bst1.insert(4);
+		bst1.insert(6);
 
-		assert(7 == bst1.getNodeCount());
+		assert(8 == bst1.getNodeCount());
 
-		assert(bst1.remove(4));
-		assert(bst1.remove(6));
+		assert(bst1.find(6));
+
 		assert(bst1.remove(7));
+
+		assert(bst1.find(1));
+		assert(bst1.find(2));
+		assert(bst1.find(3));
+		assert(bst1.find(4));
+		assert(bst1.find(5));
+		assert(bst1.find(6));
+		assert(! bst1.find(7));
+		assert(bst1.find(8));
+
+		assert(bst1.remove(2));
+
+		assert(bst1.find(1));
+		assert(! bst1.find(2));
+		assert(bst1.find(3));
+		assert(bst1.find(4));
+		assert(bst1.find(5));
+		assert(bst1.find(6));
+		assert(! bst1.find(7));
+		assert(bst1.find(8));
+
+		assert(bst1.remove(3));
+
+		assert(bst1.find(1));
+		assert(! bst1.find(2));
+		assert(! bst1.find(3));
+		assert(bst1.find(4));
+		assert(bst1.find(5));
+		assert(bst1.find(6));
+		assert(! bst1.find(7));
+		assert(bst1.find(8));
+
 		assert(bst1.remove(5));
 
-		assert(3 == bst1.getNodeCount());
-	}
+		assert(bst1.find(1));
+		assert(! bst1.find(2));
+		assert(! bst1.find(3));
+		assert(bst1.find(4));
+		assert(! bst1.find(5));
+		assert(bst1.find(6));
+		assert(! bst1.find(7));
+		assert(bst1.find(8));
+
+		assert(bst1.remove(4));
+
+		assert(bst1.find(1));
+		assert(! bst1.find(2));
+		assert(! bst1.find(3));
+		assert(! bst1.find(4));
+		assert(! bst1.find(5));
+		assert(bst1.find(6));
+		assert(! bst1.find(7));
+		assert(bst1.find(8));
+
+		assert(bst1.remove(6));
+		assert(bst1.remove(8));
+
+		assert(1 == bst1.getNodeCount());
+
+		bst1.insert(2);
+		bst1.insert(3);
+
+	//}
 
 	}
-	*/
 	// }}}
 
 	cout << "All tests passed.\n";

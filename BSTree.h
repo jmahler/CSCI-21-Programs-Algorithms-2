@@ -189,35 +189,67 @@ class BSTree
 		// }}}
 
 		// {{{  remove(T&)
+
 	private:
+
+		/*
+		 * Starting with the given non-NULL node, find and
+		 * remove the maximum value.
+		 * The value variable will be assigned the data value
+		 * that was removed.
+		 */
+		void _remove_max(BSTNode<T>*& treeRoot, T& removed) {
+			if (NULL == treeRoot->getRight()) {
+				// found the maximum
+
+				// save the original root pointer
+				BSTNode<T>* oldRoot = treeRoot;
+
+				// get the value
+				removed = treeRoot->getData();
+
+				// re-assign the original root pointer
+				treeRoot = treeRoot->getLeft();
+
+				// delete the original old pointer
+				delete oldRoot;
+				oldRoot = NULL;
+				count--;
+			} else {
+				_remove_max(treeRoot->getRight(), removed);
+			}
+		}
+
 		bool _remove(BSTNode<T>*& treeRoot, const T& target) {
 			if (NULL == treeRoot) {
 				return false;  // value not found
+			} else if (target < treeRoot->getData()) {
+				return _remove(treeRoot->getLeft(), target);
+			} else if (target > treeRoot->getData()) {
+				return _remove(treeRoot->getRight(), target);
+			//} else if (target == treeRoot->getData()) {
 			} else {
-				if (target == treeRoot->getData()) {
-					// value to remove found!
-					BSTNode<T>* left = treeRoot->getLeft();	
-					BSTNode<T>* right = treeRoot->getRight();	
+				BSTNode<T>*& left = treeRoot->getLeft();	
 
-					delete treeRoot;
-					treeRoot = NULL;
+				if (NULL == left) {
+					BSTNode<T>* oldRoot = treeRoot;
+
+					treeRoot = treeRoot->getRight();
+
+					delete oldRoot;
+					oldRoot = NULL;
 					count--;
+				} else if (NULL != left) {
+					T newVal = target;
 
-					if (NULL == left && NULL == right) {
-						// nothing to reconnect
-					} else if (NULL == left) {
-						treeRoot = right;
-					} else if (NULL == right) {
-						treeRoot = left;
-					}
-					// what about when both left and right are defined?
+					// starting with the left non-NULL node,
+					// remove the maximum and get the value.
+					_remove_max(left, newVal);
 
-					return true;
-				} else if (target < treeRoot->getData()) {
-					return _remove(treeRoot->getLeft(), target);
-				} else { // target > data
-					return _remove(treeRoot->getRight(), target);
+					treeRoot->setData(newVal);
 				}
+
+				return true;
 			}
 		}
 	public:	
@@ -227,7 +259,11 @@ class BSTree
 		 * @returns true if value was found and removed, false otherwise
 		 */
 		bool remove(const T& target) {
-			return _remove(root, target);
+			bool t;
+			t = _remove(root, target);
+
+			return t;
+			//return _remove(root, target);
 		}
 		// }}}
 
