@@ -1,0 +1,88 @@
+creating new object
+sorted-order:   ( ) 
+minimum value of an empty list is undefined
+maximum value of an empty list is undefined
+inserted: 10
+inserted: 20
+inserted: 30
+inserted: 40
+inserted: 50
+20 found
+30 found
+60 not found
+inserted: 60
+60 found
+-1 not found
+inserted: 70
+inserted: 80
+inserted: 90
+inserted: 100
+inserted: 110
+inserted: 120
+node count is 12
+sorted-order:   ( 10 20 30 40 50 60 70 80 90 100 110 120 ) 
+minimum value is: 10
+maximum value is: 120
+post-order:     ( 120 110 100 90 80 70 60 50 40 30 20 10 ) 
+pre-order:      ( 10 20 30 40 50 60 70 80 90 100 110 120 ) 
+reverse-order:  ( 120 110 100 90 80 70 60 50 40 30 20 10 ) 
+minimum value is: 10
+maximum value is: 120
+removed: 20
+removed: 40
+removed: 60
+removed: 80
+removed: 100
+removed: 120
+node count is 6
+sorted-order:   ( 10 30 50 70 90 110 ) 
+post-order:     ( 110 90 70 50 30 10 ) 
+pre-order:      ( 10 30 50 70 90 110 ) 
+reverse-order:  ( 110 90 70 50 30 10 ) 
+minimum value is: 10
+maximum value is: 110
+removed: 10
+removed: 110
+minimum value is: 30
+maximum value is: 90
+removed: 30
+minimum value is: 50
+maximum value is: 90
+removed: 90
+minimum value is: 50
+maximum value is: 70
+removed: 50
+minimum value is: 70
+maximum value is: 70
+all values cleared
+destroying old object...
+creating new object
+node count is 0
+sorted-order:   ( ) 
+inserted: 10
+inserted: 20
+inserted: 30
+inserted: 40
+inserted: 50
+inserted: 60
+inserted: 70
+inserted: 80
+inserted: 90
+inserted: 100
+inserted: 110
+inserted: 120
+node count is 12
+sorted-order:   ( 10 20 30 40 50 60 70 80 90 100 110 120 ) 
+removed: 20
+removed: 40
+removed: 60
+removed: 80
+removed: 100
+removed: 120
+node count is 6
+sorted-order:   ( 10 30 50 70 90 110 ) 
+post-order:     ( 110 90 70 50 30 10 ) 
+pre-order:      ( 10 30 50 70 90 110 ) 
+reverse-order:  ( 110 90 70 50 30 10 ) 
+minimum value is: 10
+maximum value is: 110

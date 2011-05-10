@@ -17,9 +17,18 @@ main: main.cpp BSTNode.h BSTree.h
 test: test.cpp BSTNode.h BSTree.h
 	$(CC) $(CFLAGS) $< -o $@
 
-#%.o: %.cpp %.h
-#	$(CC) $(CFLAGS) -c $< -o $@
+#input.txt.out.check: main input.txt
+#	./main input.txt > input.txt.out.check
+
+input.txt.out: input.txt main
+	./main $< > $@
+
+check: test input.txt.out input.txt.out.check
+	./test
+	# OK if diff shows no differences
+	diff input.txt.out input.txt.out.check
 
 clean:
 	-rm -f main test
 	-rm -f $(OBJECTS)
+	-rm -f input.txt.out
