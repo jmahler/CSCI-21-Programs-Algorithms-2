@@ -14,6 +14,9 @@ using namespace std;
  */
 struct EmptyTreeError {};
 
+/**
+ * A Binary Search Tree (BST) structure.
+ */
 template <class T>
 class BSTree
 {
@@ -150,9 +153,7 @@ class BSTree
 		// {{{ clear();
 	private:
 		void _clear(BSTNode<T>*& treeRoot) {
-			if (NULL == treeRoot) {
-				// end of branch, DONE
-			} else {
+			if (NULL != treeRoot) {
 				_clear(treeRoot->getLeft());
 				_clear(treeRoot->getRight());
 
