@@ -123,7 +123,7 @@ class BSTree
 		}
 		// }}}
 
-		// {{{ prints()
+		// {{{ printe()
 	private:
 		// post-order traversal
 		void _printe(BSTNode<T>*& treeRoot, stringstream& ss) {
@@ -267,11 +267,7 @@ class BSTree
 		 * @returns true if value was found and removed, false otherwise
 		 */
 		bool remove(const T& target) {
-			bool t;
-			t = _remove(root, target);
-
-			return t;
-			//return _remove(root, target);
+			return _remove(root, target);
 		}
 		// }}}
 
@@ -296,7 +292,6 @@ class BSTree
 		 * @arg data value to find
 		 *
 		 * @returns true if found, false otherwise.
-		 *
 		 */
 		bool find(const T& data) {
 			return _find(root, data);
@@ -373,11 +368,12 @@ class BSTree
 	public:
 		/**
 		 * Get a value in the tree.
-		 * Works like find() except it returns the value instead of true/false.
+		 * Works like find() except it returns a pointer to the
+		 * value instead of true/false.
 		 *
 		 * @arg data value to find
 		 *
-		 * @returns true if found, false otherwise.
+		 * @returns non-NULL pointer if found, NULL otherwise
 		 *
 		 */
 		T* getData(const T& data) {
@@ -395,6 +391,7 @@ class BSTree
 			return count;
 		}
 		// }}}
+
 };
 
 // vim:foldmethod=marker

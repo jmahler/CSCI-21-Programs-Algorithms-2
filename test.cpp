@@ -1,4 +1,12 @@
 
+/**
+ * Test file for the BSTree.h and BSTNode.h files.
+ *
+ * To use this simply compile it and run it.
+ * If all the tests passed it will display "All tests passed"
+ * otherwise it will indicate where an error occured.
+ */
+
 #include <cassert>
 #include <iostream>
 

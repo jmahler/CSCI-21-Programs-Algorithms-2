@@ -2,12 +2,12 @@
 NAME
 ----
 
-Binary Search Tree in C++
+Binary Search Trees in C++
 
 INTRODUCTION
 ------------
 
-This project impements a binary search tree structure in C++ and
+This project implements a binary search tree structure in C++ and
 provides a command line utility for testing it using commands from
 a file.
 

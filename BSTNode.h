@@ -12,9 +12,9 @@ class BSTNode
 		BSTNode* left;
 		BSTNode* right;
 
-		/* A data value must always be defined for
-		 * a node, no the default constructor is made
-		 * private to prevent this situation.
+		/* A data value must always be defined.
+		 * To prevent it from deing undefined the
+		 * default constructor is made private.
 		 */
 		BSTNode() {};
 
@@ -22,7 +22,7 @@ class BSTNode
 
 		/**
 		 * Construct a new BSTNode.
-		 * A value must be given to initializing the node.
+		 * A value must be given to initialize the node.
 		 *
 		 * @arg new data value
 		 */
@@ -71,7 +71,7 @@ class BSTNode
 
 		/**
 		 * Set the LEFT BSTNode of this object.
-		 * Can be set to NULL if there is not node on the LEFT.
+		 * Can be set to NULL if there is no node on the LEFT.
 		 *
 		 * @arg BSTNode
 		 */
