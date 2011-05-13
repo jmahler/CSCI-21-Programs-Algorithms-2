@@ -4,7 +4,18 @@ OBJECTS=
 CC=g++
 CFLAGS=-Wall -ansi -pedantic $(INCLUDE)
 
-all: wc
+all: wc config
+
+
+config: config.cpp
+	$(CC) $(CFLAGS) $< -o $@
+
+#config-input.txt.check: config-input.txt config 
+#	cat config-input.txt | ./config > config-input.txt.check
+
+config-input.txt.out: config-input.txt config
+	cat config-input.txt | ./config > config-input.txt.out
+
 
 wc: wc.cpp
 	$(CC) $(CFLAGS) $< -o $@
@@ -16,11 +27,13 @@ wc-input.txt.out: wc-input.txt wc
 	cat wc-input.txt | ./wc > wc-input.txt.out
 
 
-check: wc wc-input.txt.out
+check: wc wc-input.txt.out config config-input.txt.out
 	# OK if no differences are shown
 	diff wc-input.txt.out wc-input.txt.check
+	diff config-input.txt.out config-input.txt.check
 
 
 clean:
 	-rm -f wc wc-input.txt.out
+	-rm -f config config-input.txt.out
 
