@@ -1,0 +1,8 @@
+aba
+aabbaa
+abad
+acde
+aa bb aa
+aa bb cc d
+a1 234 56
+12 34 43 21
