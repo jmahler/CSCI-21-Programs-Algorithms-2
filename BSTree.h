@@ -45,7 +45,7 @@ class BSTree
 		// {{{ print()
 	private:
 		// inorder traversal
-		void _print(BSTNode<T>*& treeRoot, stringstream& ss) {
+		void _print(BSTNode<T>*& treeRoot, ostream& ss) {
 			if (NULL != treeRoot) {
 				_print(treeRoot->getLeft(), ss);
 				ss << " " << treeRoot->getData();
@@ -72,7 +72,7 @@ class BSTree
 		// {{{ printr()
 	private:
 		// reverse order traversal
-		void _printr(BSTNode<T>*& treeRoot, stringstream& ss) {
+		void _printr(BSTNode<T>*& treeRoot, ostream& ss) {
 			if (NULL != treeRoot) {
 				_printr(treeRoot->getRight(), ss);
 				ss << " " << treeRoot->getData();
@@ -99,7 +99,7 @@ class BSTree
 		// {{{ printp()
 	private:
 		// pre-order traversal
-		void _printp(BSTNode<T>*& treeRoot, stringstream& ss) {
+		void _printp(BSTNode<T>*& treeRoot, ostream& ss) {
 			if (NULL != treeRoot) {
 				ss << " " << treeRoot->getData();
 				_printp(treeRoot->getLeft(), ss);
@@ -126,7 +126,7 @@ class BSTree
 		// {{{ printe()
 	private:
 		// post-order traversal
-		void _printe(BSTNode<T>*& treeRoot, stringstream& ss) {
+		void _printe(BSTNode<T>*& treeRoot, ostream& ss) {
 			if (NULL != treeRoot) {
 				_printe(treeRoot->getLeft(), ss);
 				_printe(treeRoot->getRight(), ss);
