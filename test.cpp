@@ -292,6 +292,35 @@ int main() {
 	}
 	// }}}
 
+	// {{{ BSTree, remove()
+	// test for bug found by Boyd
+	{
+	BSTree<int> bst1;
+
+	bst1.insert(50);
+	bst1.insert(25);
+	bst1.insert(75);
+	bst1.insert(60);
+	bst1.insert(80);
+	bst1.insert(65);
+
+	assert(6 == bst1.getNodeCount());
+
+	assert(bst1.remove(60));
+	assert(bst1.remove(75));
+
+	assert(4 == bst1.getNodeCount());
+
+	// the value 50 should be missing if the bug is present
+	assert(bst1.find(50));
+
+	assert(! bst1.find(60));
+	assert(! bst1.find(75));
+
+	assert(4 == bst1.getNodeCount());
+	}
+	// }}}
+
 	// {{{ BSTree, getData()
 	{
 	BSTree<int> bst1;

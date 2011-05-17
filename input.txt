@@ -85,4 +85,17 @@ pp
 pr
 min
 max
+# test for bug found by Boyd
+x
+i 50
+i 25
+i 75
+i 60
+i 80
+i 65
+p
+# If the bug is found the value 50 is lost
+r 60
+r 75
+p
 -1
