@@ -2,7 +2,8 @@
 'aabbaa' is  a palindrome
 'abad' is NOT a palindrome
 'acde' is NOT a palindrome
-'aa bb aa' is  a palindrome
-'aa bb cc d' is NOT a palindrome
-'a1 234 56' is NOT a palindrome
-'12 34 43 21' is  a palindrome
+'aabbaa' is  a palindrome
+'aabbccd' is NOT a palindrome
+'a123456' is NOT a palindrome
+'12344321' is  a palindrome
+'sitonapotatopanotis' is  a palindrome

@@ -25,8 +25,9 @@ int main(int argc, char** argv)
 
 	// join all the words in argv in to a single string separated by spaces
 	for (int i = 1; i < argc; i++) {
-		if (i >= 2)
-			word += " ";
+		// include or ignore spaces?
+		//if (i >= 2)
+	    //	word += " ";
 
 		word += argv[i];
 	}

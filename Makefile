@@ -4,7 +4,11 @@ OBJECTS=
 CC=g++
 CFLAGS=-Wall -ansi -pedantic $(INCLUDE)
 
-all: wc config palindrome
+all: wc config palindrome armies
+
+
+armies: armies.cpp
+	$(CC) $(CFLAGS) $< -o $@
 
 
 config: config.cpp
