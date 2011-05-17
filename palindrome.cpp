@@ -22,14 +22,17 @@ int main(int argc, char** argv)
 	}
 
 	string word;
+	string word_orig;
 
 	// join all the words in argv in to a single string separated by spaces
 	for (int i = 1; i < argc; i++) {
-		// include or ignore spaces?
-		//if (i >= 2)
-	    //	word += " ";
+
+		// include spaces
+		if (i >= 2)
+	    	word_orig += " ";
 
 		word += argv[i];
+		word_orig += argv[i];
 	}
 
 	string wordr;  // word in reverse stored here
@@ -38,7 +41,7 @@ int main(int argc, char** argv)
 
 	//cout << "The word '" << word << "' in reverse is '" << wordr << "'\n";
 
-	cout << "'" << word << "' is ";
+	cout << "'" << word_orig << "' is ";
 
 	if (wordr != word)
 		cout << "NOT";
