@@ -17,7 +17,7 @@ using namespace std;
  * cat textfile | ./wc
  */
 
-bool cmp( pair<string, int> a, pair<string, int> b) {
+bool cmp(pair<string, int> a, pair<string, int> b) {
 
 	if (a.second > b.second)
 		return true;
@@ -25,6 +25,28 @@ bool cmp( pair<string, int> a, pair<string, int> b) {
 	return false;
 }
 
+string toLower(string s) {
+	string::iterator it;
+	string lowered;
+
+	for (it = s.begin(); it != s.end(); it++) {
+		lowered += tolower((*it));
+	}
+
+	return lowered;
+}
+
+string toAlnum(string s) {
+	string::iterator it;
+	string alnum;
+
+	for (it = s.begin(); it != s.end(); it++) {
+		if (isalnum(*it))
+			alnum += (*it);
+	}
+
+	return alnum;
+}
 int main(int argc, char** argv)
 {
 	map<string, int> words;
@@ -34,6 +56,12 @@ int main(int argc, char** argv)
 
 	string word;
 	while (cin >> word) {
+
+		// Normalize the data by making variations of
+		// words (such as The the THE) the same.
+		word = toLower(word);  // to lower case
+		word = toAlnum(word);  // to alpha numeric only
+
 		map<string, int>::iterator it;
 
 		if (! words[word]++)
