@@ -47,9 +47,10 @@ The results can be quite entertaining.
 For example, in the previous command the top occurrences unsurprisingly
 are 'forrest' and 'jenny'.
 
-To improve results the data is normalized somewhat.
+To improve results the data is filtered and normalized.
 For example: occurrences such as 'The', 'the', 'The!' are normalized
 by lowering their case and removing any non alpha numeric characters.
+Also, words with less than 4 characters are not included in the summary.
 
 STL components used: map, vector, algorithm
 
