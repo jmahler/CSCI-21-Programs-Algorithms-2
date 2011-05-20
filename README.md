@@ -17,8 +17,8 @@ Four different programs are included.
 palindrome
 ----------
 
-To test whether a string is a palindrome simply specify a string on
-the command line.
+The palindrome program will test a string if it is a palindrome.
+The palindrome to test is given on the command line as shown below.
 It will respond stating whether it is or is not a palindrome.
 
 	shell$ ./palindrome sit on a potato pan otis
@@ -26,7 +26,7 @@ It will respond stating whether it is or is not a palindrome.
 	shell$ ./palindrome a b c b
 	'a b c d' is NOT a palindrome
 
-Also include is a utility (palindrome-run.sh) which will run palindrome
+Also included is a utility (palindrome-run.sh) which will run palindrome
 against a file with one string on each line.
 See the source of this file for more information.
 
@@ -35,17 +35,17 @@ STL components used: stack
 wc
 --
 
-Word count expects data to be provided on standard in and it will
-terminate when it reaches the end of input.
-At the end it will display all the words along with their count.
-And it will also display a summary of the top most occurrences.
+The word count program (wc) will count the number of words in
+a text file and display the top most occurances.
+It is run bat piping a file in to standard in as shown below.
 
 	shell$ cat scripts/ForrestGump.txt | ./wc
 
-Various text files are included in the directory 'scripts/'.
-The results can be quite entertaining.
-For example, in the previous command the top occurrences unsurprisingly
-are 'forrest' and 'jenny'.
+Various text files are included in the directory 'scripts/'
+and the results can be quite entertaining.
+For example, when the words were counted of the move script for
+Forrest Gump (see previous example) the top most occurances were,
+unsurpisingly, 'forrest' and 'jenny'.
 
 To improve results the data is filtered and normalized.
 For example: occurrences such as 'The', 'the', 'The!' are normalized
@@ -59,7 +59,7 @@ config
 
 The config program reads a file containing items of 'key:val' on
 each line and displays the results.
-It expects its input to come from standard in.
+It expects its input to come from standard in as shown below.
 
 	shell$ cat config-input.txt | ./config
 
@@ -90,10 +90,9 @@ armies
 
 The armies program simulates a battle between two armies by using
 random numbers.
-It takes a single argument specifying the number of battles.
+It takes a single argument specifying the number of soldiers in each army.
 
 	shell$ ./armies 10
-	range: 40
 	10 battles have been fought
 	Army 1 had 5 wins
 	Army 2 had 5 wins
@@ -118,13 +117,10 @@ This project was developed under Linux
 and commands such as 'make' and 'diff' are expected to
 be present in order to build and test it properly.
 
-This project includes an extensive test suite.
-All assertion tests are placed in 'test.cpp'.
-And verification of the proper output of the main program
-is checked by viewing the differences ('diff' command) of
-the various check files.
+The programs are tested by comparing the expected output
+to the actual output using a 'check' file.
+And the differences are found using the 'diff' command.
 To run all the tests run 'make check'.
-
 
 AUTHOR
 ======
@@ -138,7 +134,7 @@ This project is publicly hosted on [Github][gith] under the name [CSCI-21-Progra
  [lab8]: http://foobt.net/csci21/S3513_11/labs/lab8.html
  [butte]: http://www.butte.edu
  [boyd]: http://www.foobt.net
- [prj8]: https://github.com/jmahler/CSCI-21-Programs-Algorithms-2-project07
+ [prj8]: https://github.com/jmahler/CSCI-21-Programs-Algorithms-2-project08
  [gith]: http://github.com
 
 Jeremiah Mahler <jmmahler@gmail.com><br>

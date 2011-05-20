@@ -9,7 +9,7 @@ using namespace std;
  *
  * USAGE:
  *
- * ./palindrome <word>
+ * ./palindrome <string to test>
  */
 
 string reverse(string);

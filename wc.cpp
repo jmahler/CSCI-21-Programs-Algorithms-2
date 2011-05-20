@@ -15,16 +15,20 @@ using namespace std;
  * USAGE:
  *
  * cat textfile | ./wc
+ *
+ * To help imrove results the data has been normalized by converting
+ * words to lower case and by removing non alpha numeric characters.
+ * Also, words that are too short (< 4 characters) are not included in
+ * the summary.
  */
 
-bool cmp(pair<string, int> a, pair<string, int> b) {
-
-	if (a.second > b.second)
-		return true;
-
-	return false;
-}
-
+/**
+ * Convert a string to all lowercase.
+ *
+ * @arg string to convert.
+ *
+ * @returns converted string.
+ */
 string toLower(string s) {
 	string::iterator it;
 	string lowered;
@@ -36,6 +40,14 @@ string toLower(string s) {
 	return lowered;
 }
 
+/**
+ * Remove any non-alhpanumeric characters (e.g. '!,.')
+ * from a string.
+ *
+ * @arg string to process
+ *
+ * @returns string
+ */
 string toAlnum(string s) {
 	string::iterator it;
 	string alnum;
@@ -47,10 +59,23 @@ string toAlnum(string s) {
 
 	return alnum;
 }
+
+/**
+ * This comparison operation is used to sort the vector
+ * of pairs of words and counts.
+ */
+bool cmp(pair<string, int> a, pair<string, int> b) {
+
+	if (a.second > b.second)
+		return true;
+
+	return false;
+}
+
 int main(int argc, char** argv)
 {
 	map<string, int> words;
-	int num_top_matches = 50;  // number of top matches to display
+	int num_top_matches = 10;  // number of top matches to display
 	unsigned int skip_word_len = 4;  // words shorter than this will
 	                                 // be skipped in the top occurances summary
 
@@ -90,7 +115,9 @@ int main(int argc, char** argv)
 	if (line.length() > 0)
 		cout << line << endl;
 
+
 	// display the top most occurances
+
 	vector< pair<string, int> > vwords;
 	for (it=words.begin(); it != words.end(); it++) {
 		pair<string, int> p1((*it).first, (*it).second);

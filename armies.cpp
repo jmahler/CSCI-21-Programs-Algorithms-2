@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 
 	//unsigned int range = ((rand() % 91) + 10);  // 10 - 100
 	unsigned int range = ((rand() % 41) + 10);  // 10 - 50
-	cout << "range: " << range << "\n";
+	//cout << "range: " << range << "\n";
 
 	// build the battles
 	for (unsigned int i = 0; i < num_soldiers; i++) {
