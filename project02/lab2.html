@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="http://foobt.net/styles/lab.css" />
+	<title>csci 21 :: lab 2</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+
+	<center>
+		<b>csci 21 :: lab 2 (due before midnight on Monday, Feb 21)</b><br>
+		<i>THIS PROGRAMMING PROJECT IS TO BE COMPLETED AND SUBMITTED <b>INDIVIDUALLY</b></i>
+	</center>
+  
+	<p>&nbsp;</p>
+		
+<div class="description">
+<span class="sectiontitle">Description:</span>
+	
+	<p>
+		The purpose of the project is to introduce you to (1) constructors/overloaded constructors, 
+		(2) destructors, and (3) pointers and dynamic memory. You will also be presented with a new 
+		parsing problem, and of course you will continue to sharpen your skills in object-oriented 
+		design and programming in C++.
+	</p>
+	<p>
+		In this program, you will design and implement a simple "virtual pet" game. Each "virtual pet" 
+		will have a name and a hunger level (at level 0 the pet "passes out" and at level 10 the pet 
+		is full and will not eat any more). The hunger level of each pet decreases by 1 level every 2 
+		minutes.
+	</p>
+	<p>
+		At the start of the game the program will create 3 "virtual pets" for your player to interact with. 
+		Each pet will have a name (hard-coded) and a random initial hunger level, between 5-10.
+		Your player will have the option to feed each pet individually (i.e., the player must select 
+		a specific pet to feed). When a pet "passes out," the player will be prompted to name a 
+		new pet, which will take the place of the pet that passes out, and be given a random initial 
+		hunger level, again between 5 and 10.
+	</p>
+	<p>
+		Some technical details:
+	</p>
+	<ul>
+		<li>
+			design and implement a class to model the virtual pets, with the following:
+			<ul>
+				<li>a default constructor</li>
+				<li>at least one overloaded constructor</li>
+				<li>
+					a destructor that displays a message when it is invoked, such as 
+					"Spot has passed out." (Spot being the name of the pet in this example); 
+					use the 'cerr' stream for this output
+				</li>
+			</ul>
+		</li>
+		<li>you may use the timer code provided by <a href="../files/bttimer">this class</a></li>
+		<li>
+			design and implement a user interface class, with the following:
+			<ul>
+				<li>use pointers to allocate/release the three required pet objects</li>
+			</ul>
+		</li>
+	</ul>
+ 
+</div>
+
+<div class="objectiveslist">
+<span class="sectiontitle">Objectives:</span>
+	<ul>
+		<li>implement and use a default constructor</li>
+		<li>implement and use an overloaded constructor</li>
+		<li>implement a destructor and identify when it will be invoked</li>
+		<li>use pointers to allocate and access dynamic memory</li>
+		<li>correctly manage dynamically allocated memory</li> 
+	</ul>
+</div>
+
+<div class ="objectiveslist">
+<span class="sectiontitle">Requirements:</span>
+	<ul>
+		<li>program must be fully documented in the doxygen style [10 points]</li>
+		<li>program must build and run [10 points]</li>
+		<li>complete pet class with attributes, sets/gets, and helper functions as needed [10 points]</li>
+		<li>default constructor in pet class [10 points]</li>
+		<li>overloaded constructor in pet class [10 points]</li>
+		<li>destructor in pet class with required 'cerr' output [10 points]</li>
+		<li>user interface class with default constructor and destructor, both used properly [10 points]</li>
+		<li>use pointers to allocate, access, and release pet objects in user interface [100 points]</li>
+		<li>provide all program functionality as described above [20 points]</li>
+	</ul>
+</div>
+
+<div class="exercise">
+<span class="sectiontitle">To do:</span>
+	
+	<p>
+		Submit your C++ source (all of your .h and .cpp files) to me at <i>jboydt@foobt.net</i>. 
+		PLEASE BE SURE TO INCLUDE THE STRING 'bcsp11' (WITHOUT THE QUOTES IN YOUR SUBJECT LINE). 
+		Please also include the class and project number. An example of a proper 
+		subject line is: <b>CSCI 21 Project 2 (bcsp11)</b>
+	</p>
+	<p>
+		In your email, write a short paragraph describing your experience with this exercise. 
+		Describe your successes, and any difficulties you had.  I am especially interested in 
+		learning what gave you the most trouble, so that we can work on it in lecture/lab.
+	</p>
+	
+</div>
+
+</body>
+</html>
