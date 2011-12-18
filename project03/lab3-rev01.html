@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="http://www.foobt.net/styles/lab.css" />
+	<title>csci 21 :: lab 3</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+
+	<center>
+		<b>csci 21 :: lab 3 (due before midnight on Monday, Mar 7)</b><br>
+		<i>THIS PROGRAMMING PROJECT IS TO BE COMPLETED AND SUBMITTED <b>INDIVIDUALLY</b></i>
+	</center>
+  
+	<p>&nbsp;</p>
+		
+<div class="description">
+<span class="sectiontitle">Description:</span>
+	
+	<p>
+		The purpose of this project is threefold:
+	</p>
+	<ol>
+		<li>to give you an opportunity to practice using, and hopefully demonstrate your mastery of, arrays</li>
+		<li>to introduce you to the concept of unit testing</li>
+		<li>to give you a problem that involves reading and then parsing data from a text file</li>
+	</ol>
+	<p>
+		For this project you will design and implement a program that receives data and commands read in from 
+		a text file. The data will be positive integers, which are to be stored in an array. The commands will include 
+		operations such as adding new data, removing data, accessing data, and printing the contents of the array.
+	</p>
+	<p>
+		The array must be a data member of a class that you design and implement to provide all of the following 
+		functionality:
+	</p>
+	<ul>
+		<li>
+			data members: capacity of the array, number of elements currently in the array, a dynamic array of 
+			integers, a flag that allows an instance to be set to fixed size or allows for auto-resizing (auto-resized 
+			arrays double in capacity on resizing)
+		</li>
+		<li>
+			default capacity of 5 elements, fixed size
+		</li>
+		<li>
+			the ability to create an instance with a specified array capacity, defaults to fixed size
+		</li>
+		<li>
+			the ability to create an instance with a specified array capacity, specified fixed size/auto-resize
+		</li>
+		<li>
+			a function to add new data (data will always be added to the next available "slot" at the end of 
+			the array; add data fails if the array is already filled to capacity (fixed size) or causes the array 
+			to grow in size (auto-resizing)
+		</li>
+		<li>
+			a function to insert data at a specified index; overwrites any data already present at the index, returns 
+			-1 if the index value is invalid
+		</li>
+		<li>
+			a function to retrieve data at a specified index; returns -1 if the index value is invalid
+		</li>
+		<li>
+			a function to "remove" data at a specified index; removal means shifting all values at higher indices 
+			in the array down one to fill the "slot" from where the value was removed; returns -1 if the index value 
+			is invalid (invalid index here means the index was outside the bounds of the array OR the index value refers 
+			to a "slot" that is not being used
+		</li>
+		<li>
+			a function to retrieve the capacity of the array
+		</li>
+		<li>
+			a function to retrieve the number of elements in the array
+		</li>
+		<li>
+			a function to print the capacity, number of elements, and all of the values in the array; this function 
+			must NOT use cout -- instead, this function will create a string with the desired output information and 
+			return the string to the caller
+		</li>
+		<li>
+			do NOT do any outputs, except for your own debugging work, in your array class
+		</li>
+	</ul>
+	<p>
+		The input text file will contain the following information: array setup (capacity, fixed size or auto-resize), 
+		commands (with data as appropriate). The commands are as follows:
+	</p>
+	<ul>
+		<li>
+			<b>i VALUE INDEX</b><br />
+			('i' is the insert command, VALUE is the value being inserted, INDEX is the index 
+			in the array); on success, your program should display "VALUE inserted at index INDEX"; on failure, 
+			your program should display "INDEX is an invalid index"
+		</li>
+		<li>
+			<b>g INDEX</b><br />
+			('g' is the get command, INDEX is the index in the array from where the data should be gotten); 
+			on success, your program should display "value at INDEX: VALUE"; on failure, your program should display 
+			"INDEX is an invalid index"
+		</li>
+		<li>
+			<b>a VALUE</b><br />
+			('a' is the add command, VALUE is the value to be added at the next available "slot" at the end 
+			of the array); on success (fixed size or auto-resizing), your program should display "VALUE added"; 
+			on failure (fixed size only), your program should display "array is filled to capacity"; if the array 
+			must grow to accommodate the new value (auto-resizing only), your program should display "array resized 
+			to new capacity CAPACITY" where CAPACITY is the new capacity
+		</li>
+		<li>
+			<b>r INDEX</b><br />
+			('r' is the remove command, INDEX is the index in the array from where the data should be removed); 
+			on success, your program should display "value at INDEX removed"; on failure, your program should display 
+			"INDEX is an invalid index"
+		</li>
+		<li>
+			<b>c</b><br />
+			('c' is the capacity command); your program should display "array capacity is CAPACITY" where CAPACITY 
+			is the capacity of the array
+		</li>
+		<li>
+			<b>n</b>
+			<br />('n' is the number of elements command); your program should display "array has NUMBER elements" where 
+			NUMBER is the number of elements in the array
+		</li>
+		<li>
+			<b>p</b><br />
+			('p' is the print command); display the number of elements and the capacity as "NUM_ELEMENTS/CAPACITY", 
+			and display the data in the array in a comma-separate list, at most 10 values per line
+		</li>
+	</ul>
+	<p>
+		The format of the text file will be the following:
+	</p>
+	<ul>
+		<li>line #1: array capacity (an int value)</li>
+		<li>line #2: fixed size (0) or auto-resize (1)</li>
+		<li>lines #3 and on: commands (see sample input file <a href="../files/lab3input.txt">here</a>)</li>
+		<li>last line: -1</li>
+	</ul>
+	<p>
+		The input file will be specified via the <i>argv</i> array. If no input file is specified, your program 
+		should default to the file <i>lab3input.txt</i>.
+	</p>
+</div>
+
+<div class="objectiveslist">
+<span class="sectiontitle">Objectives:</span>
+	<ul>
+		<li>design and implement a class to provide a robust function interface for an array</li>
+		<li>read and parse data from text files</li>
+		<li>continue practicing your object-oriented design and programming skills</li>
+		<li>continue practicing with pointers and dynamic memory</li> 
+	</ul>
+</div>
+
+<div class ="objectiveslist">
+<span class="sectiontitle">Requirements:</span>
+	<ul>
+		<li>program must be fully documented in the doxygen style [10 points]</li>
+		<li>program must build and run [10 points]</li>
+		<li>
+			write a simple unit test that demonstrates/tests the proper functionality of all
+			of your array class functions [20 points]
+		</li>
+		<li>complete array class as described above [30 points]</li>
+		<li>provide all program functionality as described above [30 points]</li>
+	</ul>
+</div>
+
+<div class="exercise">
+<span class="sectiontitle">To do:</span>
+	
+	<p>
+		Submit your C++ source (all of your .h and .cpp files) to me at <i>jboydt@foobt.net</i>. 
+		PLEASE BE SURE TO INCLUDE THE STRING 'bcsp11' (WITHOUT THE QUOTES IN YOUR SUBJECT LINE). 
+		Please also include the class and project number. An example of a proper 
+		subject line is: <b>CSCI 21 Project 3 (bcsp11)</b>
+	</p>
+	<p>
+		In your email, write a short paragraph describing your experience with this exercise. 
+		Describe your successes, and any difficulties you had.  I am especially interested in 
+		learning what gave you the most trouble, so that we can work on it in lecture/lab.
+	</p>
+	
+</div>
+
+</body>
+</html>
