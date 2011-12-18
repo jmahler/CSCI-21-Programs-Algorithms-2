@@ -1,0 +1,15 @@
+node count is 0
+( )
+one not found
+one not found (recursive)
+inserted: abc
+inserted: ghi
+inserted: def
+( abc def ghi )
+abc found
+abc found (recursive)
+aef not found (recursive)
+pushed jkl on to front of list
+( jkl abc def ghi )
+all values cleared
+( )

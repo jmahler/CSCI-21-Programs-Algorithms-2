@@ -1,0 +1,9 @@
+*.swp
+*.o
+input.txt.out
+log
+main
+test
+doc/doxygen-doc
+*.out
+README.htm

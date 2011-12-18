@@ -1,0 +1,17 @@
+string      # type
+n           # node count
+d           # display the list
+f one       # find this string
+fr one
+i abc
+i ghi       # insert, out of order
+i def
+d           # display, (should be sorted)
+f abc       # find
+fr abc      # find, recursively
+fr aef      # find, (shouldn't be found)
+puf jkl     # push front
+d
+c           # clear
+d
+-1          # quit

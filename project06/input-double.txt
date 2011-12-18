@@ -1,0 +1,19 @@
+double
+# input test commands for DLList (doubly linked list) library
+n
+d
+i 2.3
+i 1.11
+i 5.6
+i 4.5
+i 5.6
+i -1.35
+i -3.14
+d
+r 2.3
+d
+f 4.5
+fr 4.5
+f 4.51
+fr 4.51
+-1
