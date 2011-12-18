@@ -14,18 +14,22 @@ This class was taught by [Boyd Trolinger][boyd] during the Spring of
  [butte]: http://www.butte.edu
  [boyd]: http://www.foobt.net
 
-Individual projects are stored in their own repository.
+Each project is stored in its own directory.
 
- + [project01][proj01] -- shell for examining strings and integers
- + see the authors [profile][jmgit] for links to more recent projects,
-   they will be named similarly.
+ + project01 -- shell for examining strings and integers
+ + project02 -- game of virtual pets
+ + project03 -- simple dynamic array
+ + project04 -- dynamic array with sorting operations
+ + project05 -- discrete event simulation
+ + project06 -- doubly linked lists
+ + project07 -- binary search tree
+ + project08 -- palindrome, wc (word count), config parser, armies battle simulation
 
 The file CSCI-21.org contains class notes and project times.
 It is best viewed using Emacs in [org-mode][org].
 
   [org]: http://www.orgmode.org
   [jmgit]: https://github.com/jmahler
-  [proj01]: https://github.com/jmahler/CSCI-21-Programs-Algorithms-2-project01
 
 AUTHOR
 ------
