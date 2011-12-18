@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="http://www.foobt.net/styles/lab.css" />
+	<title>csci 21 :: project 5</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+
+	<center>
+		<b>csci 21 :: project 5 (due before midnight on Friday, Apr 15)</b><br>
+		<i>THIS PROGRAMMING PROJECT IS TO BE COMPLETED AND SUBMITTED <b>IN TWO (2) PERSON TEAMS</b></i>
+	</center>
+  
+	<p>&nbsp;</p>
+		
+<div class="description">
+<span class="sectiontitle">Description:</span>
+	
+	<ul>
+		<li>Sample Windows executable <a href="../files/project5win.exe">here</a></li>
+		<li>Sample Mac executable <a href="../files/project5mac">here</a></li>
+	</ul>
+	<p>
+		The purpose of this project is to expose you to the C++ Standard Template Library (STL), and in 
+		particular the C++ STL vector class. You will also use inheritance to create a base class and 
+		a set of specialized classes in your data model. Finally, you will have an opportunity to gain 
+		new experience using pointers.
+	</p>
+	<p>
+		For this project you will create a simple <a href="http://en.wikipedia.org/wiki/Discrete_event_simulation">
+		discrete event simulation</a>. Your system will simulate a small fast food restaurant.
+	</p>
+	<p>
+		Following are the particulars of the discrete event simulation you will design and implement:
+	</p>
+	<ul>
+		<li>
+			<b>Clock</b>. The clock in your system will be implemented as a for loop. Each pass of the for loop 
+			will represent an increment of one (1) minute. All of the simulated system's events will occur in 
+			this for loop.
+		</li>
+		<li>
+			<b>Waiting line</b>. You will use a C++ STL vector as the waiting line. Newly arriving customers 
+			will be placed at the back of the waiting line. When a cashier is available, the customer at the 
+			front of the line leaves the waiting line to be served by the cashier.
+		</li>
+		<li>
+			<b>Customers</b>. Each 'minute' there is a 50% chance that a new customer will arrive. Your system 
+			must track several variables for each customer: type, arrival time, time required to serve, departure 
+			time. Each order type also has a unique variable, described below. When a new customer arrives, your 
+			system will randomly select the type of customer:
+			<ul>
+				<li>
+					<i>hamburger</i>: time to serve set to random value between 3-5 minutes; these customers can 
+					be "wishy washy" about their order -- meaning they change their minds frequently about exactly 
+					what it is that they want, and are more likely to change their minds the longer they wait -- so 
+					they should have a random service time modifier between 0-5 to represent their lack of 
+					decisiveness about their order
+				</li>
+				<li>
+					<i>milkshake</i>: time to serve set to random value between 2-3 minutes; 50% of these customers 
+					will give up and depart the waiting line if they have to wait more than 10 minutes
+				</li>
+				<li>
+					<i>platter</i>: time to serve set to random value between 5-7 minutes; 10% of these customers 
+					are VIPs and will be moved to the front of the waiting line if they have been waiting for more 
+					than 10 minutes
+				</li>
+			</ul>
+		</li>
+		<li>
+			<b>Cashiers</b>. The number of cashiers will be specified by the user before the simulation begins. 
+			Each cashier can serve one customer at a time.
+		</li>
+		<li>
+			<b>End of Simulation Reporting</b>. At the end of the simulation, report the following statistics:
+			<ul>
+				<li>The number of 'minutes' the simulation ran.</li>
+				<li>The number of cashiers used.</li>
+				<li>The number of customers still in the waiting line.</li>
+				<li>The number of milkshake customers who gave up and left.</li>
+				<li>The types of customers being served by cashiers when the simulation stopped.</li>
+				<li>The number of each type of customer successfully served during the simulation.</li>
+			</ul>
+		</li>
+	</ul>
+	<p>
+		Following is how the system should function:
+	</p>
+	<ul>
+		<li>
+			<b>Program start</b>. The user will be asked for, and then will input, 1) the number of minutes to 
+			run the simulation (see <b>Clock</b> above) and 2) the number of cashiers (see <b>Cashiers</b> above) 
+			to use for the simulation.
+		</li>
+		<li>
+			<b>Each minute</b>. Each 'minute' of the simulation, your program should:
+			<ul>
+				<li>
+					check for arrivals (50% chance there will be an arrival each minute); if there is a new 
+					arrival, randomly generate a customer (50% are hamburgers, 35% are milkshakes, and 15% are 
+					platters) and place that customer in the waiting line
+				</li>
+				<li>
+					check each cashier; customers who are ready to depart should do so
+				</li>
+				<li>
+					[+5 point bonus] look through the waiting line and remove any <i>milkshake</i> customers who are giving up
+				</li>
+				<li>
+					[+5 point bonus] look through the waiting line and move any <i>VIP platter</i> customers to the front of the 
+					waiting line
+				</li>
+				<li>
+					for each available cashier, remove a customer from the waiting line and place that customer 
+					at the cashier for service
+					<ul>
+						<li>
+							update the customer's departure time now (current clock time + customers' service time)
+						</li>
+						<li>
+							if the customer being sent to a cashier is a <i>hamburger</i> customer, then check to see 
+							how long this customer has been waiting -- if the customer has been waiting more than 10 
+							minutes, apply the "wishy washy" modifier to this customer's service time
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+		<li>
+			<b>Program end</b>. Report simulation statistics as described above. Allow the user to restart the simulation 
+			and enter new parameters (time and number of cashiers) if desired.
+		</li>
+	</ul>
+	<p>
+		Some guidelines for your design:
+	</p>
+	<ul>
+		<li>you can incorporate your simulation logic into your user interface</li>
+		<li>each customer type must be derived from a common base class</li>
+		<li>the waiting line/vector must be implemented in its own class</li>
+	</ul>
+	<p>
+		NOTE: You will encounter several new techniques in this project, but the project overall is relatively 
+		small. You should have plenty of time to both 1) learn the new techniques and 2) implement them in 
+		code.
+	</p>
+	<p>
+		NOTE: Your documentation should reflect the contributions of each person in your two person team.
+	</p>
+</div>
+
+<div class="objectiveslist">
+<span class="sectiontitle">Objectives:</span>
+	<ul>
+		<li>practice using pointers</li>
+		<li>gain exposure to the C++ STL</li>
+		<li>design and implement a software system that uses a C++ STL vector for its primary data structure</li>
+		<li>design and implement a software system that uses inheritance in its data model</li>
+	</ul>
+</div>
+
+<div class ="objectiveslist">
+<span class="sectiontitle">Requirements:</span>
+	<ul>
+		<li>program must be fully documented in the doxygen style [10 points]</li>
+		<li>program must build and run [10 points]</li>
+		<li>a data structure class that uses C++ STL vector [25 points]</li>
+		<li>customer base class and derived classes for the three specific customer types [35 points]</li>
+		<li>fully functional simulation that provides the features described above [20 points]</li>
+	</ul>
+</div>
+
+<div class="exercise">
+<span class="sectiontitle">To do:</span>
+	
+	<p>
+		Submit your C++ source (all of your .h and .cpp files) to me at <i>jboydt@foobt.net</i>. 
+		PLEASE BE SURE TO INCLUDE THE STRING 'bcsp11' (WITHOUT THE QUOTES IN YOUR SUBJECT LINE). 
+		Please also include the class and project number. An example of a proper 
+		subject line is: <b>CSCI 21 Project 5 (bcsp11)</b>
+	</p>
+	<p>
+		In your email, write a short paragraph describing your experience with this exercise. 
+		Describe your successes, and any difficulties you had.  I am especially interested in 
+		learning what gave you the most trouble, so that we can work on it in lecture/lab.
+	</p>
+	
+</div>
+
+</body>
+</html>
