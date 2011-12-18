@@ -1,0 +1,9 @@
+*.swp
+*.o
+main
+test
+doc
+log
+lab4input.txt.out
+lab3input.txt.out
+README.htm

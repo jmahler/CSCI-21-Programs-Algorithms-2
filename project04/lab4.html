@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="http://www.foobt.net/styles/lab.css" />
+	<title>csci 21 :: lab 4</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+
+	<center>
+		<b>csci 21 :: lab 4 (due before midnight on Monday, Mar 28)</b><br>
+		<i>THIS PROGRAMMING PROJECT IS TO BE COMPLETED AND SUBMITTED <b>INDIVIDUALLY</b></i>
+	</center>
+  
+	<p>&nbsp;</p>
+		
+<div class="description">
+<span class="sectiontitle">Description:</span>
+	
+	<p>
+		The purpose of this project is to expose you to some standard sorting algorithms and to introduce you to the 
+		concept of operator overloading.
+	</p>
+	<p>
+		For this project you will be updating the work you did on lab 3 to add new features to your array class. For the 
+		sorting functions, see pseudocode <a href="../files/sorts">here</a>. The new array class features must include:
+	</p>
+	<ul>
+		<li>a bubble sorting function, to sort in ascending order</li>
+		<li>a bubble sorting function, to sort in descending order</li>
+		<li>an insertion sorting function, in ascending order</li>
+		<li>an overloaded operator&lt;&lt; to be used every time a print command is requested by the input file</li>
+	</ul>
+	<p>
+		Otherwise the program should continue to function just as it did for lab 3. You will need to update other parts of 
+		of your program to support the new command described below.
+	</p>
+	<p>
+		The input text file will contain the same commands and format as it did for lab 3, with the following 
+		additional command:
+	</p>
+	<ul>
+		<li>
+			<b>s SORTTYPE [ORDER]</b><br />
+			('s' is the sort command, SORTTYPE is the sorting algorithm to use ('B' for bubble, 'I' for insertion), 
+			and ORDER (to be used only for bubble sorts) will be ascending or descending ('A' for ascending, 'D' for 
+			descending). Insertion sorts will default to ascending order. Your program's output should say "bubble sorting 
+			in ascending order" or "bubble sorting in descending order" or "insertion sorting" as appropriate
+		</li>
+	</ul>
+	<p>
+		The input file will continue to be specified via the <i>argv</i> array. If no input file is specified, your program 
+		should default to the file <i>lab4input.txt</i> (sample <a href="../files/lab4input.txt">here</a>).
+	</p>
+</div>
+
+<div class="objectiveslist">
+<span class="sectiontitle">Objectives:</span>
+	<ul>
+		<li>extend the array class to add new functionality</li>
+		<li>learn how to define and use an overloaded operator</li>
+	</ul>
+</div>
+
+<div class ="objectiveslist">
+<span class="sectiontitle">Requirements:</span>
+	<ul>
+		<li>program must be fully documented in the doxygen style [10 points]</li>
+		<li>program must build and run [10 points]</li>
+		<li>ascending bubble sort function in array class [10 points]</li>
+		<li>descending bubble sort function in array class [10 points]</li>
+		<li>ascending insertion sort function in array class [10 points]</li>
+		<li>overloaded operator&lt;&lt; in array class [10 pts]</li>
+		<li>
+			updated program to add support for the new 's' command and variants and use of overloaded 
+			operator&lt;&lt; for array print [15 points]
+		</li>
+	</ul>
+</div>
+
+<div class="exercise">
+<span class="sectiontitle">To do:</span>
+	
+	<p>
+		Submit your C++ source (all of your .h and .cpp files) to me at <i>jboydt@foobt.net</i>. 
+		PLEASE BE SURE TO INCLUDE THE STRING 'bcsp11' (WITHOUT THE QUOTES IN YOUR SUBJECT LINE). 
+		Please also include the class and project number. An example of a proper 
+		subject line is: <b>CSCI 21 Project 4 (bcsp11)</b>
+	</p>
+	<p>
+		In your email, write a short paragraph describing your experience with this exercise. 
+		Describe your successes, and any difficulties you had.  I am especially interested in 
+		learning what gave you the most trouble, so that we can work on it in lecture/lab.
+	</p>
+	
+</div>
+
+</body>
+</html>

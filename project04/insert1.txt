@@ -1,0 +1,19 @@
+INSERTION SORT 1
+
+***********************************
+void insertionSort (int list[], int last)
+{
+     currentItemIndex = 0
+     loop1 currentItemIndex <= last
+          tempHold = list[currentItemIndex]
+          iterator = currentItemIndex - 1
+          
+          loop2 iterator >= 0 && tempHold < list[iterator]
+                list[iterator+1] = list[iterator]
+                iterator--
+          end loop2
+
+          list[iterator+1] = tempHold
+          currentItemIndex++
+     end loop1
+}
