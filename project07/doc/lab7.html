@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="http://foobt.net/styles/lab.css"/>
+	<title>csci 21 :: lab 7</title>
+</head>
+<body>
+
+	<center>
+		<b>csci 21 :: lab 7 (due Fri, May 13)</b><br>
+		<i>! PLEASE READ THE ENTIRE EXERCISE BEFORE YOU BEGIN !</i>
+	</center>
+  
+	<p>&nbsp;</p>
+		
+<div class="description">
+<span class="sectiontitle">Description:</span>
+	
+	<p>
+		The purpose of this project is for you to implement and test the functionality of a binary search tree.
+	</p>
+	<p>
+		Your binary search tree must have the following functions:
+	</p>
+	<ul>
+		<li>constructor -- set root pointer to NULL and node count to zero</li>
+		<li>destructor -- should clear all nodes</li>
+		<li>clear -- delete all nodes (and their contents if appropriate)</li>
+		<li>insert new data -- do not allow duplicates</li>
+		<li>remove data -- return true on success, else return false</li>
+		<li>find data -- return true on success, else return false</li>
+		<li>
+			get data -- return pointer to data (return NULL if data not present)
+		</li>
+		<li>*inorder traversal -- to print data in all nodes</li>
+		<li>*reverse inorder traversal -- to print data in all nodes</li>
+		<li>*preorder traversal -- to print data in all nodes</li>
+	</ul>
+	<p>
+		You must also implement a node for your binary search tree -- you may choose to implement your node as a <i>struct</i> 
+		or a <i>class</i> You will need to implement <i>const</i> and return-by-reference versions of all of your get functions.
+	</p>
+	<p>
+		You will also implement an application to test the functionality of your binary search tree. The application 
+		will use <i>int</i> as the data type to store in the nodes of your tree. Your application must provide menu options 
+		that allow your user to access all of the functions listed above. This includes the constructor and destructor -- let your 
+		user select an option to destroy the current tree and create a new one to demonstrate this functionality.
+	</p>
+	<p>
+		EXTRA CHALLENGES for you to consider
+	</p>
+	<ul>
+		<li>
+			instead of <i>int</i>, implement a class to represent a single word from a text document; each word instance will 
+			have variables to store: the string that is the word, a count of the number of occurrences of the word in a text 
+			document, a listing of the line numbers on which the word appears in a text document; to demonstrate functionality, 
+			you will implement an application that allows the user to specify a text document for processing -- the application will 
+			(1) process the text document and load the binary search tree with information about all of the words (alphabetic characters 
+			only, and case-insensitive) and (2) allow the user to view the resultant data (view all words that start with a given 
+			letter of the alphabet, search for a specific word, view the ten most common words, view the ten least common words)
+			<ul>
+				<li>
+					If you implement a tree with dynamic word objects, you will need to figure out a way to clean up these objects
+				</li>
+			</ul>
+		</li>
+		<li>
+			*traversals -- implement with a function pointer (for a function that returns void and accepts a 
+			call-by-reference parameter of the data type being stored in the binary search tree); to demonstrate 
+			functionality, the program should call these functions and pass in an appropriate function
+		</li>
+	</ul>
+
+</div>
+
+<div class="objectiveslist">
+<span class="sectiontitle">Objectives:</span>
+	<ul>
+		<li>implement and test a binary search tree</li>
+	</ul>
+</div>
+
+<div class ="objectiveslist">
+<span class="sectiontitle">Requirements:</span>
+	<ul>
+		<li>program must be fully documented in the doxygen style [10 points]</li>
+		<li>program must build and run [10 points]</li>
+		<li>implement a binary search tree and node as described above [50 points]</li>
+		<li>implement an application to demonstrate the functionality of your binary search tree [30 points]</li>
+	</ul>
+</div>
+
+<div class="exercise">
+<span class="sectiontitle">To do:</span>
+	
+	<p>
+		Submit your C++ source (all of your .h and .cpp files) to me at <i>jboydt@foobt.net</i>. 
+		PLEASE BE SURE TO INCLUDE THE STRING 'bcsp11' (WITHOUT THE QUOTES IN YOUR SUBJECT LINE). 
+		Please also include the class and project number. An example of a proper 
+		subject line is: <b>CSCI 21 Project 7 (bcsp11)</b>
+	</p>
+	<p>
+		In your email, write a short paragraph describing your experience with this exercise. 
+		Describe your successes, and any difficulties you had.  I am especially interested in 
+		learning what gave you the most trouble, so that we can work on it in lecture/lab.
+	</p>
+	
+</div>
+
+</body>
+</html>

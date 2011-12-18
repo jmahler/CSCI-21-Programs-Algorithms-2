@@ -1,0 +1,101 @@
+n
+p
+min
+max
+i 10
+i 20
+i 30
+i 40
+i 50
+f 20
+f 30
+f 60
+i 60
+f 60
+f -1
+i 70
+i 80
+i 90
+i 100
+i 110
+i 120
+n
+p
+min
+max
+pe
+pp
+pr
+min
+max
+r 20
+r 40
+r 60
+r 80
+r 100
+r 120
+n
+p
+pe
+pp
+pr
+min
+max
+r 10
+r 110
+min
+max
+r 30
+min
+max
+r 90
+min
+max
+r 50
+min
+max
+c
+x
+n
+p
+i 10
+i 20
+i 30
+i 40
+i 50
+i 60
+i 70
+i 80
+i 90
+i 100
+i 110
+i 120
+n
+p
+r 20
+r 40
+r 60
+r 80
+r 100
+r 120
+n
+p
+pe
+pp
+pr
+min
+max
+# test for bug found by Boyd
+x
+i 50
+i 25
+i 75
+i 60
+i 80
+i 65
+p
+# If the bug is found the value 50 is lost
+r 60
+r 75
+p
+-1
